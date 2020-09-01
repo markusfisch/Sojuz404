@@ -1,40 +1,5 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-<meta name="theme-color" content="#111"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-<meta name="msapplication-navbutton-color" content="#111"/>
-<title>js13k2020</title>
-<style>
-html {
-	background: #111;
-}
-body {
-	margin: 0; padding: 0;
-	font: 5vw sans-serif; color: #999;
-	overflow: hidden;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-ms-touch-action: none;
-	user-select: none;
-}
-svg {
-	display: none;
-}
-</style>
-</head>
-<body>
-<svg id="Stage">
-<g id="Scene">
-<circle cx="0" cy="100" r="300" style="fill: rgb(10, 140, 200);"/>
-<g id="Soyus">
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <path d="M 100 49 C 100 61 92 61 86 61 C 82 61 79 59 76 56 C 72 61 52 63 52 63 L 52 35 C 52 35 72 37 76 42 C 79 39 82 37 86 37 C 92 37 100 37 100 49 Z" style="fill: rgb(75, 87, 63);"/>
 <path d="M 48 36 L 52 35 L 52 63 L 48 62 L 48 36 Z" style="fill: rgb(224, 225, 230);"/>
 <path d="M 48 36 L 42 36 L 42 62 L 48 62 L 48 36 Z" style="fill: rgb(75, 87, 63);"/>
@@ -59,9 +24,4 @@ svg {
 <path d="M 12 14 C 12 15 12 15 11 15 C 10 15 10 15 10 14 C 10 13 10 13 11 13 C 12 13 12 13 12 14 Z" style="fill: rgb(224, 225, 230);"/>
 <path d="M 16 7 L 11 14 L 16 8 C 17 8 17 7 16 7 Z" style="fill: rgb(224, 225, 230);"/>
 <path d="M 19 13 L 11 14 L 19 14 C 20 14 20 13 19 13 Z" style="fill: rgb(224, 225, 230);"/>
-</g>
-</g>
 </svg>
-</body>
-<script src="src.js"></script>
-</html>
