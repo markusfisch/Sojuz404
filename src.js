@@ -4,18 +4,19 @@ const W = window,
 	M = Math
 
 let animationRequestId,
+	centerX,
+	centerY,
 	stageWidth,
 	stageHeight,
 	stage,
 	scene,
+	background,
 	soyus
 
 function draw() {
-	const cx = stageWidth * .5,
-		cy = stageHeight * .5,
-		t = Date.now() * .001,
-		x = cx - 50,
-		y = cy + M.sin(t) * 4 - 50
+	const t = Date.now() * .001,
+		x = centerX - 50,
+		y = centerY + M.sin(t) * 4 - 50
 	soyus.style.transformOrigin = '50px 50px'
 	soyus.style.transform = `translate(${x}px, ${y}px) rotateZ(22deg)`
 }
@@ -41,6 +42,9 @@ function resize() {
 	style.transformOrigin = 'top left'
 	style.transform = `scale(${scale})`
 	style.display = 'block'
+	centerX = stageWidth * .5
+	centerY = stageHeight * .5
+	background.style.transform = `translate(${centerX}px, ${centerY}px)`
 	run()
 }
 
@@ -61,6 +65,7 @@ W.onload = function() {
 
 	stage = D.getElementById('Stage')
 	scene = D.getElementById('Scene')
+	background = D.getElementById('Background')
 	soyus = D.getElementById('Soyus')
 
 	W.onresize = resize
