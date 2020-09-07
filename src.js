@@ -1,6 +1,7 @@
 'use strict'
 
-const W = window,
+const D = document,
+	W = window,
 	M = Math
 
 let animationRequestId,
@@ -11,7 +12,8 @@ let animationRequestId,
 	stage,
 	scene,
 	background,
-	soyus
+	soyus,
+	message
 
 function draw() {
 	const t = Date.now() * .001,
@@ -48,7 +50,29 @@ function resize() {
 	run()
 }
 
+function findElementByPosition(event) {
+	let x, y
+	const touches = event.touches
+	if (touches) {
+		const l = touches.length
+		for (let i = l; i--;) {
+			const t = touches[i]
+			x = t.pageX
+			y = t.pageY
+			break
+		}
+	} else {
+		x = event.pageX
+		y = event.pageY
+	}
+	return D.elementFromPoint(x, y)
+}
+
 function pointerInspect(event) {
+	const element = findElementByPosition(event)
+	if (element != null) {
+		message.innerText = element.tagName
+	}
 	event.stopPropagation()
 }
 
@@ -61,12 +85,11 @@ function pointerCancel(event) {
 }
 
 W.onload = function() {
-	const D = document
-
 	stage = D.getElementById('Stage')
 	scene = D.getElementById('Scene')
 	background = D.getElementById('Background')
 	soyus = D.getElementById('Soyus')
+	message = D.getElementById('Message')
 
 	W.onresize = resize
 	resize()

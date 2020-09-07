@@ -14,7 +14,7 @@ html {
 }
 body {
 	margin: 0; padding: 0;
-	font: 5vw sans-serif; color: #999;
+	font: min(4vw, 4vh) sans-serif; color: #fff;
 	overflow: hidden;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-touch-callout: none;
@@ -27,6 +27,12 @@ body {
 }
 svg {
 	display: none;
+}
+#Message {
+	position: fixed;
+	left: 0; top: 0; right: 0;
+	padding: .5em;
+	text-align: center;
 }
 </style>
 </head>
@@ -64,6 +70,7 @@ svg {
 </g>
 </g>
 </svg>
+<div id="Message"></div>
 </body>
 <script src="src.js"></script>
 </html>
