@@ -21,20 +21,24 @@ let animationRequestId,
 		opening: {
 			setup: function() {
 				D.documentElement.style.background = '#111'
-				earth.style.display = 'block'
-				soyuz.style.display = 'block'
-				soyuzInside.style.display = 'none'
-				cosmonautFloating.style.display = 'none'
-				this.x = centerX - 100
-				this.y = centerY - 100
+				earth.style.visibility = 'visible'
+				soyuz.style.visibility = 'visible'
+				soyuzInside.style.visibility = 'hidden'
+				cosmonautFloating.style.visibility = 'hidden'
+				this.startX = centerX - 75
+				this.startY = centerY - 75
+				this.stopX = centerX - 25
+				this.stopY = centerY - 25
 				this.begin = Date.now()
+				this.duration = 3000
 			},
 			draw: function() {
-				const f = .5
-				this.x += f
-				this.y += f
-				soyuz.style.transform = `translate(${this.x}px, ${this.y}px) rotateZ(45deg)`
-				if (Date.now() - this.begin > 3000) {
+				const now = Date.now(),
+					t = M.min(1, (now - this.begin) / this.duration),
+					x = lerp(this.startX, this.stopX, t),
+					y = lerp(this.startY, this.stopY, t)
+				soyuz.style.transform = `translate(${x}px, ${y}px) rotateZ(45deg)`
+				if (now - this.begin > this.duration) {
 					scene = scenes.soyuz
 					scene.setup()
 				}
@@ -43,10 +47,10 @@ let animationRequestId,
 		soyuz: {
 			setup: function() {
 				D.documentElement.style.background = '#3d4532'
-				earth.style.display = 'none'
-				soyuz.style.display = 'none'
-				soyuzInside.style.display = 'block'
-				cosmonautFloating.style.display = 'block'
+				earth.style.visibility = 'hidden'
+				soyuz.style.visibility = 'hidden'
+				soyuzInside.style.visibility = 'visible'
+				cosmonautFloating.style.visibility = 'visible'
 			},
 			draw: function() {
 				const t = Date.now() * .002
@@ -55,9 +59,20 @@ let animationRequestId,
 		},
 	}
 
+function lerp(a, b, t) {
+	return (1 - t) * a + t * b
+}
+
 function run() {
 	animationRequestId = requestAnimationFrame(run)
 	scene.draw()
+}
+
+function scaleCenter(scale, pivotX, pivotY) {
+	const f = 100 * scale * .5,
+		x = pivotX || centerX - f,
+		y = pivotY || centerY - f
+	return `translate(${x}px, ${y}px) scale(${scale})`
 }
 
 function resize() {
@@ -78,10 +93,9 @@ function resize() {
 	style.display = 'block'
 	centerX = stageWidth * .5
 	centerY = stageHeight * .5
-	earth.style.transform = `translate(${centerX - 250}px, ${centerY - 250}px) scale(5)`
+	earth.style.transform = scaleCenter(5)
 	soyuz.style.transformOrigin = '50px 50px'
-	cosmonaut.style.transform = `scale(.5)`
-	soyuzInside.style.transform = `translate(${centerX - 150}px, ${centerY - 150}px) scale(3)`
+	soyuzInside.style.transform = scaleCenter(3)
 	scene.setup()
 	run()
 }
