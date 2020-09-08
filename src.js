@@ -10,26 +10,54 @@ let animationRequestId,
 	stageWidth,
 	stageHeight,
 	stage,
-	scene,
-	background,
-	soyus,
+	earth,
+	soyuz,
 	cosmonaut,
-	message
-
-function draw() {
-	const t = Date.now() * .001,
-		x = centerX - 50,
-		y = centerY + M.sin(t) * 4 - 50
-	soyus.style.transformOrigin = '50px 50px'
-	soyus.style.transform = `translate(${x}px, ${y}px) rotateZ(22deg)`
-	cosmonaut.style.transformOrigin = '50px 50px'
-	cosmonaut.style.transform = `translate(${x - 70}px, ${
-		centerY + M.sin(t + -1) * 4}px) scale(.5)`
-}
+	soyuzInside,
+	cosmonautFloating,
+	message,
+	scene,
+	scenes = {
+		opening: {
+			setup: function() {
+				D.documentElement.style.background = '#111'
+				earth.style.display = 'block'
+				soyuz.style.display = 'block'
+				soyuzInside.style.display = 'none'
+				cosmonautFloating.style.display = 'none'
+				this.x = centerX - 100
+				this.y = centerY - 100
+				this.begin = Date.now()
+			},
+			draw: function() {
+				const f = .5
+				this.x += f
+				this.y += f
+				soyuz.style.transform = `translate(${this.x}px, ${this.y}px) rotateZ(45deg)`
+				if (Date.now() - this.begin > 3000) {
+					scene = scenes.soyuz
+					scene.setup()
+				}
+			}
+		},
+		soyuz: {
+			setup: function() {
+				D.documentElement.style.background = '#3d4532'
+				earth.style.display = 'none'
+				soyuz.style.display = 'none'
+				soyuzInside.style.display = 'block'
+				cosmonautFloating.style.display = 'block'
+			},
+			draw: function() {
+				const t = Date.now() * .002
+				cosmonautFloating.style.transform = `translate(${centerX}px, ${centerY - 60 + M.sin(t) * 2}px) scale(1.25)`
+			}
+		},
+	}
 
 function run() {
 	animationRequestId = requestAnimationFrame(run)
-	draw()
+	scene.draw()
 }
 
 function resize() {
@@ -50,7 +78,11 @@ function resize() {
 	style.display = 'block'
 	centerX = stageWidth * .5
 	centerY = stageHeight * .5
-	background.style.transform = `translate(${centerX}px, ${centerY + 10}px) scale(1.2)`
+	earth.style.transform = `translate(${centerX - 250}px, ${centerY - 250}px) scale(5)`
+	soyuz.style.transformOrigin = '50px 50px'
+	cosmonaut.style.transform = `scale(.5)`
+	soyuzInside.style.transform = `translate(${centerX - 150}px, ${centerY - 150}px) scale(3)`
+	scene.setup()
 	run()
 }
 
@@ -90,11 +122,13 @@ function pointerCancel(event) {
 
 W.onload = function() {
 	stage = D.getElementById('Stage')
-	scene = D.getElementById('Scene')
-	background = D.getElementById('Background')
-	soyus = D.getElementById('Soyus')
+	earth = D.getElementById('Earth')
+	soyuz = D.getElementById('Soyuz')
 	cosmonaut = D.getElementById('Cosmonaut')
+	soyuzInside = D.getElementById('SoyuzInside')
+	cosmonautFloating = D.getElementById('CosmonautFloating')
 	message = D.getElementById('Message')
+	scene = scenes.opening
 
 	W.onresize = resize
 	resize()
