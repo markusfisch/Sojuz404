@@ -23,7 +23,8 @@ function draw() {
 	soyus.style.transformOrigin = '50px 50px'
 	soyus.style.transform = `translate(${x}px, ${y}px) rotateZ(22deg)`
 	cosmonaut.style.transformOrigin = '50px 50px'
-	cosmonaut.style.transform = `translate(${x - 70}px, ${y + 50}px) scale(.5)`
+	cosmonaut.style.transform = `translate(${x - 70}px, ${
+		centerY + M.sin(t + -1) * 4}px) scale(.5)`
 }
 
 function run() {
@@ -49,7 +50,7 @@ function resize() {
 	style.display = 'block'
 	centerX = stageWidth * .5
 	centerY = stageHeight * .5
-	background.style.transform = `translate(${centerX - 25}px, ${centerY - 30}px) scale(1.5)`
+	background.style.transform = `translate(${centerX}px, ${centerY + 10}px) scale(1.2)`
 	run()
 }
 
