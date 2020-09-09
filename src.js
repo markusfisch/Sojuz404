@@ -18,12 +18,11 @@ const D = document,
 				this.stopY = centerY - 25
 				this.begin = Date.now()
 				this.messages = [
-					'A secret soviet space mission…',
-					'…in the seventies…',
-					'…and there should be more text! And this is a very very very long text that should take up more than one line which is probably very much ugly :t',
+					'A secret mission…',
 				]
 				this.nextMessage = 0
 				this.duration = readingTime * this.messages.length
+				interactive = false
 			},
 			draw: function(now) {
 				const t = now - this.begin,
@@ -44,14 +43,109 @@ const D = document,
 		soyuz: {
 			setup: function() {
 				setBackground('#3d4532')
-				show(this, [objects.soyuzInside, objects.cosmonautFloating])
-				interactive = true
+				const porthole = hotspots.porthole
+				porthole.message = 'Look outside'
+				porthole.onclick = function() {
+					setupScene(scenes.portholeEarth)
+				}
+				hotspots.jevgeni.message = 'Talk to Jevgeni'
+				const hatch = hotspots.hatch
+				hatch.message = 'Go for a Spacewalk'
+				hatch.onclick = function() {
+// DEBUG
+setupScene(scenes.nirvana)
+				}
+				show(this, [
+					objects.soyuzInside,
+					objects.cosmonaut1Floating,
+					objects.cosmonaut2Floating,
+				])
 			},
 			draw: function(now) {
-				const y = centerY - 60 + M.sin(now * .002) * 2
-				objects.cosmonautFloating.style.transform =
-					`translate(${centerX}px, ${y}px) scale(1.25)`
+				const f = M.sin(now * .002) * 2,
+					y = centerY - 60
+				objects.cosmonaut1Floating.style.transform =
+					`translate(${centerX}px, ${y + f}px) scale(1.25)`
+				objects.cosmonaut2Floating.style.transform =
+					`translate(${centerX - 162}px, ${y - f}px) scale(1.25)`
 			}
+		},
+		portholeEarth: {
+			setup: function() {
+				setBackground('#e0e1e6')
+				const inside = hotspots.inside
+				inside.message = 'Stop looking outside the window'
+				inside.onclick = function() {
+					setupScene(scenes.soyuz)
+				}
+				hotspots.africa.message = 'Africa'
+				show(this, [objects.earth, objects.porthole])
+			},
+		},
+		nirvana: {
+			setup: function() {
+				setBackground('#111')
+				show(this, [objects.soyuz, objects.cosmonaut])
+				const hatchOutside = hotspots.hatchOutside
+				hatchOutside.message = 'Get back inside'
+				hatchOutside.onclick = function() {
+					setupScene(scenes.soyuz)
+				}
+			},
+			draw: function(now) {
+				const s = M.sin(now * .002),
+					cy = centerY - 30 + s,
+					sy = centerY - 50 - s
+				objects.soyuz.style.transform =
+					`translate(${centerX - 50}px, ${sy}px) rotateZ(12deg)`
+				objects.cosmonaut.style.transform =
+					`translate(${centerX + 20}px, ${cy}px) scale(.2)`
+			}
+		},
+		library: {
+			setup: function() {
+				setBackground('#2b1f89')
+				const y = centerY - 20
+				objects.professor.style.transform =
+					`translate(${centerX - 20}px, ${y}px)`
+				objects.boris.style.transform =
+					`translate(${centerX - 140}px, ${y}px)`
+				show(this, [
+					objects.library,
+					objects.professor,
+					objects.boris,
+				])
+			},
+		},
+		infirmary: {
+			setup: function() {
+				setBackground('#2b1f89')
+				const y = centerY - 20
+				objects.nurse.style.transform =
+					`translate(${centerX + 30}px, ${y}px)`
+				objects.boris.style.transform =
+					`translate(${centerX - 125}px, ${y - 5}px)`
+				show(this, [
+					objects.infirmary,
+					objects.nurse,
+					objects.boris,
+				])
+			},
+		},
+		construction: {
+			setup: function() {
+				setBackground('#2b1f89')
+				const y = centerY - 20
+				objects.technician.style.transform =
+					`translate(${centerX - 40}px, ${y}px)`
+				objects.boris.style.transform =
+					`translate(${centerX - 135}px, ${y - 5}px)`
+				show(this, [
+					objects.construction,
+					objects.technician,
+					objects.boris,
+				])
+			},
 		},
 	}
 
@@ -62,9 +156,10 @@ let animationRequestId,
 	stageHeight,
 	stage,
 	objects,
+	hotspots,
 	message,
 	currentScene,
-	interactive = false
+	interactive
 
 function show(scene, list) {
 	for (let key in objects) {
@@ -76,6 +171,10 @@ function show(scene, list) {
 }
 
 function setupScene(scene) {
+	for (let key in hotspots) {
+		hotspots[key].message = null
+	}
+	interactive = true
 	currentScene = scene
 	currentScene.setup()
 }
@@ -123,9 +222,14 @@ function resize() {
 	style.transform = `scale(${ratio})`
 	style.display = 'block'
 
-	objects.earth.style.transform = scale(4)
+	const scale3 = scale(3)
+	objects.earth.style.transform = scale(5)
 	objects.soyuz.style.transformOrigin = '50px 50px'
-	objects.soyuzInside.style.transform = scale(3)
+	objects.soyuzInside.style.transform = scale3
+	objects.porthole.style.transform = scale3
+	objects.library.style.transform = scale3
+	objects.infirmary.style.transform = scale3
+	objects.construction.style.transform = scale3
 
 	currentScene.setup()
 	run()
@@ -150,9 +254,13 @@ function findElementByPosition(event) {
 }
 
 function pointerInspect(event) {
-	const element = findElementByPosition(event)
-	if (interactive && element != null) {
-		say(element.tagName)
+	if (interactive) {
+		const element = findElementByPosition(event)
+		if (element && element.message) {
+			say(element.message)
+		} else {
+			clear()
+		}
 	}
 	event.stopPropagation()
 }
@@ -172,9 +280,31 @@ W.onload = function() {
 		soyuz: D.getElementById('Soyuz'),
 		cosmonaut: D.getElementById('Cosmonaut'),
 		soyuzInside: D.getElementById('SoyuzInside'),
-		cosmonautFloating: D.getElementById('CosmonautFloating'),
+		cosmonaut1Floating: D.getElementById('Cosmonaut1Floating'),
+		cosmonaut2Floating: D.getElementById('Cosmonaut2Floating'),
+		porthole: D.getElementById('Porthole'),
+		library: D.getElementById('Library'),
+		infirmary: D.getElementById('Infirmary'),
+		construction: D.getElementById('Construction'),
+		professor: D.getElementById('Professor'),
+		boris: D.getElementById('Boris'),
+		nurse: D.getElementById('Nurse'),
+		technician: D.getElementById('Technician'),
+	}
+	hotspots = {
+		africa: D.getElementById('Africa'),
+		porthole: D.getElementById('SoyuzPorthole'),
+		inside: D.getElementById('GetBackInside'),
+		jevgeni: D.getElementById('Jevgeni'),
+		hatch: D.getElementById('Hatch'),
+		hatchOutside: D.getElementById('HatchOutside'),
 	}
 	message = D.getElementById('Message')
+
+	for (let name in scenes) {
+		const scene = scenes[name]
+		scene.draw = scene.draw || function() {}
+	}
 	currentScene = scenes.opening
 
 	W.onresize = resize
