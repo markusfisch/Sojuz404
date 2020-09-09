@@ -2,7 +2,58 @@
 
 const D = document,
 	W = window,
-	M = Math
+	M = Math,
+	lerp = (a, b, t) => (1 - t) * a + t * b,
+	lerpd = (a, b, t, d) => lerp(a, b, M.min(1, t / d)),
+	setBackground = (color) => D.documentElement.style.background = color,
+	readingTime = 3000,
+	scenes = {
+		opening: {
+			setup: function() {
+				setBackground('#111')
+				show(this, [objects.earth, objects.soyuz])
+				this.startX = centerX - 75
+				this.startY = centerY - 75
+				this.stopX = centerX - 25
+				this.stopY = centerY - 25
+				this.begin = Date.now()
+				this.messages = [
+					'A secret soviet space mission…',
+					'…in the seventies…',
+					'…and there should be more text! And this is a very very very long text that should take up more than one line which is probably very much ugly :t',
+				]
+				this.nextMessage = 0
+				this.duration = readingTime * this.messages.length
+			},
+			draw: function(now) {
+				const t = now - this.begin,
+					d = this.duration,
+					x = lerpd(this.startX, this.stopX, t, d),
+					y = lerpd(this.startY, this.stopY, t, d)
+				objects.soyuz.style.transform =
+					`translate(${x}px, ${y}px) rotateZ(45deg)`
+				if (t > this.nextMessage) {
+					this.nextMessage = t + readingTime
+					say(this.messages[t / readingTime | 0])
+				}
+				if (t > this.duration) {
+					setupScene(scenes.soyuz)
+				}
+			}
+		},
+		soyuz: {
+			setup: function() {
+				setBackground('#3d4532')
+				show(this, [objects.soyuzInside, objects.cosmonautFloating])
+				interactive = true
+			},
+			draw: function(now) {
+				const y = centerY - 60 + M.sin(now * .002) * 2
+				objects.cosmonautFloating.style.transform =
+					`translate(${centerX}px, ${y}px) scale(1.25)`
+			}
+		},
+	}
 
 let animationRequestId,
 	centerX,
@@ -10,93 +61,73 @@ let animationRequestId,
 	stageWidth,
 	stageHeight,
 	stage,
-	earth,
-	soyuz,
-	cosmonaut,
-	soyuzInside,
-	cosmonautFloating,
+	objects,
 	message,
-	scene,
-	scenes = {
-		opening: {
-			setup: function() {
-				D.documentElement.style.background = '#111'
-				earth.style.visibility = 'visible'
-				soyuz.style.visibility = 'visible'
-				soyuzInside.style.visibility = 'hidden'
-				cosmonautFloating.style.visibility = 'hidden'
-				this.startX = centerX - 75
-				this.startY = centerY - 75
-				this.stopX = centerX - 25
-				this.stopY = centerY - 25
-				this.begin = Date.now()
-				this.duration = 3000
-			},
-			draw: function() {
-				const now = Date.now(),
-					t = M.min(1, (now - this.begin) / this.duration),
-					x = lerp(this.startX, this.stopX, t),
-					y = lerp(this.startY, this.stopY, t)
-				soyuz.style.transform = `translate(${x}px, ${y}px) rotateZ(45deg)`
-				if (now - this.begin > this.duration) {
-					scene = scenes.soyuz
-					scene.setup()
-				}
-			}
-		},
-		soyuz: {
-			setup: function() {
-				D.documentElement.style.background = '#3d4532'
-				earth.style.visibility = 'hidden'
-				soyuz.style.visibility = 'hidden'
-				soyuzInside.style.visibility = 'visible'
-				cosmonautFloating.style.visibility = 'visible'
-			},
-			draw: function() {
-				const t = Date.now() * .002
-				cosmonautFloating.style.transform = `translate(${centerX}px, ${centerY - 60 + M.sin(t) * 2}px) scale(1.25)`
-			}
-		},
-	}
+	currentScene,
+	interactive = false
 
-function lerp(a, b, t) {
-	return (1 - t) * a + t * b
+function show(scene, list) {
+	for (let key in objects) {
+		objects[key].style.visibility = 'hidden'
+	}
+	list.forEach((o) => o.style.visibility = 'visible')
+	scene.draw(Date.now())
+	clear()
+}
+
+function setupScene(scene) {
+	currentScene = scene
+	currentScene.setup()
+}
+
+function clear() {
+	message.style.display = 'none'
+}
+
+function say(text) {
+	message.innerText = text
+	message.style.display = 'block'
 }
 
 function run() {
 	animationRequestId = requestAnimationFrame(run)
-	scene.draw()
+	currentScene.draw(Date.now())
 }
 
-function scaleCenter(scale, pivotX, pivotY) {
-	const f = 100 * scale * .5,
+function scale(ratio, pivotX, pivotY) {
+	const f = 100 * ratio * .5,
 		x = pivotX || centerX - f,
 		y = pivotY || centerY - f
-	return `translate(${x}px, ${y}px) scale(${scale})`
+	return `translate(${x}px, ${y}px) scale(${ratio})`
 }
 
 function resize() {
 	if (animationRequestId) {
 		cancelAnimationFrame(animationRequestId)
 	}
+
 	const windowWidth = window.innerWidth,
 		windowHeight = window.innerHeight,
 		min = M.min(windowWidth, windowHeight),
-		scale = min / 300,
-		style = stage.style
-	stageWidth = windowWidth / scale
-	stageHeight = windowHeight / scale
+		ratio = min / 300
+
+	stageWidth = windowWidth / ratio
+	stageHeight = windowHeight / ratio
+	centerX = stageWidth * .5
+	centerY = stageHeight * .5
+
+	const style = stage.style
 	style.width = stageWidth + 'px'
 	style.height = stageHeight + 'px'
 	style.transformOrigin = 'top left'
-	style.transform = `scale(${scale})`
+	style.transform = `scale(${ratio})`
 	style.display = 'block'
-	centerX = stageWidth * .5
-	centerY = stageHeight * .5
-	earth.style.transform = scaleCenter(5)
-	soyuz.style.transformOrigin = '50px 50px'
-	soyuzInside.style.transform = scaleCenter(3)
-	scene.setup()
+
+	objects.earth.style.transform = scale(4)
+	objects.soyuz.style.transformOrigin = '50px 50px'
+	objects.soyuzInside.style.transform = scale(3)
+
+	currentScene.setup()
 	run()
 }
 
@@ -120,8 +151,8 @@ function findElementByPosition(event) {
 
 function pointerInspect(event) {
 	const element = findElementByPosition(event)
-	if (element != null) {
-		message.innerText = element.tagName
+	if (interactive && element != null) {
+		say(element.tagName)
 	}
 	event.stopPropagation()
 }
@@ -136,13 +167,15 @@ function pointerCancel(event) {
 
 W.onload = function() {
 	stage = D.getElementById('Stage')
-	earth = D.getElementById('Earth')
-	soyuz = D.getElementById('Soyuz')
-	cosmonaut = D.getElementById('Cosmonaut')
-	soyuzInside = D.getElementById('SoyuzInside')
-	cosmonautFloating = D.getElementById('CosmonautFloating')
+	objects = {
+		earth: D.getElementById('Earth'),
+		soyuz: D.getElementById('Soyuz'),
+		cosmonaut: D.getElementById('Cosmonaut'),
+		soyuzInside: D.getElementById('SoyuzInside'),
+		cosmonautFloating: D.getElementById('CosmonautFloating'),
+	}
 	message = D.getElementById('Message')
-	scene = scenes.opening
+	currentScene = scenes.opening
 
 	W.onresize = resize
 	resize()

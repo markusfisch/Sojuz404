@@ -386,4 +386,12 @@
 <ellipse style="fill: rgb(233, 233, 233);" cx="58" cy="136" rx="2" ry="4"/>
 <path d="M 58 135 C 58 141 54 145 46 145 C 38 145 34 141 34 135 C 34 129 40 127 46 127 C 54 127 58 129 58 135 Z" style="fill: rgb(233, 233, 233);"/>
 <path d="M 56 135 C 56 142 52 144 46 144 C 40 144 36 142 36 135 C 36 128 41 128 46 128 C 52 128 56 128 56 135 Z" style="fill: rgb(206, 181, 107);"/>
+<line style="fill: none; stroke: rgb(202, 203, 207);" x1="74" y1="-34" x2="74" y2="-86"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="379.64762830130906" y1="383.94958942259177" x2="424.10256613634215" y2="384.6204143743588"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="394" x2="424" y2="395"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="404" x2="424" y2="405"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="414" x2="424" y2="415"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="424" x2="424" y2="425"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="434" x2="424" y2="435"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="444" x2="424" y2="445"/>
 </svg>
