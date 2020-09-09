@@ -78,7 +78,6 @@ setupScene(scenes.nirvana)
 				inside.onclick = function() {
 					setupScene(scenes.soyuz)
 				}
-				hotspots.africa.message = 'Africa'
 				show(this, [objects.earth, objects.porthole])
 			},
 		},
@@ -86,9 +85,9 @@ setupScene(scenes.nirvana)
 			setup: function() {
 				setBackground('#111')
 				show(this, [objects.soyuz, objects.cosmonaut])
-				const hatchOutside = hotspots.hatchOutside
-				hatchOutside.message = 'Get back inside'
-				hatchOutside.onclick = function() {
+				const backInside = hotspots.backInside
+				backInside.message = 'Get back inside'
+				backInside.onclick = function() {
 					setupScene(scenes.soyuz)
 				}
 			},
@@ -137,7 +136,7 @@ setupScene(scenes.nirvana)
 				setBackground('#2b1f89')
 				const y = centerY - 20
 				objects.technician.style.transform =
-					`translate(${centerX - 40}px, ${y}px)`
+					`translate(${centerX - 50}px, ${y}px)`
 				objects.boris.style.transform =
 					`translate(${centerX - 135}px, ${y - 5}px)`
 				show(this, [
@@ -292,12 +291,11 @@ W.onload = function() {
 		technician: D.getElementById('Technician'),
 	}
 	hotspots = {
-		africa: D.getElementById('Africa'),
 		porthole: D.getElementById('SoyuzPorthole'),
 		inside: D.getElementById('GetBackInside'),
 		jevgeni: D.getElementById('Jevgeni'),
 		hatch: D.getElementById('Hatch'),
-		hatchOutside: D.getElementById('HatchOutside'),
+		backInside: D.getElementById('BackInside'),
 	}
 	message = D.getElementById('Message')
 
