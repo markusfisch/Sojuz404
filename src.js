@@ -11,6 +11,44 @@ const D = document,
 		you: '<span class="You">You:</span>',
 		jevgeni: '<span class="Jevgeni">Jevgeni:</span>',
 	},
+	convs = {
+		jevgeni: {
+			opening: [
+				{
+					text: 'Everything okay back there?',
+					action: () => setTicker([
+						`${labels.jevgeni} It's a bit tight, but okay.`,
+					]),
+				},
+				{
+					text: 'Are we still on course?',
+					action: () => setTicker([
+						`${labels.jevgeni} Of course are we on course. Is this a trick question?`,
+					], () => dialog(convs.jevgeni.trickQuestion)),
+				},
+				{
+					text: 'Would you please stop farting?',
+					action: () => setTicker([
+						`${labels.jevgeni} I'm trying. Promise.`,
+					]),
+				},
+			],
+			trickQuestion: [
+				{
+					text: 'No, just asking politely.',
+					action: () => setTicker([
+						`${labels.jevgeni} Well, then, yes, we are still on course, of course.`,
+					]),
+				},
+				{
+					text: 'I want an answer.',
+					action: () => setTicker([
+						`${labels.jevgeni} Yes, comrade, we are still on course.`,
+					]),
+				},
+			],
+		}
+	},
 	scenes = {
 		opening: {
 			setup: function() {
@@ -23,7 +61,7 @@ const D = document,
 				this.duration = setTicker([
 					'A secret mission…',
 					'bla bla',
-				])
+				], () => setupScene('insideSoyuz'))
 				show(this, [objects.earth, objects.soyuz])
 			},
 			draw: function(now) {
@@ -33,9 +71,9 @@ const D = document,
 					y = lerpd(this.startY, this.stopY, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
-				if (t > this.duration || !ticker.messages) {
+				/*if (t > this.duration || !ticker.messages) {
 					setupScene('insideSoyuz')
-				}
+				}*/
 			}
 		},
 		insideSoyuz: {
@@ -49,11 +87,7 @@ const D = document,
 				setHotspot(
 					hotspots.jevgeni,
 					'Talk to Jevgeni',
-					() => talk([
-						"Everything okay back there?",
-						"Are we still on course?",
-						"Would you please stop farting?",
-					])
+					() => dialog(convs.jevgeni.opening)
 				)
 				setHotspot(
 					hotspots.hatch,
@@ -200,29 +234,12 @@ function setHotspot(hotspot, message, f) {
 	hotspot.action = f
 }
 
-function resetTicker() {
-	ticker.messages = null
-	ticker.pointer = 0
-	inDialog = false
-	clear()
-}
-
 function show(scene, list) {
 	for (let key in objects) {
 		objects[key].style.visibility = 'hidden'
 	}
 	list.forEach((o) => o.style.visibility = 'visible')
 	scene.draw(Date.now())
-}
-
-function setupScene(name) {
-	for (let key in hotspots) {
-		hotspots[key].message = null
-	}
-	resetTicker()
-	state.scene = name
-	currentScene = scenes[name]
-	currentScene.setup()
 }
 
 function clear() {
@@ -234,7 +251,8 @@ function showMessage(html) {
 	message.style.display = 'block'
 }
 
-function setTicker(messages) {
+function setTicker(messages, runAfter) {
+	ticker.runAfter = runAfter
 	ticker.messages = messages.map(function(text) {
 		return {
 			text: text,
@@ -249,21 +267,35 @@ function setTicker(messages) {
 	return ticker.messages.reduce((total, m) => total + m.duration, 0)
 }
 
-function pickOne() {
-	setTicker([`${labels.jevgeni} Pick one!`])
+function dialog(conversation) {
+	inDialog = true
+	message.innerText = ''
+	const ul = D.createElement('ol')
+	conversation.map(function(option) {
+		const li = D.createElement('li'),
+			a = D.createElement('a')
+		a.onclick = option.action
+		a.innerHTML = option.text
+		li.appendChild(a)
+		ul.appendChild(li)
+	})
+	message.appendChild(ul)
+	message.style.display = 'block'
 }
 
-function talk(expressions) {
-	inDialog = true
-	showMessage(expressions
-		.map((text) => `<li><a onclick="javascript:pickOne()">${text}</a></li>`)
-		.reduce((all, item) => all + item, `${labels.you}<ul>`) + '</ul>')
+function resetTicker() {
+	ticker.runAfter = ticker.messages = null
+	ticker.pointer = 0
+	inDialog = false
+	clear()
 }
 
 function tickNext(now) {
 	++ticker.pointer
 	if (ticker.pointer >= ticker.messages.length) {
+		const f = ticker.runAfter
 		resetTicker()
+		f && f()
 		return
 	}
 	const m = ticker.messages[ticker.pointer]
@@ -278,6 +310,16 @@ function tick(now) {
 	if (now > ticker.nextTick) {
 		tickNext(now)
 	}
+}
+
+function setupScene(name) {
+	for (let key in hotspots) {
+		hotspots[key].message = null
+	}
+	resetTicker()
+	state.scene = name
+	currentScene = scenes[name]
+	currentScene.setup()
 }
 
 function run() {
