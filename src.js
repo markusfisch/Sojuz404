@@ -10,40 +10,58 @@ const D = document,
 	labels = {
 		you: '<span class="You">You:</span>',
 		jevgeni: '<span class="Jevgeni">Jevgeni:</span>',
+		groundControl: '<span class="GroundControl">Ground Control:</span>',
 	},
 	convs = {
 		jevgeni: {
-			opening: [
+			before: [
 				{
 					text: 'Everything okay back there?',
 					action: () => setTicker([
-						`${labels.jevgeni} It's a bit tight, but okay.`,
+						`${labels.jevgeni} It's a bit tight, but at least I have a window.`,
 					]),
 				},
 				{
 					text: 'Are we still on course?',
 					action: () => setTicker([
 						`${labels.jevgeni} Of course are we on course. Is this a trick question?`,
-					], () => dialog(convs.jevgeni.trickQuestion)),
+					], () => dialog(convs.jevgeni.course)),
 				},
 				{
 					text: 'Would you please stop farting?',
 					action: () => setTicker([
-						`${labels.jevgeni} I'm trying. Promise.`,
+						`${labels.jevgeni} This was the last one. Promise.`
 					]),
 				},
 			],
-			trickQuestion: [
+			course: [
 				{
-					text: 'No, just asking politely.',
+					text: 'No, just controlling our parameters like good Cosmonauts should do.',
 					action: () => setTicker([
 						`${labels.jevgeni} Well, then, yes, we are still on course, of course.`,
 					]),
 				},
 				{
-					text: 'I want an answer.',
+					text: 'Comrade, I need an answer.',
 					action: () => setTicker([
 						`${labels.jevgeni} Yes, comrade, we are still on course.`,
+					]),
+				},
+			],
+		},
+		groundControl: {
+			before: [
+				{
+					text: 'In position, request instructions.',
+					action: () => setTicker([
+						`${labels.groundControl} Copy. Input coordinates.`,
+					]),
+				},
+				{
+					text: 'Jevgeni is a bio hazard.',
+					action: () => setTicker([
+						`${labels.jevgeni} You're exaggerating.`,
+						`${labels.groundControl} Comrades!`,
 					]),
 				},
 			],
@@ -71,9 +89,6 @@ const D = document,
 					y = lerpd(this.startY, this.stopY, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
-				/*if (t > this.duration || !ticker.messages) {
-					setupScene('insideSoyuz')
-				}*/
 			}
 		},
 		insideSoyuz: {
@@ -87,7 +102,7 @@ const D = document,
 				setHotspot(
 					hotspots.jevgeni,
 					'Talk to Jevgeni',
-					() => dialog(convs.jevgeni.opening)
+					() => dialog(convs.jevgeni.before)
 				)
 				setHotspot(
 					hotspots.hatch,
@@ -96,7 +111,8 @@ const D = document,
 				)
 				setHotspot(
 					hotspots.radio,
-					'Talk to control',
+					'Talk to ground control',
+					() => dialog(convs.groundControl.before)
 				)
 				setHotspot(
 					hotspots.controls,
@@ -105,10 +121,12 @@ const D = document,
 				setHotspot(
 					hotspots.storage1,
 					'Look into storage space one',
+					() => setTicker(['A couple of space suits.'])
 				)
 				setHotspot(
 					hotspots.storage2,
 					'Look into storage space two',
+					() => setTicker(['Proviant, adhesive tape and a towel.'])
 				)
 				show(this, [
 					objects.soyuzInside,
