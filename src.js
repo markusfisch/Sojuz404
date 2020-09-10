@@ -195,6 +195,11 @@ const D = document,
 		library: {
 			setup: function() {
 				setBackground('#2b1f89')
+				setHotspot(
+					hotspots.goToInfirmaryRight,
+					'Go to infirmary',
+					() => setupScene('infirmary')
+				)
 				const y = centerY - 20
 				objects.professor.style.transform =
 					`translate(${centerX - 20}px, ${y}px)`
@@ -210,6 +215,16 @@ const D = document,
 		infirmary: {
 			setup: function() {
 				setBackground('#2b1f89')
+				setHotspot(
+					hotspots.goToLibrary,
+					'Go to library',
+					() => setupScene('library')
+				)
+				setHotspot(
+					hotspots.goToConstruction,
+					'Go to construction',
+					() => setupScene('construction')
+				)
 				const y = centerY - 20
 				objects.nurse.style.transform =
 					`translate(${centerX + 30}px, ${y}px)`
@@ -225,6 +240,11 @@ const D = document,
 		construction: {
 			setup: function() {
 				setBackground('#2b1f89')
+				setHotspot(
+					hotspots.goToInfirmaryLeft,
+					'Go to infirmary',
+					() => setupScene('infirmary')
+				)
 				const y = centerY - 20
 				objects.technician.style.transform =
 					`translate(${centerX - 50}px, ${y}px)`
@@ -509,6 +529,10 @@ W.onload = function() {
 		zMinus: D.getElementById('z-'),
 		tMinus: D.getElementById('t-'),
 		start: D.getElementById('Start'),
+		goToInfirmaryLeft: D.getElementById('GoToInfirmaryLeft'),
+		goToInfirmaryRight: D.getElementById('GoToInfirmaryRight'),
+		goToConstruction: D.getElementById('GoToConstruction'),
+		goToLibrary: D.getElementById('GoToLibrary'),
 	}
 	message = D.getElementById('Message')
 
