@@ -16,16 +16,24 @@ const D = document,
 		jevgeni: {
 			before: [
 				{
+					use: () => !state.everythingOkay,
 					text: 'Everything okay back there?',
-					action: () => setTicker([
-						`${labels.jevgeni} It's a bit tight, but at least I have a window.`,
-					]),
+					action: () => {
+						state.everythingOkay = true
+						setTicker([
+							`${labels.jevgeni} It's a bit tight, but at least I have a window.`,
+						])
+					},
 				},
 				{
+					use: () => !state.onCourse,
 					text: 'Are we still on course?',
-					action: () => setTicker([
-						`${labels.jevgeni} Of course are we on course. Is this a trick question?`,
-					], () => dialog(convs.jevgeni.course)),
+					action: () => {
+						state.onCourse = true
+						setTicker([
+							`${labels.jevgeni} Of course are we on course. Is this a trick question?`,
+						], () => dialog(convs.jevgeni.course))
+					},
 				},
 				{
 					text: 'Would you please stop farting?',
@@ -286,10 +294,16 @@ function setTicker(messages, runAfter) {
 }
 
 function dialog(conversation) {
+	const filtered = conversation.filter(
+		(option) => option.use ? option.use() : true
+	)
+	if (filtered.length < 1) {
+		return
+	}
 	inDialog = true
 	message.innerText = ''
 	const ul = D.createElement('ol')
-	conversation.map(function(option) {
+	filtered.map(function(option) {
 		const li = D.createElement('li'),
 			a = D.createElement('a')
 		a.onclick = option.action
