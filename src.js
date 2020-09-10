@@ -6,8 +6,11 @@ const D = document,
 	lerp = (a, b, t) => (1 - t) * a + t * b,
 	lerpd = (a, b, t, d) => lerp(a, b, M.min(1, t / d)),
 	setBackground = (color) => D.documentElement.style.background = color,
-	readingTime = 3000,
 	ticker = {},
+	labels = {
+		you: '<span class="You">You:</span>',
+		jevgeni: '<span class="Jevgeni">Jevgeni:</span>',
+	},
 	scenes = {
 		opening: {
 			setup: function() {
@@ -19,7 +22,6 @@ const D = document,
 				this.startTime = Date.now()
 				this.duration = setTicker([
 					'A secret mission…',
-					'1',
 					'bla bla',
 				])
 				show(this, [objects.earth, objects.soyuz])
@@ -31,7 +33,7 @@ const D = document,
 					y = lerpd(this.startY, this.stopY, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
-				if (t > this.duration || tick(now)) {
+				if (t > this.duration || !ticker.messages) {
 					setupScene('insideSoyuz')
 				}
 			}
@@ -47,6 +49,11 @@ const D = document,
 				setHotspot(
 					hotspots.jevgeni,
 					'Talk to Jevgeni',
+					() => talk([
+						"Everything okay back there?",
+						"Are we still on course?",
+						"Would you please stop farting?",
+					])
 				)
 				setHotspot(
 					hotspots.hatch,
@@ -108,6 +115,11 @@ const D = document,
 					'Get back inside',
 					() => setupScene('insideSoyuz')
 				)
+				setTicker([
+					`${labels.you} Where are the stars?`,
+					`${labels.you} Where is everything?`,
+					`${labels.you} WHERE ARE WE?`,
+				])
 			},
 			draw: function(now) {
 				const s = M.sin(now * .002),
@@ -176,6 +188,7 @@ let animationRequestId,
 	hotspots,
 	message,
 	currentScene,
+	elementUnderPointer,
 	inDialog = false,
 	state = {
 		scene: 'opening',
@@ -184,7 +197,14 @@ let animationRequestId,
 
 function setHotspot(hotspot, message, f) {
 	hotspot.message = message
-	hotspot.onclick = f
+	hotspot.action = f
+}
+
+function resetTicker() {
+	ticker.messages = null
+	ticker.pointer = 0
+	inDialog = false
+	clear()
 }
 
 function show(scene, list) {
@@ -199,8 +219,7 @@ function setupScene(name) {
 	for (let key in hotspots) {
 		hotspots[key].message = null
 	}
-	clear()
-	inDialog = false
+	resetTicker()
 	state.scene = name
 	currentScene = scenes[name]
 	currentScene.setup()
@@ -210,13 +229,12 @@ function clear() {
 	message.style.display = 'none'
 }
 
-function say(text) {
-	message.innerText = text
+function showMessage(html) {
+	message.innerHTML = html
 	message.style.display = 'block'
 }
 
 function setTicker(messages) {
-	inDialog = true
 	ticker.messages = messages.map(function(text) {
 		return {
 			text: text,
@@ -224,36 +242,49 @@ function setTicker(messages) {
 		}
 	})
 	ticker.pointer = 0
-	ticker.start = Date.now()
-	const m = ticker.messages[0]
-	ticker.nextTick = ticker.start + m.duration
-	say(m.text)
+	const m = ticker.messages[ticker.pointer]
+	ticker.nextTick = Date.now() + m.duration
+	showMessage(m.text)
+	inDialog = true
 	return ticker.messages.reduce((total, m) => total + m.duration, 0)
 }
 
-function tick(now, skip) {
+function pickOne() {
+	setTicker([`${labels.jevgeni} Pick one!`])
+}
+
+function talk(expressions) {
+	inDialog = true
+	showMessage(expressions
+		.map((text) => `<li><a onclick="javascript:pickOne()">${text}</a></li>`)
+		.reduce((all, item) => all + item, `${labels.you}<ul>`) + '</ul>')
+}
+
+function tickNext(now) {
+	++ticker.pointer
+	if (ticker.pointer >= ticker.messages.length) {
+		resetTicker()
+		return
+	}
+	const m = ticker.messages[ticker.pointer]
+	ticker.nextTick = now + m.duration
+	showMessage(m.text)
+}
+
+function tick(now) {
 	if (!ticker.messages) {
-		return true
+		return
 	}
-	if (now > ticker.nextTick || skip) {
-		++ticker.pointer
-		if (ticker.pointer >= ticker.messages.length) {
-			ticker.messages = null
-			ticker.pointer = 0
-			clear()
-			inDialog = false
-			return true
-		}
-		const m = ticker.messages[ticker.pointer]
-		ticker.nextTick = now + m.duration
-		say(m.text)
+	if (now > ticker.nextTick) {
+		tickNext(now)
 	}
-	return false
 }
 
 function run() {
 	animationRequestId = requestAnimationFrame(run)
-	currentScene.draw(Date.now())
+	const now = Date.now()
+	currentScene.draw(now)
+	tick(now)
 }
 
 function scale(ratio, pivotX, pivotY) {
@@ -318,12 +349,23 @@ function findElementByPosition(event) {
 
 function pointerInspect(event) {
 	if (!inDialog) {
-		const element = findElementByPosition(event)
-		if (element && element.message) {
-			say(element.message)
+		elementUnderPointer = findElementByPosition(event)
+		if (elementUnderPointer && elementUnderPointer.message) {
+			showMessage(elementUnderPointer.message)
 		} else {
 			clear()
 		}
+	}
+	event.stopPropagation()
+}
+
+function pointerInteract(event) {
+	if (!inDialog) {
+		if (elementUnderPointer && elementUnderPointer.action) {
+			elementUnderPointer.action()
+		}
+	} else if (ticker.messages) {
+		tickNext(Date.now())
 	}
 	event.stopPropagation()
 }
@@ -372,18 +414,10 @@ W.onload = function() {
 	W.onresize = resize
 	resize()
 
-	D.onmousedown = pointerInspect
-	D.onmousemove = pointerInspect
-	D.onmouseout = pointerCancel
-	D.onclick = function() {
-		if (inDialog) {
-			tick(Date.now(), true)
-		}
-	}
-
 	if ('ontouchstart' in D) {
 		D.ontouchstart = pointerInspect
 		D.ontouchmove = pointerInspect
+		D.ontouchend = pointerInteract
 		D.ontouchleave = pointerCancel
 		D.ontouchcancel = pointerCancel
 
@@ -397,5 +431,10 @@ W.onload = function() {
 		D.addEventListener('gestureend', function(event) {
 			event.preventDefault()
 		}, false)
+	} else {
+		D.onmousedown = pointerInspect
+		D.onmousemove = pointerInspect
+		D.onmouseup = pointerInteract
+		D.onmouseout = pointerCancel
 	}
 }

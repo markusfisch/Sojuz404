@@ -328,15 +328,15 @@
 <rect width="9" height="22" style="fill: rgb(61, 69, 50);" x="-72" y="-70"/>
 <ellipse style="fill: rgb(202, 203, 207);" cx="-64" rx="7" ry="10" cy="-59"/>
 <ellipse style="fill: rgb(240, 241, 246);" cx="-63" rx="6" ry="9" cy="-59"/>
-<circle style="fill: rgb(10, 140, 200); stroke-width: 2px; stroke: rgb(202, 203, 207);" cx="-91" r="5" cy="-59"/>
+<circle style="fill: rgb(10, 140, 200); stroke-width: 2px; stroke: rgb(202, 203, 207);" cx="-91" r="5" cy="-59" id="PortholeInside"/>
 <rect x="-76" width="4" height="22" style="fill: rgb(202, 203, 207);" y="-70"/>
 <polygon style="fill: rgb(169, 169, 169);" points="-100 -79 -105 -68 -102 -46 -94 -48 -94 -44 -106 -35 -106 -83"/>
 <line style="fill: none; stroke: rgb(249, 250, 255);" x1="-74" y1="-48" x2="-74" y2="-70"/>
 <line style="fill: none; stroke: rgb(202, 203, 207);" x1="-41" y1="-33" x2="-41" y2="-85"/>
-<path d="M -52 -80 L -59 -80 L -61 -70 L -71 -70 L -71 -71 C -69 -80 -56 -85 -49 -85 L -52 -80 Z" style="fill: rgb(75, 87, 63);"/>
-<path d="M -56 -48 L -50 -38 L -50 -33 C -57 -33 -69 -38 -71 -47 L -71 -48 Z" style="fill: rgb(75, 87, 63);"/>
-<path d="M -90 -77 L -88 -80 C -82 -77 -77 -74 -77 -70 Z" style="fill: rgb(169, 169, 169);"/>
-<path d="M -86 -46 L -80 -56 L -77 -48 C -77 -45 -80 -43 -84 -40 L -86 -46 Z" style="fill: rgb(169, 169, 169);"/>
+<path d="M -52 -80 L -59 -80 L -61 -70 L -71 -70 L -71 -71 C -69 -80 -56 -85 -49 -85 L -52 -80 Z" style="fill: rgb(75, 87, 63);" id="Storage1"/>
+<path d="M -56 -48 L -50 -38 L -50 -33 C -57 -33 -69 -38 -71 -47 L -71 -48 Z" style="fill: rgb(75, 87, 63);" id="Storage2"/>
+<path d="M -90 -77 L -88 -80 C -82 -77 -77 -74 -77 -70 Z" style="fill: rgb(169, 169, 169);" id="Radio"/>
+<path d="M -86 -46 L -80 -56 L -77 -48 C -77 -45 -80 -43 -84 -40 L -86 -46 Z" style="fill: rgb(169, 169, 169);" id="Controls"/>
 <g transform="matrix(0.443206, 0, 0, 0.443206, -248.700058, -83.647331)" style="">
 <polygon style="fill: rgb(53, 165, 202);" points="341 34 350 35 356 38 363 39 367 31 371 34 364 44 354 45 357 60 367 75 365 89 360 88 360 77 354 69 358 79 355 91 350 91 350 78 341 67 339 46 336 53 339 61 337 64 330 54 334 41"/>
 <polygon style="fill: rgb(201, 158, 147);" points="344 20 354 18 356 27 353 32 349 32 350 36 345 39 341 35 342 30"/>
@@ -346,9 +346,9 @@
 <polygon style="fill: rgb(201, 158, 147);" points="367 28 369 29 371 26 373 27 370 34 367 31"/>
 <polygon style="fill: rgb(201, 158, 147);" points="339 61 343 62 341 64 344 67 340 69 337 64"/>
 </g>
-<path d="M -19 -72 C -17 -72 -17 -46 -19 -46 C -21 -46 -23 -51 -23 -59 C -23 -67 -21 -72 -19 -72 Z" style="fill: rgb(240, 241, 246);"/>
+<path d="M -19 -72 C -17 -72 -17 -46 -19 -46 C -21 -46 -23 -51 -23 -59 C -23 -67 -21 -72 -19 -72 Z" style="fill: rgb(240, 241, 246);" id="Hatch"/>
 <line style="fill: none; stroke: rgb(202, 203, 207);" x1="-36" y1="-33" x2="-36" y2="-85"/>
-<g style="" transform="matrix(0.452857, 0, 0, 0.452857, -84.675804, -40.017628)">
+<g style="" transform="matrix(0.452857, 0, 0, 0.452857, -84.675804, -40.017632)">
 <polygon style="fill: rgb(201, 158, 147);" points="92 -81 84 -83 83 -77 84 -69 90 -69 89 -64 98 -64 97 -71"/>
 <polygon style="fill: rgb(252, 252, 252);" points="114 -2 117 4 120 2 119 -5 115 -7"/>
 <polygon style="fill: rgb(201, 158, 147);" points="64 -47 58 -47 57 -45 62 -44 60 -42 65 -44"/>
