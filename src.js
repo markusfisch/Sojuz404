@@ -125,6 +125,7 @@ const D = document,
 				setHotspot(
 					hotspots.controls,
 					'Use the controls',
+					() => setupScene('panel'),
 				)
 				setHotspot(
 					hotspots.storage1,
@@ -236,6 +237,26 @@ const D = document,
 				])
 			},
 		},
+		panel: {
+			setup: function() {
+				setBackground('#a9a9a9')
+				setHotspot(
+					hotspots.stopControl,
+					'Back',
+					() => setupScene('insideSoyuz')
+				)
+				setHotspot(hotspots.xPlus, 'x+')
+				setHotspot(hotspots.yPlus, 'y+')
+				setHotspot(hotspots.zPlus, 'z+')
+				setHotspot(hotspots.tPlus, 't+')
+				setHotspot(hotspots.xMinus, 'x-')
+				setHotspot(hotspots.yMinus, 'y-')
+				setHotspot(hotspots.zMinus, 'z-')
+				setHotspot(hotspots.tMinus, 't-')
+				setHotspot(hotspots.start, 'Start')
+				show(this, [objects.panel])
+			},
+		}
 	}
 
 let animationRequestId,
@@ -398,6 +419,7 @@ function resize() {
 	objects.library.style.transform = scale3
 	objects.infirmary.style.transform = scale3
 	objects.construction.style.transform = scale3
+	objects.panel.style.transform = scale3
 
 	currentScene.setup()
 	run()
@@ -465,6 +487,7 @@ W.onload = function() {
 		boris: D.getElementById('Boris'),
 		nurse: D.getElementById('Nurse'),
 		technician: D.getElementById('Technician'),
+		panel: D.getElementById('Panel'),
 	}
 	hotspots = {
 		soyuzBody: D.getElementById('SoyuzBody'),
@@ -476,6 +499,16 @@ W.onload = function() {
 		storage2: D.getElementById('Storage2'),
 		jevgeni: D.getElementById('Jevgeni'),
 		stopLooking: D.getElementById('StopLooking'),
+		stopControl: D.getElementById('StopControl'),
+		xPlus: D.getElementById('x+'),
+		yPlus: D.getElementById('y+'),
+		zPlus: D.getElementById('z+'),
+		tPlus: D.getElementById('t+'),
+		xMinus: D.getElementById('x-'),
+		yMinus: D.getElementById('y-'),
+		zMinus: D.getElementById('z-'),
+		tMinus: D.getElementById('t-'),
+		start: D.getElementById('Start'),
 	}
 	message = D.getElementById('Message')
 
