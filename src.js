@@ -7,7 +7,6 @@ const D = document,
 	lerpd = (a, b, t, d) => lerp(a, b, M.min(1, t / d)),
 	setBackground = (color) => D.documentElement.style.background = color,
 	readingTime = 3000,
-	state = {},
 	scenes = {
 		soyuzBeforeEarth: {
 			setup: function() {
@@ -37,7 +36,7 @@ const D = document,
 					say(this.messages[t / readingTime | 0])
 				}
 				if (t > this.duration) {
-					setupScene(scenes.insideSoyuz)
+					setupScene('insideSoyuz')
 				}
 			}
 		},
@@ -47,7 +46,7 @@ const D = document,
 				setHotspot(
 					hotspots.porthole,
 					'Look outside',
-					() => setupScene(scenes.portholeEarth)
+					() => setupScene('portholeEarth')
 				)
 				setHotspot(
 					hotspots.jevgeni,
@@ -56,7 +55,7 @@ const D = document,
 				setHotspot(
 					hotspots.hatch,
 					'Go for a space walk',
-					() => setupScene(scenes.nowhere)
+					() => setupScene('nowhere')
 				)
 				setHotspot(
 					hotspots.radio,
@@ -91,13 +90,17 @@ const D = document,
 		},
 		portholeEarth: {
 			setup: function() {
-				setBackground('#e0e1e6')
+				setBackground('#111')
 				setHotspot(
 					hotspots.stopLooking,
 					'Stop looking',
-					() => setupScene(scenes.insideSoyuz)
+					() => setupScene('insideSoyuz')
 				)
-				show(this, [objects.earth, objects.porthole])
+				const o = [objects.porthole]
+				if (!state.nowhere) {
+					o.unshift(objects.earth)
+				}
+				show(this, o)
 			},
 		},
 		nowhere: {
@@ -107,7 +110,7 @@ const D = document,
 				setHotspot(
 					hotspots.soyuzBody,
 					'Get back inside',
-					() => setupScene(scenes.insideSoyuz)
+					() => setupScene('insideSoyuz')
 				)
 			},
 			draw: function(now) {
@@ -178,7 +181,11 @@ let animationRequestId,
 	message,
 	currentScene,
 	inDialog = false,
-	interactive = false
+	interactive = false,
+	state = {
+		scene: 'soyuzBeforeEarth',
+		nowhere: false,
+	}
 
 function setHotspot(hotspot, message, f) {
 	hotspot.message = message
@@ -194,12 +201,13 @@ function show(scene, list) {
 	clear()
 }
 
-function setupScene(scene) {
+function setupScene(name) {
 	for (let key in hotspots) {
 		hotspots[key].message = null
 	}
 	interactive = true
-	currentScene = scene
+	state.scene = name
+	currentScene = scenes[name]
 	currentScene.setup()
 }
 
@@ -332,7 +340,7 @@ W.onload = function() {
 		const scene = scenes[name]
 		scene.draw = scene.draw || function() {}
 	}
-	currentScene = scenes.soyuzBeforeEarth
+	currentScene = scenes[state.scene]
 
 	W.onresize = resize
 	resize()
