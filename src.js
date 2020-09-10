@@ -7,35 +7,31 @@ const D = document,
 	lerpd = (a, b, t, d) => lerp(a, b, M.min(1, t / d)),
 	setBackground = (color) => D.documentElement.style.background = color,
 	readingTime = 3000,
+	ticker = {},
 	scenes = {
-		soyuzBeforeEarth: {
+		opening: {
 			setup: function() {
 				setBackground('#111')
-				show(this, [objects.earth, objects.soyuz])
 				this.startX = centerX - 75
 				this.startY = centerY - 75
 				this.stopX = centerX - 25
 				this.stopY = centerY - 25
-				this.begin = Date.now()
-				this.messages = [
+				this.startTime = Date.now()
+				this.duration = setTicker([
 					'A secret mission…',
-				]
-				this.nextMessage = 0
-				this.duration = readingTime * this.messages.length
-				interactive = false
+					'1',
+					'bla bla',
+				])
+				show(this, [objects.earth, objects.soyuz])
 			},
 			draw: function(now) {
-				const t = now - this.begin,
+				const t = now - this.startTime,
 					d = this.duration,
 					x = lerpd(this.startX, this.stopX, t, d),
 					y = lerpd(this.startY, this.stopY, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
-				if (t > this.nextMessage) {
-					this.nextMessage = t + readingTime
-					say(this.messages[t / readingTime | 0])
-				}
-				if (t > this.duration) {
+				if (t > this.duration || tick(now)) {
 					setupScene('insideSoyuz')
 				}
 			}
@@ -181,9 +177,8 @@ let animationRequestId,
 	message,
 	currentScene,
 	inDialog = false,
-	interactive = false,
 	state = {
-		scene: 'soyuzBeforeEarth',
+		scene: 'opening',
 		nowhere: false,
 	}
 
@@ -198,14 +193,14 @@ function show(scene, list) {
 	}
 	list.forEach((o) => o.style.visibility = 'visible')
 	scene.draw(Date.now())
-	clear()
 }
 
 function setupScene(name) {
 	for (let key in hotspots) {
 		hotspots[key].message = null
 	}
-	interactive = true
+	clear()
+	inDialog = false
 	state.scene = name
 	currentScene = scenes[name]
 	currentScene.setup()
@@ -218,6 +213,42 @@ function clear() {
 function say(text) {
 	message.innerText = text
 	message.style.display = 'block'
+}
+
+function setTicker(messages) {
+	inDialog = true
+	ticker.messages = messages.map(function(text) {
+		return {
+			text: text,
+			duration: 1000 + 200 * text.split(' ').length
+		}
+	})
+	ticker.pointer = 0
+	ticker.start = Date.now()
+	const m = ticker.messages[0]
+	ticker.nextTick = ticker.start + m.duration
+	say(m.text)
+	return ticker.messages.reduce((total, m) => total + m.duration, 0)
+}
+
+function tick(now, skip) {
+	if (!ticker.messages) {
+		return true
+	}
+	if (now > ticker.nextTick || skip) {
+		++ticker.pointer
+		if (ticker.pointer >= ticker.messages.length) {
+			ticker.messages = null
+			ticker.pointer = 0
+			clear()
+			inDialog = false
+			return true
+		}
+		const m = ticker.messages[ticker.pointer]
+		ticker.nextTick = now + m.duration
+		say(m.text)
+	}
+	return false
 }
 
 function run() {
@@ -286,7 +317,7 @@ function findElementByPosition(event) {
 }
 
 function pointerInspect(event) {
-	if (interactive && !inDialog) {
+	if (!inDialog) {
 		const element = findElementByPosition(event)
 		if (element && element.message) {
 			say(element.message)
@@ -294,10 +325,6 @@ function pointerInspect(event) {
 			clear()
 		}
 	}
-	event.stopPropagation()
-}
-
-function pointerInteract(event) {
 	event.stopPropagation()
 }
 
@@ -347,13 +374,16 @@ W.onload = function() {
 
 	D.onmousedown = pointerInspect
 	D.onmousemove = pointerInspect
-	D.onmouseup = pointerInteract
 	D.onmouseout = pointerCancel
+	D.onclick = function() {
+		if (inDialog) {
+			tick(Date.now(), true)
+		}
+	}
 
 	if ('ontouchstart' in D) {
 		D.ontouchstart = pointerInspect
 		D.ontouchmove = pointerInspect
-		D.ontouchend = pointerInteract
 		D.ontouchleave = pointerCancel
 		D.ontouchcancel = pointerCancel
 
