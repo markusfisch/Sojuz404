@@ -7,8 +7,9 @@ const D = document,
 	lerpd = (a, b, t, d) => lerp(a, b, M.min(1, t / d)),
 	setBackground = (color) => D.documentElement.style.background = color,
 	readingTime = 3000,
+	state = {},
 	scenes = {
-		opening: {
+		soyuzBeforeEarth: {
 			setup: function() {
 				setBackground('#111')
 				show(this, [objects.earth, objects.soyuz])
@@ -36,25 +37,43 @@ const D = document,
 					say(this.messages[t / readingTime | 0])
 				}
 				if (t > this.duration) {
-					setupScene(scenes.soyuz)
+					setupScene(scenes.insideSoyuz)
 				}
 			}
 		},
-		soyuz: {
+		insideSoyuz: {
 			setup: function() {
 				setBackground('#3d4532')
-				const porthole = hotspots.porthole
-				porthole.message = 'Look outside'
-				porthole.onclick = function() {
-					setupScene(scenes.portholeEarth)
-				}
-				hotspots.jevgeni.message = 'Talk to Jevgeni'
-				const hatch = hotspots.hatch
-				hatch.message = 'Go for a Spacewalk'
-				hatch.onclick = function() {
-// DEBUG
-setupScene(scenes.nirvana)
-				}
+				setHotspot(
+					hotspots.porthole,
+					'Look outside',
+					() => setupScene(scenes.portholeEarth)
+				)
+				setHotspot(
+					hotspots.jevgeni,
+					'Talk to Jevgeni',
+				)
+				setHotspot(
+					hotspots.hatch,
+					'Go for a space walk',
+					() => setupScene(scenes.nowhere)
+				)
+				setHotspot(
+					hotspots.radio,
+					'Talk to control',
+				)
+				setHotspot(
+					hotspots.controls,
+					'Use the controls',
+				)
+				setHotspot(
+					hotspots.storage1,
+					'Look into storage space one',
+				)
+				setHotspot(
+					hotspots.storage2,
+					'Look into storage space two',
+				)
 				show(this, [
 					objects.soyuzInside,
 					objects.cosmonaut1Floating,
@@ -73,23 +92,23 @@ setupScene(scenes.nirvana)
 		portholeEarth: {
 			setup: function() {
 				setBackground('#e0e1e6')
-				const inside = hotspots.inside
-				inside.message = 'Stop looking outside the window'
-				inside.onclick = function() {
-					setupScene(scenes.soyuz)
-				}
+				setHotspot(
+					hotspots.stopLooking,
+					'Stop looking',
+					() => setupScene(scenes.insideSoyuz)
+				)
 				show(this, [objects.earth, objects.porthole])
 			},
 		},
-		nirvana: {
+		nowhere: {
 			setup: function() {
 				setBackground('#111')
 				show(this, [objects.soyuz, objects.cosmonaut])
-				const backInside = hotspots.backInside
-				backInside.message = 'Get back inside'
-				backInside.onclick = function() {
-					setupScene(scenes.soyuz)
-				}
+				setHotspot(
+					hotspots.soyuzBody,
+					'Get back inside',
+					() => setupScene(scenes.insideSoyuz)
+				)
 			},
 			draw: function(now) {
 				const s = M.sin(now * .002),
@@ -158,7 +177,13 @@ let animationRequestId,
 	hotspots,
 	message,
 	currentScene,
-	interactive
+	inDialog = false,
+	interactive = false
+
+function setHotspot(hotspot, message, f) {
+	hotspot.message = message
+	hotspot.onclick = f
+}
 
 function show(scene, list) {
 	for (let key in objects) {
@@ -253,7 +278,7 @@ function findElementByPosition(event) {
 }
 
 function pointerInspect(event) {
-	if (interactive) {
+	if (interactive && !inDialog) {
 		const element = findElementByPosition(event)
 		if (element && element.message) {
 			say(element.message)
@@ -291,11 +316,15 @@ W.onload = function() {
 		technician: D.getElementById('Technician'),
 	}
 	hotspots = {
-		porthole: D.getElementById('SoyuzPorthole'),
-		inside: D.getElementById('GetBackInside'),
-		jevgeni: D.getElementById('Jevgeni'),
+		soyuzBody: D.getElementById('SoyuzBody'),
+		porthole: D.getElementById('PortholeInside'),
 		hatch: D.getElementById('Hatch'),
-		backInside: D.getElementById('BackInside'),
+		radio: D.getElementById('Radio'),
+		controls: D.getElementById('Controls'),
+		storage1: D.getElementById('Storage1'),
+		storage2: D.getElementById('Storage2'),
+		jevgeni: D.getElementById('Jevgeni'),
+		stopLooking: D.getElementById('StopLooking'),
 	}
 	message = D.getElementById('Message')
 
@@ -303,7 +332,7 @@ W.onload = function() {
 		const scene = scenes[name]
 		scene.draw = scene.draw || function() {}
 	}
-	currentScene = scenes.opening
+	currentScene = scenes.soyuzBeforeEarth
 
 	W.onresize = resize
 	resize()

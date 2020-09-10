@@ -14,7 +14,7 @@ html {
 }
 body {
 	margin: 0; padding: 0;
-	font: min(4vw, 4vh) sans-serif; color: #fff;
+	font: 130% sans-serif; color: #fff;
 	overflow: hidden;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-touch-callout: none;
@@ -71,7 +71,7 @@ svg {
 	<polygon style="fill: rgb(212, 216, 216);" points="80 10 77 17 71 21 66 22 62 29 53 31 61 28 64 21 72 19 76 14 77 8"></polygon>
 </g>
 <g id="Soyuz">
-	<path d="M 90 51 C 90 63 82 63 76 63 C 72 63 69 61 66 58 C 62 63 42 65 42 65 L 42 37 C 42 37 62 39 66 44 C 69 41 72 39 76 39 C 82 39 90 39 90 51 Z" style="fill: rgb(75, 87, 63);" id="BackInside"></path>
+	<path d="M 90 51 C 90 63 82 63 76 63 C 72 63 69 61 66 58 C 62 63 42 65 42 65 L 42 37 C 42 37 62 39 66 44 C 69 41 72 39 76 39 C 82 39 90 39 90 51 Z" style="fill: rgb(75, 87, 63);" id="SoyuzBody"></path>
 	<path d="M 38 38 L 42 37 L 42 65 L 38 64 L 38 38 Z" style="fill: rgb(224, 225, 230);"></path>
 	<path d="M 38 38 L 32 38 L 32 64 L 38 64 L 38 38 Z" style="fill: rgb(75, 87, 63);"></path>
 	<path d="M 32 38 L 20 38 L 20 64 L 32 64 L 32 38 Z" style="fill: rgb(224, 225, 230);"></path>
@@ -102,15 +102,15 @@ svg {
 	<rect width="9" height="22" style="fill: rgb(61, 69, 50);" x="38" y="40"></rect>
 	<ellipse style="fill: rgb(202, 203, 207);" cx="46" rx="7" ry="10" cy="51"></ellipse>
 	<ellipse style="fill: rgb(240, 241, 246);" cx="47" rx="6" ry="9" cy="51"></ellipse>
-	<circle style="fill: rgb(10, 140, 200); stroke-width: 2px; stroke: rgb(202, 203, 207);" cx="19" r="5" cy="51" id="SoyuzPorthole"></circle>
+	<circle style="fill: rgb(10, 140, 200); stroke-width: 2px; stroke: rgb(202, 203, 207);" cx="19" r="5" cy="51" id="PortholeInside"></circle>
 	<rect x="34" width="4" height="22" style="fill: rgb(202, 203, 207);" y="40"></rect>
 	<polygon style="fill: rgb(169, 169, 169);" points="10 31 5 42 8 64 16 62 16 66 4 75 4 27"></polygon>
 	<line style="fill: none; stroke: rgb(249, 250, 255);" x1="36" y1="62" x2="36" y2="40"></line>
 	<line style="fill: none; stroke: rgb(202, 203, 207);" x1="69" y1="77" x2="69" y2="25"></line>
-	<path d="M 58 30 L 51 30 L 49 40 L 39 40 L 39 39 C 41 30 54 25 61 25 L 58 30 Z" style="fill: rgb(75, 87, 63);"></path>
-	<path d="M 54 62 L 60 72 L 60 77 C 53 77 41 72 39 63 L 39 62 Z" style="fill: rgb(75, 87, 63);"></path>
-	<path d="M 20 33 L 22 30 C 28 33 33 36 33 40 Z" style="fill: rgb(169, 169, 169);"></path>
-	<path d="M 24 64 L 30 54 L 33 62 C 33 65 30 67 26 70 L 24 64 Z" style="fill: rgb(169, 169, 169);"></path>
+	<path d="M 58 30 L 51 30 L 49 40 L 39 40 L 39 39 C 41 30 54 25 61 25 L 58 30 Z" style="fill: rgb(75, 87, 63);" id="Storage1"></path>
+	<path d="M 54 62 L 60 72 L 60 77 C 53 77 41 72 39 63 L 39 62 Z" style="fill: rgb(75, 87, 63);" id="Storage2"></path>
+	<path d="M 20 33 L 22 30 C 28 33 33 36 33 40 Z" style="fill: rgb(169, 169, 169);" id="Radio"></path>
+	<path d="M 24 64 L 30 54 L 33 62 C 33 65 30 67 26 70 L 24 64 Z" style="fill: rgb(169, 169, 169);" id="Controls"></path>
 	<path d="M 91 38 C 93 38 93 64 91 64 C 89 64 87 59 87 51 C 87 43 89 38 91 38 Z" style="fill: rgb(240, 241, 246);" id="Hatch"></path>
 	<line style="fill: none; stroke: rgb(202, 203, 207);" x1="74" y1="77" x2="74" y2="25"></line>
 </g>
@@ -133,7 +133,7 @@ svg {
 	<polygon style="fill: rgb(201, 158, 147);" points="36 55 40 56 38 58 41 61 37 63 34 58"></polygon>
 </g>
 <g id="Porthole">
-	<path d="M -110 -110 L 210 -110 L 210 210 L -110 210 L -110 -110 Z M 50 11 C 28 11 11 28 11 50 C 11 72 28 89 50 89 C 72 89 89 72 89 50 C 89 28 72 11 50 11 Z" style="fill: rgb(224, 225, 230);" id="GetBackInside"></path>
+	<path d="M -110 -110 L 210 -110 L 210 210 L -110 210 L -110 -110 Z M 50 11 C 28 11 11 28 11 50 C 11 72 28 89 50 89 C 72 89 89 72 89 50 C 89 28 72 11 50 11 Z" style="fill: rgb(224, 225, 230);" id="StopLooking"></path>
 	<circle style="stroke: rgb(202, 203, 207); stroke-width: 8px; fill: none;" r="39" cy="50" cx="50"></circle>
 </g>
 <g id="Library">
