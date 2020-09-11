@@ -29,11 +29,16 @@ body {
 svg {
 	display: none;
 }
-#Message {
+#Message, #FX {
 	display: none;
-	background: rgba(0,0,0,.5);
 	position: fixed;
 	left: 0; top: 0; right: 0;
+}
+#FX {
+	bottom: 0;
+}
+#Message {
+	background: rgba(0,0,0,.5);
 	padding: .5em;
 	text-align: center;
 }
@@ -332,6 +337,7 @@ span {
 </g>
 </svg>
 <div id="Message"></div>
+<div id="FX"></div>
 </body>
 <script src="src.js"></script>
 </html>

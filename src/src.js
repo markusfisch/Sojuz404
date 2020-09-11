@@ -65,6 +65,14 @@ const D = document,
 						`${labels.jevgeni} No, nothing at all, it's all totally black…`,
 					]),
 				},
+				{
+					text: () => state.errorSeen
+						? 'How do we fix the drive? What does "err" mean?'
+						: null,
+					action: () => setTicker([
+						`${labels.jevgeni} If only I could remember…`,
+					]),
+				},
 			],
 		},
 		groundControl: {
@@ -149,6 +157,7 @@ const D = document,
 						? setTicker([
 							`zzz…`,
 							`${labels.jevgeni} No contact… I guess we've got to help ourselves!`,
+							`${labels.you} Moscow, we have a problem.`,
 						])
 						: dialog(convs.groundControl.before)
 				)
@@ -205,7 +214,8 @@ const D = document,
 						state.aboveAfrica = true
 						setTicker([`${labels.jevgeni} Above Africa…`])
 					}
-				} else {
+				} else if (!state.whereIsEarth) {
+					state.whereIsEarth = true
 					setTicker([`${labels.jevgeni} Where's the earth?`])
 				}
 				show(this, o)
@@ -323,8 +333,12 @@ const D = document,
 		},
 		panel: {
 			setup: function() {
-				state.value = state.value || 400
-				hotspots.value.innerHTML = state.value
+				state.value = state.value || 399
+				const err = state.nowhere && !state.repaired
+				hotspots.value.innerHTML = err ? 'err' : state.value
+				if (err) {
+					state.errorSeen = true
+				}
 				setBackground('#a9a9a9')
 				setHotspot(
 					hotspots.reset,
@@ -335,14 +349,18 @@ const D = document,
 					hotspots.plus,
 					'Increase',
 					() => {
-						hotspots.value.innerHTML = ++state.value
+						if (!err) {
+							hotspots.value.innerHTML = ++state.value
+						}
 					})
 				setHotspot(
 					hotspots.minus,
 					'Decrease',
 					() => {
-						state.value = M.max(0, state.value - 1)
-						hotspots.value.innerHTML = state.value
+						if (!err) {
+							state.value = M.max(0, state.value - 1)
+							hotspots.value.innerHTML = state.value
+						}
 					})
 				setHotspot(
 					hotspots.start,
@@ -350,14 +368,21 @@ const D = document,
 					() => {
 						if (state.nowhere) {
 							setTicker([
-								`${labels.jevgeni} We probably should find out what has gone wrong first.`,
+								`${labels.jevgeni} We should find out how to fix it.`,
 							])
 						} else if (state.value != 404) {
 							setTicker([
 								`${labels.jevgeni} This doesn't look right…`,
 							])
 						} else {
-							setupScene('nowhere')
+							flashToScene('nowhere', [
+								'#d7c23a',
+								'#ff0900',
+								'#518e3d',
+								'#fff',
+								'#d7c23a',
+								'#fff',
+							])
 						}
 					}
 				)
@@ -375,6 +400,7 @@ let animationRequestId,
 	objects,
 	hotspots,
 	message,
+	fx,
 	currentScene,
 	elementUnderPointer,
 	inDialog = false,
@@ -382,6 +408,21 @@ let animationRequestId,
 		scene: 'opening',
 		nowhere: false,
 	}
+
+function flashToScene(name, colors, index) {
+	index = index || 0
+	fx.style.background = colors[index]
+	fx.style.display = 'block'
+	setTimeout(function() {
+		++index
+		if (index >= colors.length) {
+			fx.style.display = 'none'
+			setupScene(name)
+		} else {
+			flashToScene(name, colors, index)
+		}
+	}, 100)
+}
 
 function setHotspot(hotspot, message, f) {
 	hotspot.message = message
@@ -617,6 +658,7 @@ W.onload = function() {
 		goToLibrary: D.getElementById('GoToLibrary'),
 	}
 	message = D.getElementById('Message')
+	fx = D.getElementById('FX')
 
 	for (let name in scenes) {
 		const scene = scenes[name]
