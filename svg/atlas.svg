@@ -121,12 +121,12 @@
 <polygon style="fill: rgb(10, 140, 200);" points="233 395 236 455 261 458 269 396"/>
 <polygon style="fill: rgb(90, 90, 90);" points="246 386 247 369 259 369 258 386"/>
 <polygon style="fill: rgb(216, 216, 216);" points="233 395 269 396 258 386 245 386"/>
-<polygon style="fill: rgb(216, 165, 114);" points="313 372 317 359 321 372"/>
-<polygon style="fill: rgb(101, 101, 101);" points="313 372 313 459 321 459 321 372"/>
-<polygon style="fill: rgb(101, 101, 101);" points="315 366 317 359 319 366"/>
-<polygon style="fill: rgb(10, 140, 200);" points="161 392 164 452 189 455 197 393" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -215.520343, 187.392082)"/>
-<polygon style="fill: rgb(90, 90, 90);" points="144 392 145 375 157 375 156 392" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -197.400827, 162.847525)"/>
-<polygon style="fill: rgb(216, 216, 216);" points="140 399 176 400 165 390 152 390" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -202.744027, 169.494464)"/>
+<polygon style="fill: rgb(216, 165, 114);" points="403 372 407 359 411 372"/>
+<polygon style="fill: rgb(101, 101, 101);" points="403 372 403 459 411 459 411 372"/>
+<polygon style="fill: rgb(101, 101, 101);" points="405 366 407 359 409 366"/>
+<polygon style="fill: rgb(10, 140, 200);" points="146 409 184 455 206 443 176 388"/>
+<polygon style="fill: rgb(90, 90, 90);" points="150 394 141 380 151 373 160 387"/>
+<polygon style="fill: rgb(216, 216, 216);" points="146 409 175 388 161 387 150 395"/>
 <path d="M 340 -349 C 340 -337 332 -337 326 -337 C 322 -337 319 -339 316 -342 C 312 -337 292 -335 292 -335 L 292 -363 C 292 -363 312 -361 316 -356 C 319 -359 322 -361 326 -361 C 332 -361 340 -361 340 -349 Z" style="fill: rgb(75, 87, 63);"/>
 <path d="M 340 -349 C 340 -344 339 -343 339 -343 C 338 -343 338 -355 339 -355 C 339 -355 340 -354 340 -349 Z" style="fill: rgb(224, 225, 230);"/>
 <path d="M 341 -350 C 341 -345 340 -344 340 -344 C 339 -344 339 -356 340 -356 C 340 -356 341 -355 341 -350 Z" style="fill: rgb(224, 225, 230);" transform="matrix(-0.587379, 0.809312, -0.809312, -0.587379, 260.114937, -820.617461)" bx:origin="0 1"/>
@@ -241,8 +241,8 @@
 <path d="M 90 -239 C 90 -234 89 -233 89 -233 C 88 -233 88 -245 89 -245 C 89 -245 90 -244 90 -239 Z" style="fill: rgb(224, 225, 230);"/>
 <path d="M 111 -240 C 111 -235 110 -234 110 -234 C 109 -234 109 -246 110 -246 C 110 -246 111 -245 111 -240 Z" style="fill: rgb(224, 225, 230);" transform="matrix(-0.587379, 0.809312, -0.809312, -0.587379, -15.957881, -459.864006)" bx:origin="0 1"/>
 <path d="M 110 -239 C 110 -235 109 -234 109 -234 C 108 -234 108 -244 109 -244 C 109 -244 110 -243 110 -239 Z" style="fill: rgb(170, 171, 175);"/>
-<rect x="369" y="373" width="66" height="84" style="fill: rgb(255, 255, 255);"/>
-<rect x="369" y="361" width="66" height="12" style="fill: rgb(223, 223, 223);"/>
+<rect x="459" y="373" width="66" height="84" style="fill: rgb(255, 255, 255);"/>
+<rect x="459" y="361" width="66" height="12" style="fill: rgb(223, 223, 223);"/>
 <polygon style="fill: rgb(190, 190, 190);" points="39 180 60 183 64 173 63 144 56 141"/>
 <ellipse style="fill: rgb(216, 216, 216);" cx="47" cy="135" rx="12" ry="14"/>
 <path d="M 57 142 L 58 148 L 73 157 L 78 171 L 72 173 L 68 164 L 59 160 L 60 174 L 56 182 L 57 192 L 68 202 L 65 214 L 60 214 L 60 205 L 50 198 L 45 187 L 41 197 L 49 209 L 47 215 L 44 220 L 39 219 L 40 211 L 32 197 L 35 178 L 35 171 L 36 161 L 31 164 L 24 172 L 20 169 L 26 156 L 36 149 L 40 148 L 41 145 L 57 142 Z" style="fill: rgb(216, 216, 216);"/>
@@ -251,13 +251,13 @@
 <ellipse style="fill: rgb(233, 233, 233);" cx="58" cy="136" rx="2" ry="4"/>
 <path d="M 58 135 C 58 141 54 145 46 145 C 38 145 34 141 34 135 C 34 129 40 127 46 127 C 54 127 58 129 58 135 Z" style="fill: rgb(233, 233, 233);"/>
 <path d="M 56 135 C 56 142 52 144 46 144 C 40 144 36 142 36 135 C 36 128 41 128 46 128 C 52 128 56 128 56 135 Z" style="fill: rgb(206, 181, 107);"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="379.64762830130906" y1="383.94958942259177" x2="424.10256613634215" y2="384.6204143743588"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="394" x2="424" y2="395"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="404" x2="424" y2="405"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="414" x2="424" y2="415"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="424" x2="424" y2="425"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="434" x2="424" y2="435"/>
-<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="380" y1="444" x2="424" y2="445"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="384" x2="514" y2="385"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="394" x2="514" y2="395"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="404" x2="514" y2="405"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="414" x2="514" y2="415"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="424" x2="514" y2="425"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="434" x2="514" y2="435"/>
+<line style="stroke: rgb(223, 223, 223); stroke-width: 2px;" x1="470" y1="444" x2="514" y2="445"/>
 <polygon style="fill: rgb(255, 255, 255);" points="239 208 242 214 245 212 244 205 240 203"/>
 <polygon style="fill: rgb(201, 158, 147);" points="189 163 183 163 181 165 187 166 186 168 190 166"/>
 <polygon style="fill: rgb(201, 158, 147);" points="246 163 249 169 248 172 245 168 244 170 243 164"/>
@@ -316,7 +316,7 @@
 <rect width="9" height="22" style="fill: rgb(61, 69, 50);" x="-72" y="-70"/>
 <ellipse style="fill: rgb(202, 203, 207);" cx="-64" rx="7" ry="10" cy="-59"/>
 <ellipse style="fill: rgb(240, 241, 246);" cx="-63" rx="6" ry="9" cy="-59" id="InnerHatch"/>
-<circle style="fill: rgb(10, 140, 200); stroke-width: 2px; stroke: rgb(202, 203, 207);" cx="-91" r="5" cy="-59" id="PortholeInside"/>
+<circle style="fill: rgb(10, 140, 200); stroke-width: 2px; stroke: rgb(202, 203, 207);" cx="-91" r="5" cy="-59" id="Window"/>
 <rect x="-76" width="4" height="22" style="fill: rgb(202, 203, 207);" y="-70"/>
 <polygon style="fill: rgb(169, 169, 169);" points="-100 -79 -105 -68 -102 -46 -94 -48 -94 -44 -106 -35 -106 -83" id="Seats"/>
 <line style="fill: none; stroke: rgb(249, 250, 255);" x1="-74" y1="-48" x2="-74" y2="-70"/>
@@ -542,41 +542,12 @@
 <polygon style="fill: rgb(233, 234, 237);" points="121 17 121 20 199 20 198 17"/>
 <rect x="135" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
 <rect x="179" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
-<rect width="100" height="100" style="fill: rgb(169, 169, 169);"/>
-<rect y="40" width="14" height="14" style="stroke-width: 2px; stroke: rgb(149, 149, 149); fill: rgb(207, 207, 207);" rx="3" ry="3" id="Minus" x="10"/>
-<rect x="28" y="39" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
-<rect x="76" y="40" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="Plus"/>
-<rect x="76" y="60" width="14" height="14" style="stroke-width: 2px; fill: rgb(118, 207, 89); stroke: rgb(81, 142, 61);" rx="3" ry="3" id="Start"/>
-<rect y="60" width="14" height="14" style="stroke-width: 2px; fill: rgb(193, 53, 73); stroke: rgb(151, 41, 58);" rx="3" ry="3" id="Reset" x="10"/>
-<rect width="100" height="100" style="fill: rgb(169, 169, 169);" x="-220"/>
-<rect y="63" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-1" x="-210"/>
-<rect y="44" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-2" x="-210"/>
-<rect y="25" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-3" x="-210"/>
-<rect y="6" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-4" x="-210"/>
-<rect x="-192" y="62" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
-<rect x="-192" y="43" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
-<rect x="-192" y="24" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
-<rect x="-192" y="5" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
-<rect x="-144" y="63" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-5"/>
-<rect x="-144" y="6" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-6"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-140" y1="13" x2="-134" y2="13"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-137" y1="10" x2="-137" y2="16"/>
-<rect x="-144" y="25" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-7"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-140" y1="32" x2="-134" y2="32"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-137" y1="29" x2="-137" y2="35"/>
-<rect x="-144" y="44" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-8"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-140" y1="51" x2="-134" y2="51"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-137" y1="48" x2="-137" y2="54"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-140" y1="70" x2="-134" y2="70"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-137" y1="67" x2="-137" y2="73"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-206" y1="13" x2="-200" y2="13"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-206" y1="32" x2="-200" y2="32"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-206" y1="51" x2="-200" y2="51"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-206" y1="70" x2="-200" y2="70"/>
-<rect x="-167" y="82" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3"/>
-<line style="stroke: rgb(149, 149, 149); stroke-width: 2px;" x1="-160" y1="86" x2="-160" y2="92"/>
-<rect x="-187" y="82" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3"/>
-<circle style="fill: rgb(149, 149, 149);" cy="89" r="3" cx="-180"/>
+<rect width="100" height="100" style="fill: rgb(169, 169, 169);" x="-110"/>
+<rect y="40" width="14" height="14" style="stroke-width: 2px; stroke: rgb(149, 149, 149); fill: rgb(207, 207, 207);" rx="3" ry="3" id="Minus" x="-100"/>
+<rect x="-82" y="39" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
+<rect x="-34" y="40" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="Plus"/>
+<rect x="-34" y="60" width="14" height="14" style="stroke-width: 2px; fill: rgb(118, 207, 89); stroke: rgb(81, 142, 61);" rx="3" ry="3" id="Start"/>
+<rect y="60" width="14" height="14" style="stroke-width: 2px; fill: rgb(193, 53, 73); stroke: rgb(151, 41, 58);" rx="3" ry="3" id="Reset" x="-100"/>
 <polygon style="fill: rgb(79, 79, 79);" points="310 -60 312 -58 312 -72 310 -74" id=""/>
 <polygon style="fill: rgb(250, 244, 250);" points="303 -60 310 -60 310 -62 303 -62" id=""/>
 <g transform="matrix(-0.398488, 0, 0, 0.398488, 306.278076, -249.960022)" style="">
@@ -589,7 +560,7 @@
 <polygon style="fill: rgb(201, 158, 147);" points="14 249 24 247 26 255 23 261 19 261 20 266 16 269 11 266 12 259"/>
 <polygon style="fill: rgb(193, 53, 73);" points="26 247 17 245 12 247 12 259 14 257 14 252 16 251 16 254 18 253 17 250"/>
 </g>
-<text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 11px; text-anchor: end;" x="68" y="50">00000</text>
+<text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 11px; text-anchor: end;" x="-42" y="50">00000</text>
 <ellipse style="fill: rgb(216, 216, 216);" cx="-83" cy="135" rx="12" ry="14"/>
 <ellipse style="fill: rgb(233, 233, 233);" cx="-72" cy="136" rx="2" ry="4"/>
 <path d="M -72 135 C -72 141 -76 145 -84 145 C -92 145 -96 141 -96 135 C -96 129 -90 127 -84 127 C -76 127 -72 129 -72 135 Z" style="fill: rgb(233, 233, 233);"/>
@@ -601,4 +572,11 @@
 <polygon style="fill: rgb(180, 117, 77);" points="-83 438 -103 454 -78 457 -62 438"/>
 <polygon style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="-113 453"/>
 <ellipse style="fill: rgb(145, 94, 62);" cx="-62" cy="412" rx="6" ry="14"/>
+<ellipse style="fill: rgb(216, 216, 216);" cy="410" rx="34" ry="40" cx="-160"/>
+<ellipse style="fill: rgb(233, 233, 233);" cx="-129" cy="413" rx="6" ry="11"/>
+<path d="M -129 410 C -129 427 -140 438 -163 438 C -186 438 -197 427 -197 410 C -197 393 -180 387 -163 387 C -140 387 -129 393 -129 410 Z" style="fill: rgb(233, 233, 233);"/>
+<path d="M -134 410 C -134 430 -146 436 -163 436 C -180 436 -191 430 -191 410 C -191 390 -177 390 -163 390 C -146 390 -134 390 -134 410 Z" style="fill: rgb(206, 181, 107);"/>
+<polygon style="fill: rgb(216, 165, 114);" points="316 393 309 381 322 387"/>
+<polygon style="fill: rgb(101, 101, 101);" points="316 393 363 440 371 434 322 387"/>
+<polygon style="fill: rgb(101, 101, 101);" points="313 388 309 381 316 384"/>
 </svg>

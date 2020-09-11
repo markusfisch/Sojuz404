@@ -106,7 +106,7 @@ const D = document,
 					action: () => {
 						state.panicked = true
 						setTicker([
-							`${labels.jevgeni} Calm down, we need to keep calm or we're lost. Do you remember what the scientists said?`,
+							`${labels.jevgeni} Calm down, we need to keep calm or we're lost.`,
 						])
 					},
 				},
@@ -119,7 +119,7 @@ const D = document,
 					], () => dialog(convs.jevgeni.drugs)),
 				},
 				{
-					text: () => `I remember there was a formula on a blackboard that seemed important… it looked like the Pythagorean theorem but with some additional symbols…`,
+					text: () => `I remember there was a formula on a blackboard…`,
 					action: () => setTicker([
 						`${labels.jevgeni} Keep thinking!`,
 					]),
@@ -127,18 +127,18 @@ const D = document,
 			],
 			drugs: [
 				{
-					text: () => `Do we have any drugs?`,
+					text: () => `Well, do we have any drugs?`,
 					action: () => setTicker([
 						`${labels.jevgeni} Look in the storage! That's all we have!`,
 					]),
 				},
 				{
-					text: () => `Yes, shut up and let me think.`,
+					text: () => `Maybe I just need to sleep?`,
 					action: () => setTicker([
-						`${labels.jevgeni} As you wish.`,
+						`${labels.jevgeni} If it helps…`,
 					]),
 				},
-			]
+			],
 		},
 		groundControl: {
 			before: [
@@ -173,8 +173,9 @@ const D = document,
 				this.stopY = centerY - 25
 				this.startTime = Date.now()
 				this.duration = setTicker([
-					'A secret mission…',
-					'bla bla',
+					`You're a cosmonaut,…`,
+					`…on board a secret mission…`,
+					`…to test a new super-secret space drive.`,
 				], () => setupScene('insideSoyuz'))
 				show(this, [objects.earth, objects.soyuz])
 			},
@@ -190,14 +191,20 @@ const D = document,
 		insideSoyuz: {
 			setup: function() {
 				setBackground('#3d4532')
+				showInventory = true
 				setHotspot(
-					hotspots.porthole,
+					hotspots.window,
 					'Look outside',
 					() => setupScene('portholeEarth')
 				)
-				hotspots.porthole.style = `fill: ${state.nowhere
+				hotspots.window.style = `fill: ${state.nowhere
 					? '#111'
 					: '#0a8cc8'}; stroke-width: 2px; stroke: #cacbcf;`
+				setHotspot(
+					hotspots.me,
+					'This is me',
+					() => {}
+				)
 				setHotspot(
 					hotspots.jevgeni,
 					'Talk to Jevgeni',
@@ -234,12 +241,35 @@ const D = document,
 				setHotspot(
 					hotspots.storage1,
 					'Look into storage space one',
-					() => setTicker(['A couple of space suits. Might come in handy.'])
+					() => {
+						let message = 'A couple of space suits. Might come in handy.'
+						if (state.nowhere) {
+							message = `There's nothing I can use right now.`
+							if (!state.storage1) {
+								state.storage1 = true
+								addToInventory('helmet')
+								message = `You've got a helmet!`
+							}
+						}
+						setTicker([message])
+					}
 				)
 				setHotspot(
 					hotspots.storage2,
 					'Look into storage space two',
-					() => setTicker(['Proviant, adhesive tape and a towel. You should always have a towel.'])
+					() => {
+						let message = 'Proviant, adhesive tape and a towel. You should always have a towel.'
+						if (state.nowhere) {
+							message = `There's nothing I can use right now.`
+							if (!state.storage2) {
+								state.storage2 = true
+								addToInventory('tape')
+								addToInventory('proviant')
+								message = `You found a tape and proviant.`
+							}
+						}
+						setTicker([message])
+					}
 				)
 				setHotspot(
 					hotspots.innerHatch,
@@ -251,16 +281,16 @@ const D = document,
 				)
 				show(this, [
 					objects.soyuzInside,
-					objects.cosmonaut1Floating,
-					objects.cosmonaut2Floating,
+					objects.borisFloating,
+					objects.jevgeniFloating,
 				])
 			},
 			draw: function(now) {
 				const f = M.sin(now * .002) * 2,
 					y = centerY - 60
-				objects.cosmonaut1Floating.style.transform =
+				objects.borisFloating.style.transform =
 					`translate(${centerX}px, ${y + f}px) scale(1.25)`
-				objects.cosmonaut2Floating.style.transform =
+				objects.jevgeniFloating.style.transform =
 					`translate(${centerX - 162}px, ${y - f}px) scale(1.25)`
 			},
 		},
@@ -470,11 +500,70 @@ let animationRequestId,
 	fx,
 	currentScene,
 	elementUnderPointer,
-	inDialog = false,
+	inDialog,
+	showInventory,
+	useItemWith,
 	state = {
+		inventory: [],
 		scene: 'opening',
-		nowhere: false,
 	}
+
+function hideInventory() {
+	state.inventory.forEach((name) => {
+		objects[name].style.visibility = 'hidden'
+	})
+}
+
+function updateInventory() {
+	let x = 10,
+		y = stageHeight - 40
+	state.inventory.forEach((name) => {
+		objects[name].style.transform = `translate(${x}px, ${y}px) scale(.33)`
+		objects[name].style.visibility = 'visible'
+		x += 40
+	})
+}
+
+function showUseItemWithMessage() {
+	showMessage(`Use ${useItemWith} with ?`)
+}
+
+function addToInventory(name) {
+	const children = objects[name].children
+	for (let i = children.length; i--;) {
+		const child = children[i]
+		child.name = name
+		child.message = `Use ${name}`
+		child.action = () => {
+			useItemWith = name
+			showUseItemWithMessage()
+		}
+	}
+	state.inventory.push(name)
+	updateInventory()
+}
+
+function removeFromInventory(name) {
+	state.inventory = state.inventory.filter((item) => item != name)
+}
+
+function combineItems(items) {
+	let newItem
+	items.sort()
+	const a = items[0],
+		b = items[1]
+	if (a == 'helmet' && b == 'tape') {
+		newItem = 'nurse'
+	} else {
+		setTicker([`This won't work.`])
+		return
+	}
+	hideInventory()
+	removeFromInventory(a)
+	removeFromInventory(b)
+	addToInventory(newItem)
+	updateInventory()
+}
 
 function flashToScene(name, colors, index) {
 	index = index || 0
@@ -581,10 +670,17 @@ function setupScene(name) {
 	for (let key in hotspots) {
 		hotspots[key].message = null
 	}
+	useItemWith = null
+	showInventory = false
 	resetTicker()
 	state.scene = name
 	currentScene = scenes[name]
 	currentScene.setup()
+	if (showInventory) {
+		updateInventory()
+	} else {
+		hideInventory()
+	}
 }
 
 function run() {
@@ -635,7 +731,7 @@ function resize() {
 	objects.boris.style.transformOrigin = center
 	objects.panel.style.transform = scale3
 
-	currentScene.setup()
+	setupScene(state.scene)
 	run()
 }
 
@@ -661,7 +757,13 @@ function pointerInspect(event) {
 	if (!inDialog) {
 		elementUnderPointer = findElementByPosition(event)
 		if (elementUnderPointer && elementUnderPointer.message) {
-			showMessage(elementUnderPointer.message)
+			const message = elementUnderPointer.message,
+				name = elementUnderPointer.name || elementUnderPointer.id
+			showMessage(useItemWith
+				? `Use ${useItemWith} with ${name}`
+				: message)
+		} else if (useItemWith) {
+			showUseItemWithMessage()
 		} else {
 			clear()
 		}
@@ -672,7 +774,15 @@ function pointerInspect(event) {
 function pointerInteract(event) {
 	if (!inDialog) {
 		if (elementUnderPointer && elementUnderPointer.action) {
-			elementUnderPointer.action()
+			if (useItemWith) {
+				combineItems([
+					useItemWith,
+					elementUnderPointer.name || elementUnderPointer.id
+				])
+				useItemWith = null
+			} else {
+				elementUnderPointer.action()
+			}
 		}
 	} else if (ticker.messages) {
 		tickNext(Date.now())
@@ -691,8 +801,11 @@ W.onload = function() {
 		soyuz: D.getElementById('Soyuz'),
 		cosmonaut: D.getElementById('Cosmonaut'),
 		soyuzInside: D.getElementById('SoyuzInside'),
-		cosmonaut1Floating: D.getElementById('Cosmonaut1Floating'),
-		cosmonaut2Floating: D.getElementById('Cosmonaut2Floating'),
+		borisFloating: D.getElementById('BorisFloating'),
+		jevgeniFloating: D.getElementById('JevgeniFloating'),
+		tape: D.getElementById('Tape'),
+		proviant: D.getElementById('Proviant'),
+		helmet: D.getElementById('Helmet'),
 		porthole: D.getElementById('Porthole'),
 		library: D.getElementById('Library'),
 		infirmary: D.getElementById('Infirmary'),
@@ -705,13 +818,14 @@ W.onload = function() {
 	}
 	hotspots = {
 		soyuzBody: D.getElementById('SoyuzBody'),
-		porthole: D.getElementById('PortholeInside'),
+		window: D.getElementById('Window'),
 		hatch: D.getElementById('Hatch'),
 		radio: D.getElementById('Radio'),
 		controls: D.getElementById('Controls'),
 		storage1: D.getElementById('Storage1'),
 		storage2: D.getElementById('Storage2'),
 		innerHatch: D.getElementById('InnerHatch'),
+		me: D.getElementById('Me'),
 		jevgeni: D.getElementById('Jevgeni'),
 		stopLooking: D.getElementById('StopLooking'),
 		plus: D.getElementById('Plus'),
@@ -731,7 +845,6 @@ W.onload = function() {
 		const scene = scenes[name]
 		scene.draw = scene.draw || function() {}
 	}
-	currentScene = scenes[state.scene]
 
 	W.onresize = resize
 	resize()
