@@ -16,8 +16,9 @@ const D = document,
 		jevgeni: {
 			before: [
 				{
-					use: () => !state.everythingOkay,
-					text: 'Everything okay back there?',
+					text: () => state.everythingOkay
+						? null
+						: 'Everything okay back there?',
 					action: () => {
 						state.everythingOkay = true
 						setTicker([
@@ -26,8 +27,9 @@ const D = document,
 					},
 				},
 				{
-					use: () => !state.onCourse,
-					text: 'Are we still on course?',
+					text: () => state.onCourse
+						? null
+						: 'Are we still on course?',
 					action: () => {
 						state.onCourse = true
 						setTicker([
@@ -36,7 +38,7 @@ const D = document,
 					},
 				},
 				{
-					text: 'Would you please stop farting?',
+					text: () => 'Would you please stop farting?',
 					action: () => setTicker([
 						`${labels.jevgeni} This was the last one. Promise.`
 					]),
@@ -44,13 +46,13 @@ const D = document,
 			],
 			course: [
 				{
-					text: 'No, just controlling our parameters like good Cosmonauts should do.',
+					text: () => 'No, just controlling our parameters like good Cosmonauts should do.',
 					action: () => setTicker([
 						`${labels.jevgeni} Well, then, yes, we are still on course, of course.`,
 					]),
 				},
 				{
-					text: 'Comrade, I need an answer.',
+					text: () => 'Comrade, I need an answer.',
 					action: () => setTicker([
 						`${labels.jevgeni} Yes, comrade, we are still on course.`,
 					]),
@@ -60,13 +62,13 @@ const D = document,
 		groundControl: {
 			before: [
 				{
-					text: 'In position, request instructions.',
+					text: () => 'In position, request instructions.',
 					action: () => setTicker([
 						`${labels.groundControl} Copy. Input coordinates.`,
 					]),
 				},
 				{
-					text: 'Jevgeni is a bio hazard.',
+					text: () => 'Jevgeni is a bio hazard.',
 					action: () => setTicker([
 						`${labels.jevgeni} You're exaggerating.`,
 						`${labels.groundControl} Comrades!`,
@@ -335,22 +337,19 @@ function setTicker(messages, runAfter) {
 }
 
 function dialog(conversation) {
-	const filtered = conversation.filter(
-		(option) => option.use ? option.use() : true
-	)
-	if (filtered.length < 1) {
-		return
-	}
 	inDialog = true
 	message.innerText = ''
 	const ul = D.createElement('ol')
-	filtered.map(function(option) {
-		const li = D.createElement('li'),
-			a = D.createElement('a')
-		a.onclick = option.action
-		a.innerHTML = option.text
-		li.appendChild(a)
-		ul.appendChild(li)
+	conversation.map(function(option) {
+		const text = option.text()
+		if (text) {
+			const li = D.createElement('li'),
+				a = D.createElement('a')
+			a.onclick = option.action
+			a.innerHTML = text
+			li.appendChild(a)
+			ul.appendChild(li)
+		}
 	})
 	message.appendChild(ul)
 	message.style.display = 'block'
