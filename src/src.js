@@ -514,6 +514,11 @@ function hideInventory() {
 	})
 }
 
+function clearInventory() {
+	hideInventory()
+	state.inventory = []
+}
+
 function updateInventory() {
 	let x = 10,
 		y = stageHeight - 40
@@ -552,7 +557,13 @@ function combineItems(items) {
 	items.sort()
 	const a = items[0],
 		b = items[1]
-	if (a == 'helmet' && b == 'tape') {
+	if (a == 'Me' && b == 'proviant') {
+		hideInventory()
+		removeFromInventory(b)
+		updateInventory()
+		setTicker([`${labels.you} I'm not hungry anymore.`])
+		return
+	} else if (a == 'helmet' && b == 'tape') {
 		newItem = 'nurse'
 	} else {
 		setTicker([`This won't work.`])
