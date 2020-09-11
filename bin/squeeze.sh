@@ -19,4 +19,4 @@ do
 	# skip empty lines
 	[ "$REPLY" ] || continue
 	echo "$REPLY"
-done | sed -e 's/><\/circle>/\/>/g;s/><\/ellipse>/\/>/g;s/><\/line>/\/>/g;s/><\/path>/\/>/g;s/><\/polygon>/\/>/g;s/><\/rect>/\/>/g'
+done | sed -e 's/><\/circle>/\/>/g;s/><\/ellipse>/\/>/g;s/><\/line>/\/>/g;s/><\/path>/\/>/g;s/><\/polygon>/\/>/g;s/><\/polyline>/\/>/g;s/><\/rect>/\/>/g'

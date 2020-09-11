@@ -118,13 +118,13 @@
 <path d="M 326 264 L 335 264 L 343 269 L 348 284 L 346 299 L 343 298 L 343 285 L 340 278 L 339 293 L 341 310 L 331 311 L 329 309 L 328 311 L 319 308 L 321 293 L 321 277 L 318 285 L 317 299 L 314 300 L 313 284 L 317 269 L 326 264 Z" style="fill: rgb(230, 228, 236);"/>
 <polygon style="fill: rgb(201, 158, 147);" points="334 249 323 247 321 254 324 261 327 260 326 265 331 267 334 265 334 258"/>
 <polygon style="fill: rgb(131, 106, 99);" points="323 247 330 250 329 254 331 254 332 250 333 251 334 257 336 248 328 244"/>
-<polygon style="fill: rgb(216, 140, 93);" points="233 395 236 455 261 458 269 396"/>
+<polygon style="fill: rgb(10, 140, 200);" points="233 395 236 455 261 458 269 396"/>
 <polygon style="fill: rgb(90, 90, 90);" points="246 386 247 369 259 369 258 386"/>
 <polygon style="fill: rgb(216, 216, 216);" points="233 395 269 396 258 386 245 386"/>
 <polygon style="fill: rgb(216, 165, 114);" points="313 372 317 359 321 372"/>
 <polygon style="fill: rgb(101, 101, 101);" points="313 372 313 459 321 459 321 372"/>
 <polygon style="fill: rgb(101, 101, 101);" points="315 366 317 359 319 366"/>
-<polygon style="fill: rgb(216, 140, 93);" points="161 392 164 452 189 455 197 393" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -215.520343, 187.392082)"/>
+<polygon style="fill: rgb(10, 140, 200);" points="161 392 164 452 189 455 197 393" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -215.520343, 187.392082)"/>
 <polygon style="fill: rgb(90, 90, 90);" points="144 392 145 375 157 375 156 392" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -197.400827, 162.847525)"/>
 <polygon style="fill: rgb(216, 216, 216);" points="140 399 176 400 165 390 152 390" transform="matrix(0.807078, -0.590445, 0.590445, 0.807078, -202.744027, 169.494464)"/>
 <path d="M 340 -349 C 340 -337 332 -337 326 -337 C 322 -337 319 -339 316 -342 C 312 -337 292 -335 292 -335 L 292 -363 C 292 -363 312 -361 316 -356 C 319 -359 322 -361 326 -361 C 332 -361 340 -361 340 -349 Z" style="fill: rgb(75, 87, 63);"/>
@@ -546,8 +546,8 @@
 <rect y="40" width="14" height="14" style="stroke-width: 2px; stroke: rgb(149, 149, 149); fill: rgb(207, 207, 207);" rx="3" ry="3" id="Minus" x="10"/>
 <rect x="28" y="39" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
 <rect x="76" y="40" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="Plus"/>
-<rect x="76" y="59" width="14" height="14" style="stroke-width: 2px; fill: rgb(118, 207, 89); stroke: rgb(81, 142, 61);" rx="3" ry="3" id="Start"/>
-<rect y="59" width="14" height="14" style="stroke-width: 2px; fill: rgb(193, 53, 73); stroke: rgb(151, 41, 58);" rx="3" ry="3" id="Reset" x="10"/>
+<rect x="76" y="60" width="14" height="14" style="stroke-width: 2px; fill: rgb(118, 207, 89); stroke: rgb(81, 142, 61);" rx="3" ry="3" id="Start"/>
+<rect y="60" width="14" height="14" style="stroke-width: 2px; fill: rgb(193, 53, 73); stroke: rgb(151, 41, 58);" rx="3" ry="3" id="Reset" x="10"/>
 <rect width="100" height="100" style="fill: rgb(169, 169, 169);" x="-220"/>
 <rect y="63" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-1" x="-210"/>
 <rect y="44" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-2" x="-210"/>
@@ -590,4 +590,15 @@
 <polygon style="fill: rgb(193, 53, 73);" points="26 247 17 245 12 247 12 259 14 257 14 252 16 251 16 254 18 253 17 250"/>
 </g>
 <text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 11px; text-anchor: end;" x="68" y="50">00000</text>
+<ellipse style="fill: rgb(216, 216, 216);" cx="-83" cy="135" rx="12" ry="14"/>
+<ellipse style="fill: rgb(233, 233, 233);" cx="-72" cy="136" rx="2" ry="4"/>
+<path d="M -72 135 C -72 141 -76 145 -84 145 C -92 145 -96 141 -96 135 C -96 129 -90 127 -84 127 C -76 127 -72 129 -72 135 Z" style="fill: rgb(233, 233, 233);"/>
+<path d="M -74 135 C -74 142 -78 144 -84 144 C -90 144 -94 142 -94 135 C -94 128 -89 128 -84 128 C -78 128 -74 128 -74 135 Z" style="fill: rgb(206, 181, 107);"/>
+<ellipse style="fill: rgb(216, 140, 93);" cx="-83" cy="412" rx="11" ry="26"/>
+<rect x="-84" y="386" width="22" height="52" style="fill: rgb(216, 140, 93);"/>
+<ellipse style="fill: rgb(180, 117, 77);" cx="-62" cy="412" rx="11" ry="26"/>
+<polyline style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="-112 386"/>
+<polygon style="fill: rgb(180, 117, 77);" points="-83 438 -103 454 -78 457 -62 438"/>
+<polygon style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="-113 453"/>
+<ellipse style="fill: rgb(145, 94, 62);" cx="-62" cy="412" rx="6" ry="14"/>
 </svg>

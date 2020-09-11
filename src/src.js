@@ -60,20 +60,85 @@ const D = document,
 			],
 			nowhere: [
 				{
-					text: () => 'Do you see anything out there?',
+					text: () => state.madeEva
+						? null
+						: 'Do you see anything out there?',
 					action: () => setTicker([
-						`${labels.jevgeni} No, nothing at all, it's all totally black…`,
+						`${labels.jevgeni} No, nothing at all, it's all black… how's that possible?`,
 					]),
 				},
 				{
 					text: () => state.errorSeen
-						? 'How do we fix the drive? What does "err" mean?'
+						? null
+						: `How can we can back?`,
+					action: () => setTicker([
+						`${labels.jevgeni} I suppose we have to fix the drive somehow.`,
+					]),
+				},
+				{
+					text: () => state.errorSeen
+						? 'What does "err" mean?'
 						: null,
 					action: () => setTicker([
-						`${labels.jevgeni} If only I could remember…`,
+						`${labels.jevgeni} Hm, "err" means  error, of course.`,
+					]),
+				},
+				{
+					text: () => state.errorSeen
+						? 'How do we fix the drive?'
+						: null,
+					action: () => setTicker([
+						`${labels.jevgeni} I don't know how - didn't you talk to the scientists?`,
+					], () => dialog(convs.jevgeni.remember)),
+				},
+			],
+			remember: [
+				{
+					text: () => `Yes, but I don't remember it so well. Do you?`,
+					action: () => setTicker([
+						`${labels.jevgeni} No, I didn't talk to them at all. Do you really remember nothing?`,
+					], () => dialog(convs.jevgeni.remember2)),
+				},
+				{
+					text: () => state.panicked
+						? `I don't care! Just bring us home!`
+						: `I don't know!`,
+					action: () => {
+						state.panicked = true
+						setTicker([
+							`${labels.jevgeni} Calm down, we need to keep calm or we're lost. Do you remember what the scientists said?`,
+						])
+					},
+				},
+			],
+			remember2: [
+				{
+					text: () => `Don't put me under pressure!`,
+					action: () => setTicker([
+						`${labels.jevgeni} Look, we've got to solve this somehow. You better start remembering. Is there anything I can do to help you remember?`,
+					], () => dialog(convs.jevgeni.drugs)),
+				},
+				{
+					text: () => `I remember there was a formula on a blackboard that seemed important… it looked like the Pythagorean theorem but with some additional symbols…`,
+					action: () => setTicker([
+						`${labels.jevgeni} Keep thinking!`,
 					]),
 				},
 			],
+			drugs: [
+				{
+					text: () => `Do we have any drugs?`,
+					action: () => setTicker([
+						`${labels.jevgeni} Look in the storage! That's all we have!`,
+					]),
+				},
+				{
+					text: () => `Yes, shut up and let me think.`,
+					action: () => setTicker([
+						`${labels.jevgeni} As you wish.`,
+					]),
+				},
+			]
 		},
 		groundControl: {
 			before: [
@@ -169,18 +234,18 @@ const D = document,
 				setHotspot(
 					hotspots.storage1,
 					'Look into storage space one',
-					() => setTicker(['A couple of space suits.'])
+					() => setTicker(['A couple of space suits. Might come in handy.'])
 				)
 				setHotspot(
 					hotspots.storage2,
 					'Look into storage space two',
-					() => setTicker(['Proviant, adhesive tape and a towel.'])
+					() => setTicker(['Proviant, adhesive tape and a towel. You should always have a towel.'])
 				)
 				setHotspot(
 					hotspots.innerHatch,
 					'Inner hatch',
 					() => setTicker([state.nowhere
-						? `${labels.you} That won't help.`
+						? `Doesn't help now.`
 						: `${labels.jevgeni} Don't lock me up!`
 					])
 				)
@@ -216,7 +281,7 @@ const D = document,
 					}
 				} else if (!state.whereIsEarth) {
 					state.whereIsEarth = true
-					setTicker([`${labels.jevgeni} Where's the earth?`])
+					setTicker([`${labels.jevgeni} Where's the earth? And where are the stars?`])
 				}
 				show(this, o)
 			},
@@ -226,7 +291,7 @@ const D = document,
 				setBackground('#111')
 				state.nowhere = true
 				setTicker([
-					`${labels.you} What happened? Where's the earth??`,
+					`${labels.you} What happened?`,
 				], () => setupScene('insideSoyuz'))
 				show(this, [objects.soyuz])
 			},
@@ -241,6 +306,7 @@ const D = document,
 		eva: {
 			setup: function() {
 				setBackground('#111')
+				state.madeEva = true
 				setHotspot(
 					hotspots.soyuzBody,
 					'Get back inside',
@@ -364,12 +430,13 @@ const D = document,
 					})
 				setHotspot(
 					hotspots.start,
-					'Start',
+					'Start the drive',
 					() => {
 						if (state.nowhere) {
 							setTicker([
+								`${labels.you} It doesn't work!`,
 								`${labels.jevgeni} We should find out how to fix it.`,
-							])
+							], () => setupScene('insideSoyuz'))
 						} else if (state.value != 404) {
 							setTicker([
 								`${labels.jevgeni} This doesn't look right…`,
