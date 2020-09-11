@@ -1,4 +1,4 @@
-BUILD = index.html
+BUILD = htdocs/index.html
 ARCHIVE = archive.zip
 
 $(ARCHIVE): $(BUILD)
@@ -6,8 +6,8 @@ $(ARCHIVE): $(BUILD)
 	@echo "$$((10000000 / 13312 * $$(stat -f '%z' $@) / 100000))%" \
 		"($$(stat -f '%z' $@) bytes)"
 
-$(BUILD): src.js preview.html
-	bash squeeze.sh < preview.html > $@
+$(BUILD): src/src.js src/preview.html
+	cd src && bash ../bin/squeeze.sh < preview.html > ../$@
 
 clean:
 	rm -f $(BUILD) $(ARCHIVE)
