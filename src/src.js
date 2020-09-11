@@ -58,20 +58,33 @@ const D = document,
 					]),
 				},
 			],
+			nowhere: [
+				{
+					text: () => 'Do you see anything out there?',
+					action: () => setTicker([
+						`${labels.jevgeni} No, nothing at all, it's all totally black…`,
+					]),
+				},
+			],
 		},
 		groundControl: {
 			before: [
 				{
-					text: () => 'In position, request instructions.',
-					action: () => setTicker([
-						`${labels.groundControl} Copy. Input coordinates.`,
-					]),
+					text: () => state.requestCode
+						? 'What number was it?'
+						: 'In position, ready to start the experimental drive.',
+					action: () => {
+						state.requestCode = true
+						setTicker([
+							`${labels.groundControl} Input 404 - I repeat 404 - into the control panel and start the drive.`,
+						])
+					}
 				},
 				{
 					text: () => 'Jevgeni is a bio hazard.',
 					action: () => setTicker([
 						`${labels.jevgeni} You're exaggerating.`,
-						`${labels.groundControl} Comrades!`,
+						`${labels.groundControl} Focus, Comrade!`,
 					]),
 				},
 			],
@@ -99,7 +112,7 @@ const D = document,
 					y = lerpd(this.startY, this.stopY, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
-			}
+			},
 		},
 		insideSoyuz: {
 			setup: function() {
@@ -109,20 +122,35 @@ const D = document,
 					'Look outside',
 					() => setupScene('portholeEarth')
 				)
+				hotspots.porthole.style = `fill: ${state.nowhere
+					? '#111'
+					: '#0a8cc8'}; stroke-width: 2px; stroke: #cacbcf;`
 				setHotspot(
 					hotspots.jevgeni,
 					'Talk to Jevgeni',
-					() => dialog(convs.jevgeni.before)
+					() => dialog(state.nowhere
+						? convs.jevgeni.nowhere
+						: convs.jevgeni.before
+					)
 				)
 				setHotspot(
 					hotspots.hatch,
 					'Go for a space walk',
-					() => setupScene('nowhere')
+					() => state.nowhere
+						? setupScene('nowhere')
+						: setTicker([
+							`${labels.jevgeni} Not yet, we have a mission, comrade!`,
+						])
 				)
 				setHotspot(
 					hotspots.radio,
 					'Talk to ground control',
-					() => dialog(convs.groundControl.before)
+					() => state.nowhere
+						? setTicker([
+							`zzz…`,
+							`${labels.jevgeni} No contact… I guess we've got to help ourselves!`,
+						])
+						: dialog(convs.groundControl.before)
 				)
 				setHotspot(
 					hotspots.controls,
@@ -139,6 +167,14 @@ const D = document,
 					'Look into storage space two',
 					() => setTicker(['Proviant, adhesive tape and a towel.'])
 				)
+				setHotspot(
+					hotspots.innerHatch,
+					'Inner hatch',
+					() => setTicker([state.nowhere
+						? `${labels.you} That won't help.`
+						: `${labels.jevgeni} Don't lock me up!`
+					])
+				)
 				show(this, [
 					objects.soyuzInside,
 					objects.cosmonaut1Floating,
@@ -152,42 +188,58 @@ const D = document,
 					`translate(${centerX}px, ${y + f}px) scale(1.25)`
 				objects.cosmonaut2Floating.style.transform =
 					`translate(${centerX - 162}px, ${y - f}px) scale(1.25)`
-			}
+			},
 		},
 		portholeEarth: {
 			setup: function() {
 				setBackground('#111')
 				setHotspot(
 					hotspots.stopLooking,
-					'Stop looking',
+					'Stop looking out the window',
 					() => setupScene('insideSoyuz')
 				)
 				const o = [objects.porthole]
-				let messages
 				if (!state.nowhere) {
 					o.unshift(objects.earth)
-					messages = [`${labels.jevgeni} Almost above Africa…`]
+					if (!state.aboveAfrica) {
+						state.aboveAfrica = true
+						setTicker([`${labels.jevgeni} Above Africa…`])
+					}
 				} else {
-					messages = [`${labels.jevgeni} Where's the earth?`]
+					setTicker([`${labels.jevgeni} Where's the earth?`])
 				}
-				setTicker(messages)
 				show(this, o)
 			},
 		},
 		nowhere: {
 			setup: function() {
 				setBackground('#111')
-				show(this, [objects.soyuz, objects.cosmonaut])
-				setHotspot(
-					hotspots.soyuzBody,
-					'Get back inside',
-					() => setupScene('insideSoyuz')
-				)
-				setTicker([
-					`${labels.you} Where are the stars?`,
-					`${labels.you} Where is everything?`,
-					`${labels.you} WHERE ARE WE?`,
-				])
+				state.nowhere = true
+				const o = [objects.soyuz]
+				if (state.arrivedInNowhere) {
+					o.push(objects.cosmonaut)
+					this.showCosmonaut = true
+					setHotspot(
+						hotspots.soyuzBody,
+						'Get back inside',
+						() => setupScene('insideSoyuz')
+					)
+					if (!state.outInNowhereBefore) {
+						state.outInNowhereBefore = true
+						setTicker([
+							`${labels.you} Where are the stars?`,
+							`${labels.you} Where is everything?`,
+							`${labels.you} WHERE ARE WE?`,
+						])
+					}
+				} else {
+					this.showCosmonaut = false
+					state.arrivedInNowhere = true
+					setTicker([
+						`${labels.you} What happened? Where's the earth??`,
+					], () => setupScene('insideSoyuz'))
+				}
+				show(this, o)
 			},
 			draw: function(now) {
 				const s = M.sin(now * .002),
@@ -195,9 +247,11 @@ const D = document,
 					sy = centerY - 50 - s
 				objects.soyuz.style.transform =
 					`translate(${centerX - 50}px, ${sy}px) rotateZ(12deg)`
-				objects.cosmonaut.style.transform =
-					`translate(${centerX + 20}px, ${cy}px) scale(.2)`
-			}
+				if (this.showCosmonaut) {
+					objects.cosmonaut.style.transform =
+						`translate(${centerX + 20}px, ${cy}px) scale(.2)`
+				}
+			},
 		},
 		library: {
 			setup: function() {
@@ -266,24 +320,47 @@ const D = document,
 		},
 		panel: {
 			setup: function() {
+				state.value = state.value || 400
+				hotspots.value.innerHTML = state.value
 				setBackground('#a9a9a9')
 				setHotspot(
-					hotspots.stopControl,
+					hotspots.reset,
 					'Back',
 					() => setupScene('insideSoyuz')
 				)
-				setHotspot(hotspots.xPlus, 'x+')
-				setHotspot(hotspots.yPlus, 'y+')
-				setHotspot(hotspots.zPlus, 'z+')
-				setHotspot(hotspots.tPlus, 't+')
-				setHotspot(hotspots.xMinus, 'x-')
-				setHotspot(hotspots.yMinus, 'y-')
-				setHotspot(hotspots.zMinus, 'z-')
-				setHotspot(hotspots.tMinus, 't-')
-				setHotspot(hotspots.start, 'Start')
+				setHotspot(
+					hotspots.plus,
+					'Increase',
+					() => {
+						hotspots.value.innerHTML = ++state.value
+					})
+				setHotspot(
+					hotspots.minus,
+					'Decrease',
+					() => {
+						state.value = M.max(0, state.value - 1)
+						hotspots.value.innerHTML = state.value
+					})
+				setHotspot(
+					hotspots.start,
+					'Start',
+					() => {
+						if (state.nowhere) {
+							setTicker([
+								`${labels.jevgeni} We probably should find out what has gone wrong first.`,
+							])
+						} else if (state.value != 404) {
+							setTicker([
+								`${labels.jevgeni} This doesn't look right…`,
+							])
+						} else {
+							setupScene('nowhere')
+						}
+					}
+				)
 				show(this, [objects.panel])
 			},
-		}
+		},
 	}
 
 let animationRequestId,
@@ -523,18 +600,14 @@ W.onload = function() {
 		controls: D.getElementById('Controls'),
 		storage1: D.getElementById('Storage1'),
 		storage2: D.getElementById('Storage2'),
+		innerHatch: D.getElementById('InnerHatch'),
 		jevgeni: D.getElementById('Jevgeni'),
 		stopLooking: D.getElementById('StopLooking'),
-		stopControl: D.getElementById('StopControl'),
-		xPlus: D.getElementById('x+'),
-		yPlus: D.getElementById('y+'),
-		zPlus: D.getElementById('z+'),
-		tPlus: D.getElementById('t+'),
-		xMinus: D.getElementById('x-'),
-		yMinus: D.getElementById('y-'),
-		zMinus: D.getElementById('z-'),
-		tMinus: D.getElementById('t-'),
+		plus: D.getElementById('Plus'),
+		minus: D.getElementById('Minus'),
+		value: D.getElementById('Value'),
 		start: D.getElementById('Start'),
+		reset: D.getElementById('Reset'),
 		goToInfirmaryLeft: D.getElementById('GoToInfirmaryLeft'),
 		goToInfirmaryRight: D.getElementById('GoToInfirmaryRight'),
 		goToConstruction: D.getElementById('GoToConstruction'),

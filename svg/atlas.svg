@@ -542,12 +542,12 @@
 <polygon style="fill: rgb(233, 234, 237);" points="121 17 121 20 199 20 198 17"/>
 <rect x="135" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
 <rect x="179" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
-<rect width="100" height="100" style="fill: rgb(169, 169, 169);" x="-110"/>
-<rect y="40" width="14" height="14" style="stroke-width: 2px; stroke: rgb(149, 149, 149); fill: rgb(207, 207, 207);" rx="3" ry="3" id="Minus" x="-100"/>
-<rect x="-82" y="39" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
-<rect x="-34" y="40" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="Plus"/>
-<rect x="-34" y="59" width="14" height="14" style="stroke-width: 2px; fill: rgb(118, 207, 89); stroke: rgb(81, 142, 61);" rx="3" ry="3" id="Start"/>
-<rect y="59" width="14" height="14" style="stroke-width: 2px; fill: rgb(193, 53, 73); stroke: rgb(151, 41, 58);" rx="3" ry="3" id="StopControl" x="-100"/>
+<rect width="100" height="100" style="fill: rgb(169, 169, 169);"/>
+<rect y="40" width="14" height="14" style="stroke-width: 2px; stroke: rgb(149, 149, 149); fill: rgb(207, 207, 207);" rx="3" ry="3" id="Minus" x="10"/>
+<rect x="28" y="39" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
+<rect x="76" y="40" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="Plus"/>
+<rect x="76" y="59" width="14" height="14" style="stroke-width: 2px; fill: rgb(118, 207, 89); stroke: rgb(81, 142, 61);" rx="3" ry="3" id="Start"/>
+<rect y="59" width="14" height="14" style="stroke-width: 2px; fill: rgb(193, 53, 73); stroke: rgb(151, 41, 58);" rx="3" ry="3" id="Reset" x="10"/>
 <rect width="100" height="100" style="fill: rgb(169, 169, 169);" x="-220"/>
 <rect y="63" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-1" x="-210"/>
 <rect y="44" width="14" height="14" style="stroke-width: 2px; fill: rgb(207, 207, 207); stroke: rgb(149, 149, 149);" rx="3" ry="3" id="rect-2" x="-210"/>
@@ -589,4 +589,5 @@
 <polygon style="fill: rgb(201, 158, 147);" points="14 249 24 247 26 255 23 261 19 261 20 266 16 269 11 266 12 259"/>
 <polygon style="fill: rgb(193, 53, 73);" points="26 247 17 245 12 247 12 259 14 257 14 252 16 251 16 254 18 253 17 250"/>
 </g>
+<text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 11px; text-anchor: end;" x="68" y="50">00000</text>
 </svg>
