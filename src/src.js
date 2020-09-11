@@ -163,9 +163,14 @@ const D = document,
 					() => setupScene('insideSoyuz')
 				)
 				const o = [objects.porthole]
+				let messages
 				if (!state.nowhere) {
 					o.unshift(objects.earth)
+					messages = [`${labels.jevgeni} Almost above Africa…`]
+				} else {
+					messages = [`${labels.jevgeni} Where's the earth?`]
 				}
+				setTicker(messages)
 				show(this, o)
 			},
 		},
@@ -247,11 +252,11 @@ const D = document,
 					'Go to infirmary',
 					() => setupScene('infirmary')
 				)
-				const y = centerY - 20
+				const y = centerY - 25
 				objects.technician.style.transform =
-					`translate(${centerX - 50}px, ${y}px)`
+					`translate(${centerX - 60}px, ${y}px)`
 				objects.boris.style.transform =
-					`translate(${centerX - 135}px, ${y - 5}px)`
+					`translate(${centerX + 25}px, ${y - 5}px) scaleX(-1)`
 				show(this, [
 					objects.construction,
 					objects.technician,
@@ -430,14 +435,16 @@ function resize() {
 	style.transform = `scale(${ratio})`
 	style.display = 'block'
 
-	const scale3 = scale(3)
+	const scale3 = scale(3),
+		center = '50px 50px'
 	objects.earth.style.transform = scale(5)
-	objects.soyuz.style.transformOrigin = '50px 50px'
+	objects.soyuz.style.transformOrigin = center
 	objects.soyuzInside.style.transform = scale3
 	objects.porthole.style.transform = scale3
 	objects.library.style.transform = scale3
 	objects.infirmary.style.transform = scale3
 	objects.construction.style.transform = scale3
+	objects.boris.style.transformOrigin = center
 	objects.panel.style.transform = scale3
 
 	currentScene.setup()
