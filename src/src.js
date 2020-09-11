@@ -137,7 +137,7 @@ const D = document,
 					hotspots.hatch,
 					'Go for a space walk',
 					() => state.nowhere
-						? setupScene('nowhere')
+						? setupScene('eva')
 						: setTicker([
 							`${labels.jevgeni} Not yet, we have a mission, comrade!`,
 						])
@@ -215,31 +215,10 @@ const D = document,
 			setup: function() {
 				setBackground('#111')
 				state.nowhere = true
-				const o = [objects.soyuz]
-				if (state.arrivedInNowhere) {
-					o.push(objects.cosmonaut)
-					this.showCosmonaut = true
-					setHotspot(
-						hotspots.soyuzBody,
-						'Get back inside',
-						() => setupScene('insideSoyuz')
-					)
-					if (!state.outInNowhereBefore) {
-						state.outInNowhereBefore = true
-						setTicker([
-							`${labels.you} Where are the stars?`,
-							`${labels.you} Where is everything?`,
-							`${labels.you} WHERE ARE WE?`,
-						])
-					}
-				} else {
-					this.showCosmonaut = false
-					state.arrivedInNowhere = true
-					setTicker([
-						`${labels.you} What happened? Where's the earth??`,
-					], () => setupScene('insideSoyuz'))
-				}
-				show(this, o)
+				setTicker([
+					`${labels.you} What happened? Where's the earth??`,
+				], () => setupScene('insideSoyuz'))
+				show(this, [objects.soyuz])
 			},
 			draw: function(now) {
 				const s = M.sin(now * .002),
@@ -247,10 +226,34 @@ const D = document,
 					sy = centerY - 50 - s
 				objects.soyuz.style.transform =
 					`translate(${centerX - 50}px, ${sy}px) rotateZ(12deg)`
-				if (this.showCosmonaut) {
-					objects.cosmonaut.style.transform =
-						`translate(${centerX + 20}px, ${cy}px) scale(.2)`
+			},
+		},
+		eva: {
+			setup: function() {
+				setBackground('#111')
+				setHotspot(
+					hotspots.soyuzBody,
+					'Get back inside',
+					() => setupScene('insideSoyuz')
+				)
+				if (!state.evaBefore) {
+					state.evaBefore = true
+					setTicker([
+						`${labels.you} Where are the stars?`,
+						`${labels.you} Where is everything?`,
+						`${labels.you} WHERE ARE WE?`,
+					])
 				}
+				show(this, [objects.soyuz, objects.cosmonaut])
+			},
+			draw: function(now) {
+				const s = M.sin(now * .002),
+					cy = centerY - 30 + s,
+					sy = centerY - 50 - s
+				objects.soyuz.style.transform =
+					`translate(${centerX - 50}px, ${sy}px) scale(2) rotateZ(55deg)`
+				objects.cosmonaut.style.transform =
+					`translate(${centerX + 20}px, ${cy}px)`
 			},
 		},
 		library: {
