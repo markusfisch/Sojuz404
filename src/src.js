@@ -6,6 +6,7 @@ const D = document,
 	lerp = (a, b, t) => (1 - t) * a + t * b,
 	lerpd = (a, b, t, d) => lerp(a, b, M.min(1, t / d)),
 	setBackground = (color) => D.documentElement.style.background = color,
+	fadeOut = ['#0002', '#0004', '#0008', '#000a', '#000'],
 	ticker = {},
 	labels = {
 		you: '<span class="You">You:</span>',
@@ -236,7 +237,7 @@ const D = document,
 				setHotspot(
 					hotspots.controls,
 					'Use the controls',
-					() => setupScene('panel'),
+					() => setupScene('panel')
 				)
 				setHotspot(
 					hotspots.storage1,
@@ -342,6 +343,16 @@ const D = document,
 					'Get back inside',
 					() => setupScene('insideSoyuz')
 				)
+				hotspots.flap.style.visibility = state.knowFlap
+					? 'visible'
+					: 'hidden'
+				if (state.knowFlap) {
+					setHotspot(
+						hotspots.flap,
+						'Open flap',
+						() => setupScene('service')
+					)
+				}
 				if (!state.evaBefore) {
 					state.evaBefore = true
 					setTicker([
@@ -486,6 +497,32 @@ const D = document,
 				show(this, [objects.panel])
 			},
 		},
+		service: {
+			setup: function() {
+				setBackground('#e0e1e6')
+				show(this, [objects.service])
+			}
+		},
+		home: {
+			setup: function() {
+				setBackground('#111')
+				objects.soyuz.style.transform =
+					`translate(${centerX}px, ${centerY}px) rotateZ(45deg)`
+				show(this, [objects.earth, objects.soyuz])
+				setTicker([
+					`${labels.jevgeni} We're home!`,
+					`${labels.you} Yes!!`,
+				], () => flashToScene('end', fadeOut))
+			}
+		},
+		end: {
+			setup: function() {
+				setBackground('#111')
+				message.style.bottom = '0'
+				message.style.background = '#111'
+				showMessage('The End')
+			}
+		},
 	}
 
 let animationRequestId,
@@ -507,6 +544,21 @@ let animationRequestId,
 		inventory: [],
 		scene: 'opening',
 	}
+
+function flashToScene(name, colors, index) {
+	index = index || 0
+	fx.style.background = colors[index]
+	fx.style.display = 'block'
+	setTimeout(function() {
+		++index
+		if (index >= colors.length) {
+			fx.style.display = 'none'
+			setupScene(name)
+		} else {
+			flashToScene(name, colors, index)
+		}
+	}, 100)
+}
 
 function hideInventory() {
 	state.inventory.forEach((name) => {
@@ -563,6 +615,9 @@ function combineItems(items) {
 		updateInventory()
 		setTicker([`${labels.you} I'm not hungry anymore.`])
 		return
+	} else if (a == 'Me' && b == 'nurse') {
+		flashToScene('library', fadeOut)
+		return
 	} else if (a == 'helmet' && b == 'tape') {
 		newItem = 'nurse'
 	} else {
@@ -576,25 +631,12 @@ function combineItems(items) {
 	updateInventory()
 }
 
-function flashToScene(name, colors, index) {
-	index = index || 0
-	fx.style.background = colors[index]
-	fx.style.display = 'block'
-	setTimeout(function() {
-		++index
-		if (index >= colors.length) {
-			fx.style.display = 'none'
-			setupScene(name)
-		} else {
-			flashToScene(name, colors, index)
-		}
-	}, 100)
-}
-
 function setHotspot(hotspot, message, action) {
-	const children = hotspot.children
+	const name = hotspot.id,
+		children = hotspot.children
 	for (let i = children.length; i--;) {
 		const child = children[i]
+		child.name = name
 		child.message = message
 		child.action = action
 	}
@@ -608,6 +650,25 @@ function show(scene, list) {
 	}
 	list.forEach((o) => o.style.visibility = 'visible')
 	scene.draw(Date.now())
+}
+
+function dialog(conversation) {
+	inDialog = true
+	message.innerText = ''
+	const ul = D.createElement('ol')
+	conversation.map(function(option) {
+		const text = option.text()
+		if (text) {
+			const li = D.createElement('li'),
+				a = D.createElement('a')
+			a.onclick = option.action
+			a.innerHTML = text
+			li.appendChild(a)
+			ul.appendChild(li)
+		}
+	})
+	message.appendChild(ul)
+	message.style.display = 'block'
 }
 
 function clear() {
@@ -635,25 +696,6 @@ function setTicker(messages, runAfter) {
 	return ticker.messages.reduce((total, m) => total + m.duration, 0)
 }
 
-function dialog(conversation) {
-	inDialog = true
-	message.innerText = ''
-	const ul = D.createElement('ol')
-	conversation.map(function(option) {
-		const text = option.text()
-		if (text) {
-			const li = D.createElement('li'),
-				a = D.createElement('a')
-			a.onclick = option.action
-			a.innerHTML = text
-			li.appendChild(a)
-			ul.appendChild(li)
-		}
-	})
-	message.appendChild(ul)
-	message.style.display = 'block'
-}
-
 function resetTicker() {
 	ticker.runAfter = ticker.messages = null
 	ticker.pointer = 0
@@ -675,10 +717,7 @@ function tickNext(now) {
 }
 
 function tick(now) {
-	if (!ticker.messages) {
-		return
-	}
-	if (now > ticker.nextTick) {
+	if (ticker.messages && now > ticker.nextTick) {
 		tickNext(now)
 	}
 }
@@ -835,6 +874,7 @@ W.onload = function() {
 	}
 	hotspots = {
 		soyuzBody: D.getElementById('SoyuzBody'),
+		flap: D.getElementById('Flap'),
 		window: D.getElementById('Window'),
 		hatch: D.getElementById('Hatch'),
 		radio: D.getElementById('Radio'),

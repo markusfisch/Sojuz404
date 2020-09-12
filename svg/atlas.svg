@@ -523,25 +523,22 @@
 <polygon style="fill: rgb(61, 48, 37);" points="68 -71 68 -72 86 -72 85 -71"/>
 <polygon style="fill: rgb(61, 48, 37);" points="68 -71 68 -72 67 -73 67 -72"/>
 <polygon style="fill: rgb(232, 232, 232);" points="164 -67 164 -79 173 -79 173 -67"/>
-<polygon style="fill: rgb(203, 204, 208);" points="22 -252 22 -246 30 -246 30 -252"/>
-<polygon style="fill: rgb(203, 204, 208);" points="22 -240 22 -236 30 -236 30 -240"/>
-<polygon style="fill: rgb(203, 204, 208);" points="22 -235 22 -231 30 -231 30 -235"/>
-<polygon style="fill: rgb(50, 59, 42);" points="33 -245 33 -241 37 -241 37 -245"/>
+<polygon style="fill: rgb(203, 204, 208);" points="22 -248 22 -241 30 -241 30 -248" id="Flap"/>
 <polygon style="fill: rgb(193, 188, 193);" points="124 -39 118 -35 118 -78 123 -77"/>
 <polygon style="fill: rgb(83, 81, 83);" points="118 -37 121 -39 121 -77 118 -78" id="GoToConstruction"/>
 <polygon style="fill: rgb(174, 169, 174);" points="124 -39 121 -39 121 -77 123 -77"/>
 <polygon style="fill: rgb(193, 188, 193);" points="197 -38 202 -34 203 -80 198 -78"/>
 <polygon style="fill: rgb(83, 81, 83);" points="199 -38 202 -36 203 -80 200 -78" id="GoToLibrary"/>
 <polygon style="fill: rgb(174, 169, 174);" points="199 -38 197 -38 198 -78 200 -78"/>
-<rect width="100" height="100" style="fill: rgb(224, 225, 230);" x="110"/>
-<polygon style="fill: rgb(156, 157, 159);" points="131 38 121 20 199 20 189 38"/>
-<polygon style="fill: rgb(203, 204, 208);" points="131 38 131 80 189 80 189 38"/>
-<polygon style="fill: rgb(186, 187, 190);" points="137 75 131 80 189 80 183 75"/>
-<polygon style="fill: rgb(156, 157, 159);" points="137 43 137 75 183 75 183 43"/>
-<polygon style="fill: rgb(186, 187, 190);" points="131 38 137 43 183 43 189 38"/>
-<polygon style="fill: rgb(233, 234, 237);" points="121 17 121 20 199 20 198 17"/>
-<rect x="135" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
-<rect x="179" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
+<rect width="100" height="100" style="fill: rgb(224, 225, 230);"/>
+<polygon style="fill: rgb(156, 157, 159);" points="21 38 11 20 89 20 79 38"/>
+<polygon style="fill: rgb(203, 204, 208);" points="21 38 21 80 79 80 79 38"/>
+<polygon style="fill: rgb(186, 187, 190);" points="27 75 21 80 79 80 73 75"/>
+<polygon style="fill: rgb(156, 157, 159);" points="27 43 27 75 73 75 73 43"/>
+<polygon style="fill: rgb(186, 187, 190);" points="21 38 27 43 73 43 79 38"/>
+<polygon style="fill: rgb(233, 234, 237);" points="11 17 11 20 89 20 88 17"/>
+<rect x="25" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
+<rect x="69" y="36" width="6" height="3" style="fill: rgb(110, 110, 110);"/>
 <rect width="100" height="100" style="fill: rgb(169, 169, 169);" x="-110"/>
 <rect y="40" width="14" height="14" style="stroke-width: 2px; stroke: rgb(149, 149, 149); fill: rgb(207, 207, 207);" rx="3" ry="3" id="Minus" x="-100"/>
 <rect x="-82" y="39" width="44" height="16" style="fill: rgb(59, 59, 59); stroke: rgb(85, 85, 85);" rx="3" ry="3"/>
