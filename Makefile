@@ -2,7 +2,7 @@ BUILD = htdocs/index.html
 ARCHIVE = archive.zip
 
 $(ARCHIVE): $(BUILD)
-	zip $@ $^
+	zip -j $@ $^
 	@echo "$$((10000000 / 13312 * $$(stat -f '%z' $@) / 100000))%" \
 		"($$(stat -f '%z' $@) bytes, $$((13312 - $$(stat -f '%z' $@))) left)"
 
