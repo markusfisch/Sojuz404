@@ -58,11 +58,11 @@ const D = document,
 						? null
 						: `How can we can back?`,
 					action: () => setTicker([
-						`${labels.jevgeni} I suppose we have to fix the drive somehow.`,
+						`${labels.jevgeni} Let's use the drive!`
 					]),
 				},
 				{
-					text: () => state.errorSeen && !state.needSleep
+					text: () => state.errorSeen
 						? 'How do we fix the drive?'
 						: null,
 					action: () => {
@@ -130,7 +130,9 @@ const D = document,
 					])
 				},
 				{
-					text: () => `Is it really MINUS c²t²?`,
+					text: () => state.itsPlus
+						? `Is it really MINUS c²t²?`
+						: null,
 					action: () => setTicker([
 						`${labels.professor} Yes! That's because the time coordinates is an imaginary number.`,
 					])
@@ -158,6 +160,7 @@ const D = document,
 						? `Do you know the formula square root of x²+y²+z²-c²t²?`
 						: null,
 					action: () => {
+						state.itsPlus = true
 						setTicker([
 							`${labels.technician} Of course, but it's x²+y²+z² PLUS c²t²!`,
 							`${labels.you} Why plus?`,
@@ -288,14 +291,6 @@ const D = document,
 						}
 						setTicker([message])
 					}
-				)
-				setHotspot(
-					hotspots.innerHatch,
-					'Inner hatch',
-					() => setTicker([state.nowhere
-						? `Doesn't help now.`
-						: `${labels.jevgeni} Don't lock me up!`
-					])
 				)
 				show(this, [
 					objects.soyuzInside,
@@ -992,7 +987,6 @@ W.onload = function() {
 		controls: D.getElementById('Controls'),
 		storage1: D.getElementById('Storage1'),
 		storage2: D.getElementById('Storage2'),
-		innerHatch: D.getElementById('InnerHatch'),
 		stopLooking: D.getElementById('StopLooking'),
 		plus: D.getElementById('Plus'),
 		minus: D.getElementById('Minus'),

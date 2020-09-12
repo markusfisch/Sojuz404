@@ -341,7 +341,7 @@
 <path d="M -550 -110 L -230 -110 L -230 210 L -550 210 L -550 -110 Z M -390 11 C -412 11 -429 28 -429 50 C -429 72 -412 89 -390 89 C -368 89 -351 72 -351 50 C -351 28 -368 11 -390 11 Z" style="fill: #E0E1E6;"/>
 <path d="M -220 -110 L -120 -110 L -120 -10 L -220 -10 Z M -170 -99 C -192 -99 -209 -82 -209 -60 C -209 -38 -192 -21 -170 -21 C -148 -21 -131 -38 -131 -60 C -131 -82 -148 -99 -170 -99 Z" style="fill: #E0E1E6;"/>
 <circle style="stroke: #CACBCF; stroke-width: 8px; fill: none;" cx="-170" r="39" cy="-60"/>
-<rect width="100" height="100" style="fill: #2B1F89;" x="110" y="-110"/>
+<rect width="100" height="100" style="fill: #2B1F89;" y="-110" x="110"/>
 <polygon style="fill: #3A29B7;" points="136 -27 148 -32 158 -28 172 -31 187 -28 197 -31 208 -28 206 -40 208 -53 206 -65 208 -87 201 -91 182 -89 170 -92 160 -89 148 -92 136 -89 125 -92 112 -89 114 -73 112 -61 115 -47 113 -40 112 -29 123 -31"/>
 <path d="M 125 -83 L 196 -84 L 195 -40 L 127 -42 L 125 -83 Z" style="fill: #D9D4D9;"/>
 <path d="M 127 -42 L 195 -40 L 204 -33 L 116 -33 L 127 -42 Z" style="fill: #FAF4FA;"/>
@@ -473,12 +473,6 @@
 <ellipse style="fill: #D8D8D8;" cx="85" cy="397" rx="21" ry="6"/>
 <rect x="64" y="391" width="42" height="6" style="fill: #D8D8D8;"/>
 <ellipse style="fill: #F6F6F6;" cx="85" cy="391" rx="21" ry="6"/>
-<ellipse style="fill: #FFFFFF;" cx="5" cy="448" rx="27" ry="8"/>
-<rect x="-22" y="399" width="54" height="49" style="fill: #FFFFFF;"/>
-<ellipse style="fill: #E1E1E1;" cx="5" cy="399" rx="27" ry="8"/>
-<ellipse style="fill: #FFFFFF;" cx="5" cy="396" rx="21" ry="6"/>
-<rect x="-16" y="381" width="42" height="15" style="fill: #FFFFFF;"/>
-<ellipse style="fill: #E1E1E1;" cx="5" cy="381" rx="21" ry="6"/>
 <ellipse style="fill: #D8D8D8;" cx="85" cy="437" rx="21" ry="6" transform="matrix(0.5, 0.866025, -0.866025, 0.5, 418.354998, 143.387859)"/>
 <rect x="64" y="431" width="42" height="6" style="fill: #D8D8D8;" transform="matrix(0.5, 0.866025, -0.866025, 0.5, 418.355011, 143.387848)"/>
 <ellipse style="fill: #F6F6F6;" cx="85" cy="431" rx="21" ry="6" transform="matrix(0.5, 0.866025, -0.866025, 0.5, 418.354998, 143.387859)"/>
@@ -497,7 +491,6 @@
 <polygon style="fill: #E8E8E8;" points="148 -60 147 -61 159 -61 158 -60"/>
 <line style="fill: none; stroke: #FF0900;" x1="153" y1="-72" x2="153" y2="-68"/>
 <line style="fill: none; stroke: #FF0900;" x1="151" y1="-70" x2="155" y2="-70"/>
-<polygon style="fill: #E8E8E8;" points="164 -67 164 -79 173 -79 173 -67"/>
 <polygon style="fill: #CBCCD0;" points="22 -248 22 -241 30 -241 30 -248" id="Flap"/>
 <polygon style="fill: #C1BCC1;" points="124 -39 118 -35 118 -78 123 -77"/>
 <polygon style="fill: #535153;" points="118 -37 121 -39 121 -77 118 -78" id="GoToConstruction"/>
@@ -581,16 +574,16 @@
 <polyline style="stroke: rgb(0, 0, 0); fill: none;" points="252 43 252 48 273 48"/>
 <polyline style="stroke: rgb(0, 0, 0); fill: none;" points="253 75 253 66 227 66"/>
 <polyline style="stroke: rgb(0, 0, 0); fill: none;" points="251 75 251 68 227 68"/>
-<rect x="288" y="-75" width="12" height="9" style="fill: rgb(185, 185, 185);"/>
-<rect x="289" y="-74" width="10" height="7" style="fill: rgb(61, 48, 37);"/>
-<text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 1px; white-space: pre; text-anchor: middle;" x="294" y="-72">x²+y²+z²+c²t²</text>
-<polygon style="fill: rgb(166, 166, 166);" points="288 -66 290 -59 298 -59 300 -66"/>
-<path d="M 27 68 C 22 59 19 49 22 47 L 27 44 L 48 81 L 43 84 C 40 85 33 79 27 68 Z" style="fill: #D8D8D8;"/>
-<path d="M 48 81 C 45 82 38 76 32 65 C 27 55 24 46 27 44 C 30 43 37 49 43 59 C 49 70 51 79 48 81 Z" style="fill: #F6F6F6;"/>
-<path d="M -22 499 L 32 499 L 32 548 C 32 552 20 556 5 556 C -10 556 -22 552 -22 548 Z" style="fill: #FFFFFF;"/>
-<ellipse style="fill: #E1E1E1;" cx="5" cy="499" rx="27" ry="8"/>
-<path d="M 5 502 C -7 502 -16 499 -16 496 L -16 481 L 26 481 L 26 496 C 26 499 17 502 5 502 Z" style="fill: #FFFFFF;"/>
-<ellipse style="fill: #E1E1E1;" cx="5" cy="481" rx="21" ry="6"/>
-<path d="M 73 38 C 78 29 81 19 78 17 L 73 14 L 52 51 L 57 54 C 60 55 67 49 73 38 Z" style="fill: #D8D8D8;"/>
-<path d="M 52 51 C 55 52 62 46 68 35 C 73 25 76 16 73 14 C 70 13 63 19 57 29 C 51 40 49 49 52 51 Z" style="fill: #F6F6F6;"/>
+<rect x="338" y="-75" width="12" height="9" style="fill: rgb(185, 185, 185);"/>
+<rect x="339" y="-74" width="10" height="7" style="fill: rgb(61, 48, 37);"/>
+<text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 1px; white-space: pre; text-anchor: middle;" x="344" y="-72">x²+y²+z²+c²t²</text>
+<polygon style="fill: rgb(166, 166, 166);" points="338 -66 340 -59 348 -59 350 -66"/>
+<path d="M 67 538 C 62 529 59 519 62 517 L 67 514 L 88 551 L 83 554 C 80 555 73 549 67 538 Z" style="fill: #D8D8D8;"/>
+<path d="M 88 551 C 85 552 78 546 72 535 C 67 525 64 516 67 514 C 70 513 77 519 83 529 C 89 540 91 549 88 551 Z" style="fill: #F6F6F6;"/>
+<path d="M -18 394 L 36 394 L 36 443 C 36 447 24 451 9 451 C -6 451 -18 447 -18 443 Z" style="fill: #FFFFFF;"/>
+<ellipse style="fill: #E1E1E1;" cx="9" cy="394" rx="27" ry="8"/>
+<path d="M 9 397 C -3 397 -12 394 -12 391 L -12 376 L 30 376 L 30 391 C 30 394 21 397 9 397 Z" style="fill: #FFFFFF;"/>
+<ellipse style="fill: #E1E1E1;" cx="9" cy="376" rx="21" ry="6"/>
+<path d="M 113 508 C 118 499 121 489 118 487 L 113 484 L 92 521 L 97 524 C 100 525 107 519 113 508 Z" style="fill: #D8D8D8;"/>
+<path d="M 92 521 C 95 522 102 516 108 505 C 113 495 116 486 113 484 C 110 483 103 489 97 499 C 91 510 89 519 92 521 Z" style="fill: #F6F6F6;"/>
 </svg>
