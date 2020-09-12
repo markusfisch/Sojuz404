@@ -648,7 +648,7 @@ function updateOperations() {
 	}
 	if (correct) {
 		state.repaired = true
-		state.value = 199
+		state.value = 200
 		setTicker([
 			`${labels.you} That looks good!`
 		])
