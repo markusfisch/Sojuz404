@@ -12,6 +12,9 @@ const D = document,
 		you: '<span class="You">You:</span>',
 		jevgeni: '<span class="Jevgeni">Jevgeni:</span>',
 		groundControl: '<span class="GroundControl">Ground Control:</span>',
+		professor: '<span class="Professor">Professor:</span>',
+		nurse: '<span class="Nurse">Olga:</span>',
+		technician: '<span class="Technician">Vitali:</span>',
 	},
 	convs = {
 		jevgeni: {
@@ -28,34 +31,9 @@ const D = document,
 					},
 				},
 				{
-					text: () => state.onCourse
-						? null
-						: 'Are we still on course?',
-					action: () => {
-						state.onCourse = true
-						setTicker([
-							`${labels.jevgeni} Of course are we on course. Is this a trick question?`,
-						], () => setDialog(convs.jevgeni.course))
-					},
-				},
-				{
 					text: () => 'Would you please stop farting?',
 					action: () => setTicker([
 						`${labels.jevgeni} This was the last one. Promise.`
-					]),
-				},
-			],
-			course: [
-				{
-					text: () => 'No, just controlling our parameters like good Cosmonauts should do.',
-					action: () => setTicker([
-						`${labels.jevgeni} Well, then, yes, we are still on course, of course.`,
-					]),
-				},
-				{
-					text: () => 'Comrade, I need an answer.',
-					action: () => setTicker([
-						`${labels.jevgeni} Yes, comrade, we are still on course.`,
 					]),
 				},
 			],
@@ -77,66 +55,23 @@ const D = document,
 					]),
 				},
 				{
-					text: () => state.errorSeen
-						? 'What does "err" mean?'
-						: null,
-					action: () => setTicker([
-						`${labels.jevgeni} Hm, "err" means  error, of course.`,
-					]),
-				},
-				{
-					text: () => state.errorSeen
+					text: () => state.errorSeen && !state.needSleep
 						? 'How do we fix the drive?'
 						: null,
-					action: () => setTicker([
-						`${labels.jevgeni} I don't know how - didn't you talk to the scientists?`,
-					], () => setDialog(convs.jevgeni.remember)),
-				},
-			],
-			remember: [
-				{
-					text: () => `Yes, but I don't remember it so well. Do you?`,
-					action: () => setTicker([
-						`${labels.jevgeni} No, I didn't talk to them at all. Do you really remember nothing?`,
-					], () => setDialog(convs.jevgeni.remember2)),
-				},
-				{
-					text: () => state.panicked
-						? `I don't care! Just bring us home!`
-						: `I don't know!`,
 					action: () => {
-						state.panicked = true
+						state.needSleep = true
 						setTicker([
-							`${labels.jevgeni} Calm down, we need to keep calm or we're lost.`,
-						])
-					},
-				},
-			],
-			remember2: [
-				{
-					text: () => `Don't put me under pressure!`,
-					action: () => setTicker([
-						`${labels.jevgeni} Look, we've got to solve this somehow. You better start remembering. Is there anything I can do to help you remember?`,
-					], () => setDialog(convs.jevgeni.drugs)),
+							`${labels.jevgeni} I don't know! Don't you remember?`,
+							`${labels.you} No, not really, but if I could sleep, I could go back in my dreams! I'm a lucid dreamer. I just need something to fall asleep.`,
+						], () => setDialog(convs.jevgeni.remember))
+					}
 				},
 				{
-					text: () => `I remember there was a formula on a blackboard…`,
-					action: () => setTicker([
-						`${labels.jevgeni} Keep thinking!`,
-					]),
-				},
-			],
-			drugs: [
-				{
-					text: () => `Well, do we have any drugs?`,
+					text: () => state.needSleep
+						? `Do we have any drugs?`
+						: null,
 					action: () => setTicker([
 						`${labels.jevgeni} Look in the storage! That's all we have!`,
-					]),
-				},
-				{
-					text: () => `Maybe I just need to sleep?`,
-					action: () => setTicker([
-						`${labels.jevgeni} If it helps…`,
 					]),
 				},
 			],
@@ -154,15 +89,86 @@ const D = document,
 						])
 					}
 				},
+			],
+		},
+		professor: {
+			opening: [
 				{
-					text: () => 'Jevgeni is a bio hazard.',
+					text: () => `How can I fix the super-secret space drive?`,
 					action: () => setTicker([
-						`${labels.jevgeni} You're exaggerating.`,
-						`${labels.groundControl} Focus, Comrade!`,
+						`${labels.professor} How do I know? I didn't build the damn thing. I just designed it.`,
 					]),
 				},
+				{
+					text: () => `What's this formula${state.noticedFormula ? ' again' : ''}, square root of x²+y²+z²-c²t²?`,
+					action: () => {
+						state.noticedFormula = true
+						setTicker([
+							`${labels.professor} It's used to calclulate a spacetime interval. The distance between one point in spacetime and another. This is an essential calculation for the drive to work correctly!`,
+						], () => setDialog(convs.professor.detail))
+					}
+				},
 			],
-		}
+			detail: [
+				{
+					text: () => `What do the symbols stand for?`,
+					action: () => setTicker([
+						`${labels.professor} x, y and z are the cartesian coordinates of space. c is the speed of light. And t is the time coordinate.`,
+					])
+				},
+				{
+					text: () => `What would happen if the formula was programmed wrong?`,
+					action: () => setTicker([
+						`${labels.professor} Depends. You would definitely not end up where you should be.`,
+					])
+				},
+				{
+					text: () => `Is it really MINUS c²t²?`,
+					action: () => setTicker([
+						`${labels.professor} Yes! That's because the time coordinates is an imaginary number.`,
+					])
+				},
+			],
+		},
+		nurse: {
+			opening: [
+				{
+					text: () => `How do I wake up?`,
+					action: () => setTicker([
+						`${labels.nurse} Just wake up.`,
+					], () => setupScene('insideSoyuz')),
+				},
+				{
+					text: () => `Nevermind`,
+					action: resetTicker,
+				},
+			],
+		},
+		technician: {
+			opening: [
+				{
+					text: () => state.noticedFormula
+						? `Do you know the formula square root of x²+y²+z²-c²t²?`
+						: null,
+					action: () => {
+						setTicker([
+							`${labels.technician} Of course, but it's x²+y²+z² PLUS c²t²!`,
+							`${labels.you} Why plus?`,
+							`${labels.technician} It's cleary plus because c² is a very big number and that would mean drawing a root from a negative number.`,
+						])
+					}
+				},
+				{
+					text: () => `How do I access the drive?`,
+					action: () => {
+						state.knowFlap = true
+						setTicker([
+							`${labels.technician} Only from the outside. Its service module is behind that gray flap there.`,
+						])
+					}
+				},
+			],
+		},
 	},
 	scenes = {
 		opening: {
@@ -339,13 +345,10 @@ const D = document,
 				setBackground('#111')
 				state.madeEva = true
 				setHotspot(
-					hotspots.soyuzBody,
+					objects.soyuz,
 					'Get back inside',
 					() => setupScene('insideSoyuz')
 				)
-				hotspots.flap.style.visibility = state.knowFlap
-					? 'visible'
-					: 'hidden'
 				if (state.knowFlap) {
 					setHotspot(
 						hotspots.flap,
@@ -377,6 +380,18 @@ const D = document,
 			setup: function() {
 				setBackground('#2b1f89')
 				setHotspot(
+					objects.professor,
+					'Talk to the professor',
+					() => setDialog(convs.professor.opening)
+				)
+				setHotspot(
+					hotspots.computer,
+					'Computer',
+					() => setTicker([
+						`${labels.you} Looks like it's just a prop for this dream scene.`,
+					])
+				)
+				setHotspot(
 					hotspots.goToInfirmaryRight,
 					'Go to infirmary',
 					() => setupScene('infirmary')
@@ -397,6 +412,11 @@ const D = document,
 			setup: function() {
 				setBackground('#2b1f89')
 				setHotspot(
+					objects.nurse,
+					'Talk to the nurse',
+					() => setDialog(convs.nurse.opening)
+				)
+				setHotspot(
 					hotspots.goToLibrary,
 					'Go to library',
 					() => setupScene('library')
@@ -408,9 +428,9 @@ const D = document,
 				)
 				const y = centerY - 20
 				objects.nurse.style.transform =
-					`translate(${centerX + 30}px, ${y}px)`
+					`translate(${centerX - 125}px, ${y}px)`
 				objects.boris.style.transform =
-					`translate(${centerX - 125}px, ${y - 5}px)`
+					`translate(${centerX + 30}px, ${y - 5}px) scaleX(-1)`
 				show(this, [
 					objects.infirmary,
 					objects.nurse,
@@ -421,6 +441,21 @@ const D = document,
 		construction: {
 			setup: function() {
 				setBackground('#2b1f89')
+				setHotspot(
+					objects.technician,
+					'Talk to the technician',
+					() => setDialog(convs.technician.opening)
+				)
+				setHotspot(
+					hotspots.constructionFlap,
+					'Flap',
+					() => {
+						setTicker([state.knowFlap
+							? `${labels.you} Behind that flap is the drive`
+							: `${labels.you} I wonder what is behind this flap.`,
+						])
+					}
+				)
 				setHotspot(
 					hotspots.goToInfirmaryLeft,
 					'Go to infirmary',
@@ -506,21 +541,36 @@ const D = document,
 		home: {
 			setup: function() {
 				setBackground('#111')
-				objects.soyuz.style.transform =
-					`translate(${centerX}px, ${centerY}px) rotateZ(45deg)`
-				show(this, [objects.earth, objects.soyuz])
-				setTicker([
+				this.startX = centerX - 75
+				this.startY = centerY - 75
+				this.stopX = centerX - 25
+				this.stopY = centerY - 25
+				this.startTime = Date.now()
+				this.duration = setTicker([
 					`${labels.jevgeni} We're home!`,
 					`${labels.you} Yes!!`,
 				], () => flashToScene('end', fadeOut))
-			}
+				show(this, [objects.earth, objects.soyuz])
+			},
+			draw: function(now) {
+				const t = now - this.startTime,
+					d = this.duration,
+					x = lerpd(this.startX, this.stopX, t, d),
+					y = lerpd(this.startY, this.stopY, t, d)
+				objects.soyuz.style.transform =
+					`translate(${x}px, ${y}px) rotateZ(45deg)`
+			},
 		},
 		end: {
 			setup: function() {
 				setBackground('#111')
-				info.style.bottom = '0'
 				info.style.background = '#111'
+				info.style.bottom = '0'
+				info.style.margin = 'auto'
+				info.style.height = '1%'
+				inDialog = true
 				showInfo('The End')
+				show(this, [])
 			}
 		},
 	}
@@ -657,7 +707,7 @@ function setDialog(conversation) {
 	clear()
 	inDialog = true
 	dialog.innerText = ''
-	const ul = D.createElement('ol')
+	const ol = D.createElement('ol')
 	conversation.map(function(option) {
 		const text = option.text()
 		if (text) {
@@ -666,10 +716,10 @@ function setDialog(conversation) {
 			a.onclick = option.action
 			a.innerHTML = text
 			li.appendChild(a)
-			ul.appendChild(li)
+			ol.appendChild(li)
 		}
 	})
-	dialog.appendChild(ul)
+	dialog.appendChild(ol)
 	dialog.style.display = 'block'
 }
 
@@ -882,7 +932,6 @@ W.onload = function() {
 		panel: D.getElementById('Panel'),
 	}
 	hotspots = {
-		soyuzBody: D.getElementById('SoyuzBody'),
 		flap: D.getElementById('Flap'),
 		window: D.getElementById('Window'),
 		hatch: D.getElementById('Hatch'),
@@ -901,6 +950,8 @@ W.onload = function() {
 		goToInfirmaryRight: D.getElementById('GoToInfirmaryRight'),
 		goToConstruction: D.getElementById('GoToConstruction'),
 		goToLibrary: D.getElementById('GoToLibrary'),
+		computer: D.getElementById('Computer'),
+		constructionFlap: D.getElementById('ConstructionFlap'),
 	}
 	info = D.getElementById('Info')
 	dialog = D.getElementById('Dialog')
