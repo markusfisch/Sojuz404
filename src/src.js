@@ -201,12 +201,12 @@ const D = document,
 					? '#111'
 					: '#0a8cc8'}; stroke-width: 2px; stroke: #cacbcf;`
 				setHotspot(
-					hotspots.me,
+					objects.meFloating,
 					'This is me',
 					() => {}
 				)
 				setHotspot(
-					hotspots.jevgeni,
+					objects.jevgeniFloating,
 					'Talk to Jevgeni',
 					() => dialog(state.nowhere
 						? convs.jevgeni.nowhere
@@ -281,14 +281,14 @@ const D = document,
 				)
 				show(this, [
 					objects.soyuzInside,
-					objects.borisFloating,
+					objects.meFloating,
 					objects.jevgeniFloating,
 				])
 			},
 			draw: function(now) {
 				const f = M.sin(now * .002) * 2,
 					y = centerY - 60
-				objects.borisFloating.style.transform =
+				objects.meFloating.style.transform =
 					`translate(${centerX}px, ${y + f}px) scale(1.25)`
 				objects.jevgeniFloating.style.transform =
 					`translate(${centerX - 162}px, ${y - f}px) scale(1.25)`
@@ -591,9 +591,15 @@ function flashToScene(name, colors, index) {
 	}, 100)
 }
 
-function setHotspot(hotspot, message, f) {
+function setHotspot(hotspot, message, action) {
+	const children = hotspot.children
+	for (let i = children.length; i--;) {
+		const child = children[i]
+		child.message = message
+		child.action = action
+	}
 	hotspot.message = message
-	hotspot.action = f
+	hotspot.action = action
 }
 
 function show(scene, list) {
@@ -812,8 +818,8 @@ W.onload = function() {
 		soyuz: D.getElementById('Soyuz'),
 		cosmonaut: D.getElementById('Cosmonaut'),
 		soyuzInside: D.getElementById('SoyuzInside'),
-		borisFloating: D.getElementById('BorisFloating'),
-		jevgeniFloating: D.getElementById('JevgeniFloating'),
+		meFloating: D.getElementById('Me'),
+		jevgeniFloating: D.getElementById('Jevgeni'),
 		tape: D.getElementById('Tape'),
 		proviant: D.getElementById('Proviant'),
 		helmet: D.getElementById('Helmet'),
@@ -836,8 +842,6 @@ W.onload = function() {
 		storage1: D.getElementById('Storage1'),
 		storage2: D.getElementById('Storage2'),
 		innerHatch: D.getElementById('InnerHatch'),
-		me: D.getElementById('Me'),
-		jevgeni: D.getElementById('Jevgeni'),
 		stopLooking: D.getElementById('StopLooking'),
 		plus: D.getElementById('Plus'),
 		minus: D.getElementById('Minus'),
