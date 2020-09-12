@@ -35,7 +35,7 @@ const D = document,
 						state.onCourse = true
 						setTicker([
 							`${labels.jevgeni} Of course are we on course. Is this a trick question?`,
-						], () => dialog(convs.jevgeni.course))
+						], () => setDialog(convs.jevgeni.course))
 					},
 				},
 				{
@@ -90,7 +90,7 @@ const D = document,
 						: null,
 					action: () => setTicker([
 						`${labels.jevgeni} I don't know how - didn't you talk to the scientists?`,
-					], () => dialog(convs.jevgeni.remember)),
+					], () => setDialog(convs.jevgeni.remember)),
 				},
 			],
 			remember: [
@@ -98,7 +98,7 @@ const D = document,
 					text: () => `Yes, but I don't remember it so well. Do you?`,
 					action: () => setTicker([
 						`${labels.jevgeni} No, I didn't talk to them at all. Do you really remember nothing?`,
-					], () => dialog(convs.jevgeni.remember2)),
+					], () => setDialog(convs.jevgeni.remember2)),
 				},
 				{
 					text: () => state.panicked
@@ -117,7 +117,7 @@ const D = document,
 					text: () => `Don't put me under pressure!`,
 					action: () => setTicker([
 						`${labels.jevgeni} Look, we've got to solve this somehow. You better start remembering. Is there anything I can do to help you remember?`,
-					], () => dialog(convs.jevgeni.drugs)),
+					], () => setDialog(convs.jevgeni.drugs)),
 				},
 				{
 					text: () => `I remember there was a formula on a blackboard…`,
@@ -209,7 +209,7 @@ const D = document,
 				setHotspot(
 					objects.jevgeniFloating,
 					'Talk to Jevgeni',
-					() => dialog(state.nowhere
+					() => setDialog(state.nowhere
 						? convs.jevgeni.nowhere
 						: convs.jevgeni.before
 					)
@@ -232,7 +232,7 @@ const D = document,
 							`${labels.jevgeni} No contact… I guess we've got to help ourselves!`,
 							`${labels.you} Moscow, we have a problem.`,
 						])
-						: dialog(convs.groundControl.before)
+						: setDialog(convs.groundControl.before)
 				)
 				setHotspot(
 					hotspots.controls,
@@ -259,14 +259,14 @@ const D = document,
 					hotspots.storage2,
 					'Look into storage space two',
 					() => {
-						let message = 'Proviant, adhesive tape and a towel. You should always have a towel.'
+						let message = 'Food, adhesive tape and a towel. You should always have a towel.'
 						if (state.nowhere) {
 							message = `There's nothing I can use right now.`
 							if (!state.storage2) {
 								state.storage2 = true
 								addToInventory('tape')
-								addToInventory('proviant')
-								message = `You found a tape and proviant.`
+								addToInventory('food')
+								message = `You found a tape and food.`
 							}
 						}
 						setTicker([message])
@@ -518,9 +518,9 @@ const D = document,
 		end: {
 			setup: function() {
 				setBackground('#111')
-				message.style.bottom = '0'
-				message.style.background = '#111'
-				showMessage('The End')
+				info.style.bottom = '0'
+				info.style.background = '#111'
+				showInfo('The End')
 			}
 		},
 	}
@@ -533,7 +533,8 @@ let animationRequestId,
 	stage,
 	objects,
 	hotspots,
-	message,
+	info,
+	dialog,
 	fx,
 	currentScene,
 	elementUnderPointer,
@@ -582,7 +583,7 @@ function updateInventory() {
 }
 
 function showUseItemWithMessage() {
-	showMessage(`Use ${useItemWith} with ?`)
+	showInfo(`Use ${useItemWith} with ?`)
 }
 
 function addToInventory(name) {
@@ -609,7 +610,7 @@ function combineItems(items) {
 	items.sort()
 	const a = items[0],
 		b = items[1]
-	if (a == 'Me' && b == 'proviant') {
+	if (a == 'Me' && b == 'food') {
 		hideInventory()
 		removeFromInventory(b)
 		updateInventory()
@@ -652,9 +653,10 @@ function show(scene, list) {
 	scene.draw(Date.now())
 }
 
-function dialog(conversation) {
+function setDialog(conversation) {
+	clear()
 	inDialog = true
-	message.innerText = ''
+	dialog.innerText = ''
 	const ul = D.createElement('ol')
 	conversation.map(function(option) {
 		const text = option.text()
@@ -667,17 +669,24 @@ function dialog(conversation) {
 			ul.appendChild(li)
 		}
 	})
-	message.appendChild(ul)
-	message.style.display = 'block'
+	dialog.appendChild(ul)
+	dialog.style.display = 'block'
 }
 
 function clear() {
-	message.style.display = 'none'
+	info.style.display = 'none'
+	dialog.style.display = 'none'
 }
 
-function showMessage(html) {
-	message.innerHTML = html
-	message.style.display = 'block'
+function showInfo(html) {
+	info.innerHTML = html
+	info.style.display = 'block'
+}
+
+function showDialog(html) {
+	clear()
+	dialog.innerHTML = html
+	dialog.style.display = 'block'
 }
 
 function setTicker(messages, runAfter) {
@@ -691,7 +700,7 @@ function setTicker(messages, runAfter) {
 	ticker.pointer = 0
 	const m = ticker.messages[ticker.pointer]
 	ticker.nextTick = Date.now() + m.duration
-	showMessage(m.text)
+	showDialog(m.text)
 	inDialog = true
 	return ticker.messages.reduce((total, m) => total + m.duration, 0)
 }
@@ -713,7 +722,7 @@ function tickNext(now) {
 	}
 	const m = ticker.messages[ticker.pointer]
 	ticker.nextTick = now + m.duration
-	showMessage(m.text)
+	showDialog(m.text)
 }
 
 function tick(now) {
@@ -815,7 +824,7 @@ function pointerInspect(event) {
 		if (elementUnderPointer && elementUnderPointer.message) {
 			const message = elementUnderPointer.message,
 				name = elementUnderPointer.name || elementUnderPointer.id
-			showMessage(useItemWith
+			showInfo(useItemWith
 				? `Use ${useItemWith} with ${name}`
 				: message)
 		} else if (useItemWith) {
@@ -860,7 +869,7 @@ W.onload = function() {
 		meFloating: D.getElementById('Me'),
 		jevgeniFloating: D.getElementById('Jevgeni'),
 		tape: D.getElementById('Tape'),
-		proviant: D.getElementById('Proviant'),
+		food: D.getElementById('Food'),
 		helmet: D.getElementById('Helmet'),
 		porthole: D.getElementById('Porthole'),
 		library: D.getElementById('Library'),
@@ -893,7 +902,8 @@ W.onload = function() {
 		goToConstruction: D.getElementById('GoToConstruction'),
 		goToLibrary: D.getElementById('GoToLibrary'),
 	}
-	message = D.getElementById('Message')
+	info = D.getElementById('Info')
+	dialog = D.getElementById('Dialog')
 	fx = D.getElementById('FX')
 
 	for (let name in scenes) {

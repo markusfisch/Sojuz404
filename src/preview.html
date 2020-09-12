@@ -29,15 +29,21 @@ body {
 svg {
 	display: none;
 }
-#Message, #FX {
+#Info, #Dialog, #FX {
 	display: none;
 	position: fixed;
-	left: 0; top: 0; right: 0;
+	left: 0; right: 0;
 }
-#FX {
+#Info {
+	top: 0;
+}
+#Dialog {
 	bottom: 0;
 }
-#Message {
+#FX {
+	top: 0; bottom: 0;
+}
+#Info, #Dialog {
 	background: rgba(0,0,0,.5);
 	padding: .5em;
 	text-align: center;
@@ -170,7 +176,7 @@ span {
 	<polygon style="fill: rgb(180, 117, 77);" points="41 68 21 84 46 87 62 68"></polygon>
 	<ellipse style="fill: rgb(145, 94, 62);" cx="62" cy="42" rx="6" ry="14"></ellipse>
 </g>
-<g id="Proviant">
+<g id="Food">
 	<polygon style="fill: rgb(10, 140, 200);" points="23 45 61 91 83 79 53 24"></polygon>
 	<polygon style="fill: rgb(90, 90, 90);" points="27 30 18 16 28 9 37 23"></polygon>
 	<polygon style="fill: rgb(216, 216, 216);" points="23 45 52 24 38 23 27 31"></polygon>
@@ -355,7 +361,8 @@ span {
 	<text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 11px; text-anchor: end;" x="68" y="50" id="Value"></text>
 </g>
 </svg>
-<div id="Message"></div>
+<div id="Info"></div>
+<div id="Dialog"></div>
 <div id="FX"></div>
 </body>
 <script src="src.js"></script>
