@@ -41,10 +41,17 @@ const D = document,
 				{
 					text: () => state.madeEva
 						? null
-						: 'Do you see anything out there?',
-					action: () => setTicker([
-						`${labels.jevgeni} No, nothing at all, it's all black… how's that possible?`,
-					]),
+						: state.seeAnything
+							? 'Still nothing to see?'
+							: 'Do you see anything out there?',
+					action: () => {
+						setTicker([
+							`${labels.jevgeni} No, ${state.seeAnything
+								? `still nothing.`
+								: `nothing at all, it's all black… how's that possible?`}`,
+						])
+						state.seeAnything = true
+					},
 				},
 				{
 					text: () => state.errorSeen
@@ -63,7 +70,7 @@ const D = document,
 						setTicker([
 							`${labels.jevgeni} I don't know! Don't you remember?`,
 							`${labels.you} No, not really, but if I could sleep, I could go back in my dreams! I'm a lucid dreamer. I just need something to fall asleep.`,
-						], () => setDialog(convs.jevgeni.remember))
+						])
 					}
 				},
 				{
@@ -94,13 +101,13 @@ const D = document,
 		professor: {
 			opening: [
 				{
-					text: () => `How can I fix the super-secret space drive?`,
+					text: () => `How can I fix the space drive?`,
 					action: () => setTicker([
-						`${labels.professor} How do I know? I didn't build the damn thing. I just designed it.`,
+						`${labels.professor} How would I know? I didn't build the damn thing. I just designed it.`,
 					]),
 				},
 				{
-					text: () => `What's this formula${state.noticedFormula ? ' again' : ''}, square root of x²+y²+z²-c²t²?`,
+					text: () => `What's this formula, square root of x²+y²+z²-c²t²?`,
 					action: () => {
 						state.noticedFormula = true
 						setTicker([
@@ -269,10 +276,14 @@ const D = document,
 						if (state.nowhere) {
 							message = `There's nothing I can use right now.`
 							if (!state.storage2) {
-								state.storage2 = true
+								state.storage2 = 1
 								addToInventory('tape')
 								addToInventory('food')
 								message = `You found a tape and food.`
+							} else if (state.storage2 == 1) {
+								state.storage2 = 2
+								addToInventory('pills')
+								message = `You find sleeping pills.`
 							}
 						}
 						setTicker([message])
@@ -376,13 +387,38 @@ const D = document,
 					`translate(${centerX + 20}px, ${cy}px)`
 			},
 		},
+		service: {
+			setup: function() {
+				setBackground('#e0e1e6')
+				updateOperations()
+				setHotspot(
+					hotspots.shutFlap,
+					'Back',
+					() => setupScene('eva')
+				)
+				for (let i = 1; i < 9; ++i) {
+					setHotspot(
+						hotspots[`o${i}`],
+						`Operation #${i}`,
+						() => {
+							++state.operations[i - 1]
+							updateOperations()
+						}
+					)
+				}
+				show(this, [objects.service])
+			}
+		},
 		library: {
 			setup: function() {
 				setBackground('#2b1f89')
 				setHotspot(
 					objects.professor,
 					'Talk to the professor',
-					() => setDialog(convs.professor.opening)
+					() => setDialog(state.noticedFormula
+						? convs.professor.detail
+						: convs.professor.opening
+					)
 				)
 				setHotspot(
 					hotspots.computer,
@@ -451,7 +487,7 @@ const D = document,
 					'Flap',
 					() => {
 						setTicker([state.knowFlap
-							? `${labels.you} Behind that flap is the drive`
+							? `${labels.you} Behind that flap is the drive.`
 							: `${labels.you} I wonder what is behind this flap.`,
 						])
 					}
@@ -508,35 +544,36 @@ const D = document,
 					hotspots.start,
 					'Start the drive',
 					() => {
+						const colors = [
+							'#d7c23a',
+							'#ff0900',
+							'#518e3d',
+							'#fff',
+							'#d7c23a',
+							'#fff',
+						]
 						if (state.nowhere) {
-							setTicker([
-								`${labels.you} It doesn't work!`,
-								`${labels.jevgeni} We should find out how to fix it.`,
-							], () => setupScene('insideSoyuz'))
-						} else if (state.value != 404) {
-							setTicker([
-								`${labels.jevgeni} This doesn't look right…`,
-							])
+							if (state.value == 200 && state.repaired) {
+								flashTo('home', colors)
+							} else {
+								setTicker([
+									`${labels.you} It doesn't work!`,
+									`${labels.jevgeni} We should find out how to fix it.`,
+								], () => setupScene('insideSoyuz'))
+							}
 						} else {
-							flashTo('nowhere', [
-								'#d7c23a',
-								'#ff0900',
-								'#518e3d',
-								'#fff',
-								'#d7c23a',
-								'#fff',
-							])
+							if (state.value == 404) {
+								flashTo('nowhere', colors)
+							} else {
+								setTicker([
+									`${labels.jevgeni} This doesn't look right…`,
+								])
+							}
 						}
 					}
 				)
 				show(this, [objects.panel])
 			},
-		},
-		service: {
-			setup: function() {
-				setBackground('#e0e1e6')
-				show(this, [objects.service])
-			}
 		},
 		home: {
 			setup: function() {
@@ -593,8 +630,35 @@ let rId,
 	useItemWith,
 	state = {
 		inventory: [],
+		operations: [2,0,2,0,2,0,2,2],
 		scene: 'opening',
 	}
+
+function updateOperations() {
+	const fills = [
+		'#76cf59',
+		'#c13549',
+		'#0a8cc8',
+		'#d7c23a',
+	]
+	const key = [2,0,2,0,2,1,2,2]
+	let correct = true
+	for (let i = 1; i < 9; ++i) {
+		const j = i - 1,
+			value = state.operations[j] % 4
+		hotspots[`o${i}`].style = `fill: ${fills[value]}`
+		if (key[j] != value) {
+			correct = false
+		}
+	}
+	if (correct) {
+		state.repaired = true
+		state.value = 199
+		setTicker([
+			`${labels.you} That looks good!`
+		])
+	}
+}
 
 function flashTo(name, colors, index) {
 	index = index || 0
@@ -651,30 +715,21 @@ function removeFromInventory(name) {
 }
 
 function combineItems(items) {
-	let newItem
 	items.sort()
 	const a = items[0],
 		b = items[1]
-	if (a == 'Me' && b == 'food') {
+	if ((a == 'Me' || a == 'Jevgeni') && b == 'food') {
 		hideInventory()
 		removeFromInventory(b)
 		updateInventory()
-		setTicker([`${labels.you} I'm not hungry anymore.`])
-		return
-	} else if (a == 'Me' && b == 'nurse') {
-		flashTo('library', fadeOut)
-		return
-	} else if (a == 'helmet' && b == 'tape') {
-		newItem = 'nurse'
+		setTicker([`${labels[a == 'Me' ? 'you' : 'jevgeni']} I'm not hungry anymore.`])
+	} else if (a == 'Me' && b == 'pills') {
+		setTicker([
+			`I'm feeling dizzy already…`,
+		], () => flashTo('library', fadeOut))
 	} else {
-		setTicker([`This won't work.`])
-		return
+		setTicker([`Doesn't work.`])
 	}
-	hideInventory()
-	removeFromInventory(a)
-	removeFromInventory(b)
-	addToInventory(newItem)
-	updateInventory()
 }
 
 function setHotspot(hotspot, message, action) {
@@ -840,6 +895,7 @@ function resize() {
 	objects.construction.style.transform = scale3
 	objects.boris.style.transformOrigin = center
 	objects.panel.style.transform = scale3
+	objects.service.style.transform = scale3
 
 	setupScene(state.scene)
 	run()
@@ -916,6 +972,7 @@ W.onload = function() {
 		tape: D.getElementById('Tape'),
 		food: D.getElementById('Food'),
 		helmet: D.getElementById('Helmet'),
+		pills: D.getElementById('Pills'),
 		porthole: D.getElementById('Porthole'),
 		library: D.getElementById('Library'),
 		infirmary: D.getElementById('Infirmary'),
@@ -925,6 +982,7 @@ W.onload = function() {
 		nurse: D.getElementById('Nurse'),
 		technician: D.getElementById('Technician'),
 		panel: D.getElementById('Panel'),
+		service: D.getElementById('Service'),
 	}
 	hotspots = {
 		flap: D.getElementById('Flap'),
@@ -947,6 +1005,15 @@ W.onload = function() {
 		goToLibrary: D.getElementById('GoToLibrary'),
 		computer: D.getElementById('Computer'),
 		constructionFlap: D.getElementById('ConstructionFlap'),
+		shutFlap: D.getElementById('ShutFlap'),
+		o1: D.getElementById('O1'),
+		o2: D.getElementById('O2'),
+		o3: D.getElementById('O3'),
+		o4: D.getElementById('O4'),
+		o5: D.getElementById('O5'),
+		o6: D.getElementById('O6'),
+		o7: D.getElementById('O7'),
+		o8: D.getElementById('O8'),
 	}
 	info = D.getElementById('Info')
 	dialog = D.getElementById('Dialog')
