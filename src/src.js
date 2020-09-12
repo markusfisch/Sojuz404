@@ -10,14 +10,14 @@ const D = document,
 	ticker = {},
 	labels = {
 		you: '<span class="You">You:</span>',
-		jevgeni: '<span class="Jevgeni">Jevgeni:</span>',
+		yevgeni: '<span class="Yevgeni">Yevgeni:</span>',
 		groundControl: '<span class="GroundControl">Ground Control:</span>',
 		professor: '<span class="Professor">Professor:</span>',
 		nurse: '<span class="Nurse">Olga:</span>',
 		technician: '<span class="Technician">Vitali:</span>',
 	},
 	convs = {
-		jevgeni: {
+		yevgeni: {
 			before: [
 				{
 					text: () => state.everythingOkay
@@ -26,14 +26,14 @@ const D = document,
 					action: () => {
 						state.everythingOkay = true
 						setTicker([
-							`${labels.jevgeni} It's a bit tight, but at least I have a window.`,
+							`${labels.yevgeni} It's a bit tight, but at least I have a window.`,
 						])
 					},
 				},
 				{
 					text: () => 'Would you please stop farting?',
 					action: () => setTicker([
-						`${labels.jevgeni} This was the last one. Promise.`
+						`${labels.yevgeni} This was the last one. Promise.`
 					]),
 				},
 			],
@@ -46,7 +46,7 @@ const D = document,
 							: 'Do you see anything out there?',
 					action: () => {
 						setTicker([
-							`${labels.jevgeni} No, ${state.seeAnything
+							`${labels.yevgeni} No, ${state.seeAnything
 								? `still nothing.`
 								: `nothing at all, it's all black… how's that possible?`}`,
 						])
@@ -58,7 +58,7 @@ const D = document,
 						? null
 						: `How can we can back?`,
 					action: () => setTicker([
-						`${labels.jevgeni} Let's use the drive!`
+						`${labels.yevgeni} Let's use the drive!`
 					]),
 				},
 				{
@@ -68,7 +68,7 @@ const D = document,
 					action: () => {
 						state.needSleep = true
 						setTicker([
-							`${labels.jevgeni} I don't know! Don't you remember?`,
+							`${labels.yevgeni} I don't know! Don't you remember?`,
 							`${labels.you} No, not really, but if I could sleep, I could go back in my dreams! I'm a lucid dreamer. I just need something to fall asleep.`,
 						])
 					}
@@ -78,7 +78,7 @@ const D = document,
 						? `Do we have any drugs?`
 						: null,
 					action: () => setTicker([
-						`${labels.jevgeni} Look in the storage! That's all we have!`,
+						`${labels.yevgeni} Look in the storage! That's all we have!`,
 					]),
 				},
 			],
@@ -223,11 +223,11 @@ const D = document,
 					() => {}
 				)
 				setHotspot(
-					objects.jevgeniFloating,
-					'Talk to Jevgeni',
+					objects.yevgeniFloating,
+					'Talk to Yevgeni',
 					() => setDialog(state.nowhere
-						? convs.jevgeni.nowhere
-						: convs.jevgeni.before
+						? convs.yevgeni.nowhere
+						: convs.yevgeni.before
 					)
 				)
 				setHotspot(
@@ -236,7 +236,7 @@ const D = document,
 					() => state.nowhere
 						? setupScene('eva')
 						: setTicker([
-							`${labels.jevgeni} Not yet, we have a mission, comrade!`,
+							`${labels.yevgeni} Not yet, we have a mission, comrade!`,
 						])
 				)
 				setHotspot(
@@ -245,7 +245,7 @@ const D = document,
 					() => state.nowhere
 						? setTicker([
 							`zzz…`,
-							`${labels.jevgeni} No contact… I guess we've got to help ourselves!`,
+							`${labels.yevgeni} No contact… I guess we've got to help ourselves!`,
 							`${labels.you} Moscow, we have a problem.`,
 						])
 						: setDialog(convs.groundControl.before)
@@ -295,7 +295,7 @@ const D = document,
 				show(this, [
 					objects.soyuzInside,
 					objects.meFloating,
-					objects.jevgeniFloating,
+					objects.yevgeniFloating,
 				])
 			},
 			draw: function(now) {
@@ -303,7 +303,7 @@ const D = document,
 					y = centerY - 60
 				objects.meFloating.style.transform =
 					`translate(${centerX}px, ${y + f}px) scale(1.25)`
-				objects.jevgeniFloating.style.transform =
+				objects.yevgeniFloating.style.transform =
 					`translate(${centerX - 162}px, ${y - f}px) scale(1.25)`
 			},
 		},
@@ -320,11 +320,11 @@ const D = document,
 					o.unshift(objects.earth)
 					if (!state.aboveAfrica) {
 						state.aboveAfrica = true
-						setTicker([`${labels.jevgeni} Above Africa…`])
+						setTicker([`${labels.yevgeni} Above Africa…`])
 					}
 				} else if (!state.whereIsEarth) {
 					state.whereIsEarth = true
-					setTicker([`${labels.jevgeni} Where's the earth? And where are the stars?`])
+					setTicker([`${labels.yevgeni} Where's the earth? And where are the stars?`])
 				}
 				show(this, o)
 			},
@@ -553,7 +553,7 @@ const D = document,
 							} else {
 								setTicker([
 									`${labels.you} It doesn't work!`,
-									`${labels.jevgeni} We should find out how to fix it.`,
+									`${labels.yevgeni} We should find out how to fix it.`,
 								], () => setupScene('insideSoyuz'))
 							}
 						} else {
@@ -561,7 +561,7 @@ const D = document,
 								flashTo('nowhere', colors)
 							} else {
 								setTicker([
-									`${labels.jevgeni} This doesn't look right…`,
+									`${labels.yevgeni} This doesn't look right…`,
 								])
 							}
 						}
@@ -579,7 +579,7 @@ const D = document,
 				this.stopY = centerY - 25
 				this.startTime = Date.now()
 				this.duration = setTicker([
-					`${labels.jevgeni} We're home!`,
+					`${labels.yevgeni} We're home!`,
 					`${labels.you} Yes!!`,
 				], () => flashTo('end', fadeOut))
 				show(this, [objects.earth, objects.soyuz])
@@ -713,11 +713,11 @@ function combineItems(items) {
 	items.sort()
 	const a = items[0],
 		b = items[1]
-	if ((a == 'Me' || a == 'Jevgeni') && b == 'food') {
+	if ((a == 'Me' || a == 'Yevgeni') && b == 'food') {
 		hideInventory()
 		removeFromInventory(b)
 		updateInventory()
-		setTicker([`${labels[a == 'Me' ? 'you' : 'jevgeni']} I'm not hungry anymore.`])
+		setTicker([`${labels[a == 'Me' ? 'you' : 'yevgeni']} I'm not hungry anymore.`])
 	} else if (a == 'Me' && b == 'pills') {
 		setTicker([
 			`I'm feeling dizzy already…`,
@@ -963,7 +963,7 @@ W.onload = function() {
 		cosmonaut: D.getElementById('Cosmonaut'),
 		soyuzInside: D.getElementById('SoyuzInside'),
 		meFloating: D.getElementById('Me'),
-		jevgeniFloating: D.getElementById('Jevgeni'),
+		yevgeniFloating: D.getElementById('Yevgeni'),
 		tape: D.getElementById('Tape'),
 		food: D.getElementById('Food'),
 		helmet: D.getElementById('Helmet'),
