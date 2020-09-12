@@ -544,14 +544,6 @@
 <polygon style="fill: #D8A572;" points="316 393 309 381 322 387"/>
 <polygon style="fill: #656565;" points="316 393 363 440 371 434 322 387"/>
 <polygon style="fill: #656565;" points="313 388 309 381 316 384"/>
-<rect x="293" y="57" width="7" height="8" style=""/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="282 43 282 59 289 59 289 75"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="291 75 291 57 284 57 284 43"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="277 61 287 61 287 75"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="318 75 318 55 286 55 286 43"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="320 75 320 53 288 53 288 43"/>
-<rect x="301" y="57" width="7" height="8" style=""/>
-<rect x="309" y="57" width="7" height="8" style=""/>
 <rect x="140" y="56" width="4" height="4" style="" id="O1"/>
 <rect x="145" y="56" width="4" height="4" style="" id="O2"/>
 <rect x="150" y="56" width="4" height="4" style="" id="O3"/>
@@ -570,10 +562,6 @@
 <polyline style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="27 58"/>
 <line style="stroke: rgb(0, 0, 0);" x1="137" y1="58" x2="140" y2="58"/>
 <line style="stroke: rgb(0, 0, 0);" x1="179" y1="58" x2="183" y2="58"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="250 43 250 50 273 50"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="252 43 252 48 273 48"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="253 75 253 66 227 66"/>
-<polyline style="stroke: rgb(0, 0, 0); fill: none;" points="251 75 251 68 227 68"/>
 <rect x="338" y="-75" width="12" height="9" style="fill: rgb(185, 185, 185);"/>
 <rect x="339" y="-74" width="10" height="7" style="fill: rgb(61, 48, 37);"/>
 <text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 1px; white-space: pre; text-anchor: middle;" x="344" y="-72">x²+y²+z²+c²t²</text>

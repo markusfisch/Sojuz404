@@ -56,7 +56,7 @@ const D = document,
 				{
 					text: () => state.errorSeen
 						? null
-						: `How can we can back?`,
+						: `How can we get can back?`,
 					action: () => setTicker([
 						`${labels.yevgeni} Let's use the drive!`
 					]),
@@ -92,7 +92,7 @@ const D = document,
 					action: () => {
 						state.requestCode = true
 						setTicker([
-							`${labels.groundControl} Input 404 - I repeat 404 - into the control panel and start the drive.`,
+							`${labels.groundControl} Input 404 into the control panel and start the drive.`,
 						])
 					}
 				},
@@ -120,11 +120,11 @@ const D = document,
 				{
 					text: () => `What do the symbols stand for?`,
 					action: () => setTicker([
-						`${labels.professor} x, y and z are the cartesian coordinates of space. c is the speed of light. And t is the time coordinate.`,
+						`${labels.professor} x, y and z are the coordinates of space. c is the speed of light. And t is the time.`,
 					])
 				},
 				{
-					text: () => `What would happen if the formula was programmed wrong?`,
+					text: () => `What would happen if the formula was wrong?`,
 					action: () => setTicker([
 						`${labels.professor} Depends. You would definitely not end up where you should be.`,
 					])
@@ -134,7 +134,7 @@ const D = document,
 						? `Is it really MINUS c²t²?`
 						: null,
 					action: () => setTicker([
-						`${labels.professor} Yes! That's because the time coordinates is an imaginary number.`,
+						`${labels.professor} Sure! That's because the time coordinate is an imaginary number.`,
 					])
 				},
 			],
@@ -165,6 +165,7 @@ const D = document,
 							`${labels.technician} Of course, but it's x²+y²+z² PLUS c²t²!`,
 							`${labels.you} Why plus?`,
 							`${labels.technician} It's cleary plus because c² is a very big number and that would mean drawing a root from a negative number.`,
+							`${labels.you} Hm.`,
 						])
 					}
 				},
@@ -173,7 +174,7 @@ const D = document,
 					action: () => {
 						state.knowFlap = true
 						setTicker([
-							`${labels.technician} Only from the outside. Its service module is behind that gray flap there.`,
+							`${labels.technician} Only from the outside. You can get access to it behind that gray flap there.`,
 						])
 					}
 				},
@@ -190,9 +191,9 @@ const D = document,
 				this.stopY = centerY - 25
 				this.startTime = Date.now()
 				this.duration = setTicker([
-					`You're a cosmonaut,…`,
-					`…on board a secret mission…`,
-					`…to test a new super-secret space drive.`,
+					`You're a Pavel, commander of Sojuz 404…`,
+					`…a secret mission…`,
+					`…to test a new space drive…`,
 				], () => setupScene('insideSoyuz'))
 				show(this, [objects.earth, objects.soyuz])
 			},
@@ -257,9 +258,9 @@ const D = document,
 				)
 				setHotspot(
 					hotspots.storage1,
-					'Look into storage space one',
+					'Look into storage 1',
 					() => {
-						let message = 'A couple of space suits. Might come in handy.'
+						let message = `A couple of space suits. Might come in handy.`
 						if (state.nowhere) {
 							message = `There's nothing I can use right now.`
 							if (!state.storage1) {
@@ -273,9 +274,9 @@ const D = document,
 				)
 				setHotspot(
 					hotspots.storage2,
-					'Look into storage space two',
+					'Look into storage 2',
 					() => {
-						let message = 'Food, adhesive tape and a towel. You should always have a towel.'
+						let message = `Food, adhesive tape and a towel. It's always good to have a towel.`
 						if (state.nowhere) {
 							message = `There's nothing I can use right now.`
 							if (!state.storage2) {
@@ -286,7 +287,7 @@ const D = document,
 							} else if (state.storage2 == 1) {
 								state.storage2 = 2
 								addToInventory('pills')
-								message = `You find sleeping pills.`
+								message = `You find sleeping pills!`
 							}
 						}
 						setTicker([message])
@@ -312,7 +313,7 @@ const D = document,
 				setBackground('#111')
 				setHotspot(
 					hotspots.stopLooking,
-					'Stop looking out the window',
+					'Stop looking',
 					() => setupScene('insideSoyuz')
 				)
 				const o = [objects.porthole]
@@ -320,7 +321,7 @@ const D = document,
 					o.unshift(objects.earth)
 					if (!state.aboveAfrica) {
 						state.aboveAfrica = true
-						setTicker([`${labels.yevgeni} Above Africa…`])
+						setTicker([`${labels.yevgeni} Africa!`])
 					}
 				} else if (!state.whereIsEarth) {
 					state.whereIsEarth = true
@@ -366,7 +367,6 @@ const D = document,
 					state.evaBefore = true
 					setTicker([
 						`${labels.you} Where are the stars?`,
-						`${labels.you} Where is everything?`,
 						`${labels.you} WHERE ARE WE?`,
 					])
 				}
@@ -430,12 +430,12 @@ const D = document,
 				const y = centerY - 20
 				objects.professor.style.transform =
 					`translate(${centerX - 20}px, ${y}px)`
-				objects.boris.style.transform =
+				objects.pavel.style.transform =
 					`translate(${centerX - 140}px, ${y}px)`
 				show(this, [
 					objects.library,
 					objects.professor,
-					objects.boris,
+					objects.pavel,
 				])
 			},
 		},
@@ -460,12 +460,12 @@ const D = document,
 				const y = centerY - 20
 				objects.nurse.style.transform =
 					`translate(${centerX - 125}px, ${y}px)`
-				objects.boris.style.transform =
+				objects.pavel.style.transform =
 					`translate(${centerX + 30}px, ${y - 5}px) scaleX(-1)`
 				show(this, [
 					objects.infirmary,
 					objects.nurse,
-					objects.boris,
+					objects.pavel,
 				])
 			},
 		},
@@ -482,7 +482,7 @@ const D = document,
 					'Flap',
 					() => {
 						setTicker([state.knowFlap
-							? `${labels.you} Behind that flap is the drive.`
+							? `${labels.you} Behind that flap is the drive!`
 							: `${labels.you} I wonder what is behind this flap.`,
 						])
 					}
@@ -495,12 +495,12 @@ const D = document,
 				const y = centerY - 25
 				objects.technician.style.transform =
 					`translate(${centerX - 60}px, ${y}px)`
-				objects.boris.style.transform =
+				objects.pavel.style.transform =
 					`translate(${centerX + 25}px, ${y - 5}px) scaleX(-1)`
 				show(this, [
 					objects.construction,
 					objects.technician,
-					objects.boris,
+					objects.pavel,
 				])
 			},
 		},
@@ -520,7 +520,7 @@ const D = document,
 				)
 				setHotspot(
 					hotspots.plus,
-					'Increase',
+					'Plus',
 					() => {
 						if (!err) {
 							hotspots.value.innerHTML = ++state.value
@@ -528,7 +528,7 @@ const D = document,
 					})
 				setHotspot(
 					hotspots.minus,
-					'Decrease',
+					'Minus',
 					() => {
 						if (!err) {
 							state.value = M.max(0, state.value - 1)
@@ -580,7 +580,7 @@ const D = document,
 				this.startTime = Date.now()
 				this.duration = setTicker([
 					`${labels.yevgeni} We're home!`,
-					`${labels.you} Yes!!`,
+					`${labels.you} Yes!`,
 				], () => flashTo('end', fadeOut))
 				show(this, [objects.earth, objects.soyuz])
 			},
@@ -717,7 +717,7 @@ function combineItems(items) {
 		hideInventory()
 		removeFromInventory(b)
 		updateInventory()
-		setTicker([`${labels[a == 'Me' ? 'you' : 'yevgeni']} I'm not hungry anymore.`])
+		setTicker([`${labels[a == 'Me' ? 'you' : 'yevgeni']} Tasty!`])
 	} else if (a == 'Me' && b == 'pills') {
 		setTicker([
 			`I'm feeling dizzy already…`,
@@ -888,7 +888,7 @@ function resize() {
 	objects.library.style.transform = scale3
 	objects.infirmary.style.transform = scale3
 	objects.construction.style.transform = scale3
-	objects.boris.style.transformOrigin = center
+	objects.pavel.style.transformOrigin = center
 	objects.panel.style.transform = scale3
 	objects.service.style.transform = scale3
 
@@ -973,7 +973,7 @@ W.onload = function() {
 		infirmary: D.getElementById('Infirmary'),
 		construction: D.getElementById('Construction'),
 		professor: D.getElementById('Professor'),
-		boris: D.getElementById('Boris'),
+		pavel: D.getElementById('Pavel'),
 		nurse: D.getElementById('Nurse'),
 		technician: D.getElementById('Technician'),
 		panel: D.getElementById('Panel'),
