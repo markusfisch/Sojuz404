@@ -518,7 +518,7 @@ const D = document,
 								`${labels.jevgeni} This doesn't look right…`,
 							])
 						} else {
-							flashToScene('nowhere', [
+							flashTo('nowhere', [
 								'#d7c23a',
 								'#ff0900',
 								'#518e3d',
@@ -549,7 +549,7 @@ const D = document,
 				this.duration = setTicker([
 					`${labels.jevgeni} We're home!`,
 					`${labels.you} Yes!!`,
-				], () => flashToScene('end', fadeOut))
+				], () => flashTo('end', fadeOut))
 				show(this, [objects.earth, objects.soyuz])
 			},
 			draw: function(now) {
@@ -575,7 +575,7 @@ const D = document,
 		},
 	}
 
-let animationRequestId,
+let rId,
 	centerX,
 	centerY,
 	stageWidth,
@@ -587,7 +587,7 @@ let animationRequestId,
 	dialog,
 	fx,
 	currentScene,
-	elementUnderPointer,
+	ebp,
 	inDialog,
 	showInventory,
 	useItemWith,
@@ -596,7 +596,7 @@ let animationRequestId,
 		scene: 'opening',
 	}
 
-function flashToScene(name, colors, index) {
+function flashTo(name, colors, index) {
 	index = index || 0
 	fx.style.background = colors[index]
 	fx.style.display = 'block'
@@ -606,7 +606,7 @@ function flashToScene(name, colors, index) {
 			fx.style.display = 'none'
 			setupScene(name)
 		} else {
-			flashToScene(name, colors, index)
+			flashTo(name, colors, index)
 		}
 	}, 100)
 }
@@ -615,11 +615,6 @@ function hideInventory() {
 	state.inventory.forEach((name) => {
 		objects[name].style.visibility = 'hidden'
 	})
-}
-
-function clearInventory() {
-	hideInventory()
-	state.inventory = []
 }
 
 function updateInventory() {
@@ -667,7 +662,7 @@ function combineItems(items) {
 		setTicker([`${labels.you} I'm not hungry anymore.`])
 		return
 	} else if (a == 'Me' && b == 'nurse') {
-		flashToScene('library', fadeOut)
+		flashTo('library', fadeOut)
 		return
 	} else if (a == 'helmet' && b == 'tape') {
 		newItem = 'nurse'
@@ -799,7 +794,7 @@ function setupScene(name) {
 }
 
 function run() {
-	animationRequestId = requestAnimationFrame(run)
+	rId = requestAnimationFrame(run)
 	const now = Date.now()
 	currentScene.draw(now)
 	tick(now)
@@ -813,8 +808,8 @@ function scale(ratio, pivotX, pivotY) {
 }
 
 function resize() {
-	if (animationRequestId) {
-		cancelAnimationFrame(animationRequestId)
+	if (rId) {
+		cancelAnimationFrame(rId)
 	}
 
 	const windowWidth = window.innerWidth,
@@ -870,10 +865,10 @@ function findElementByPosition(event) {
 
 function pointerInspect(event) {
 	if (!inDialog) {
-		elementUnderPointer = findElementByPosition(event)
-		if (elementUnderPointer && elementUnderPointer.message) {
-			const message = elementUnderPointer.message,
-				name = elementUnderPointer.name || elementUnderPointer.id
+		ebp = findElementByPosition(event)
+		if (ebp && ebp.message) {
+			const message = ebp.message,
+				name = ebp.name || ebp.id
 			showInfo(useItemWith
 				? `Use ${useItemWith} with ${name}`
 				: message)
@@ -888,15 +883,15 @@ function pointerInspect(event) {
 
 function pointerInteract(event) {
 	if (!inDialog) {
-		if (elementUnderPointer && elementUnderPointer.action) {
+		if (ebp && ebp.action) {
 			if (useItemWith) {
 				combineItems([
 					useItemWith,
-					elementUnderPointer.name || elementUnderPointer.id
+					ebp.name || ebp.id
 				])
 				useItemWith = null
 			} else {
-				elementUnderPointer.action()
+				ebp.action()
 			}
 		}
 	} else if (ticker.messages) {
