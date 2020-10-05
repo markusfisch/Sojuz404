@@ -191,7 +191,7 @@ const D = document,
 				this.stopY = centerY - 25
 				this.startTime = Date.now()
 				this.duration = setTicker([
-					`You're a Pavel, commander of Sojuz 404…`,
+					`You're a Pavel, commander of Soyuz 404…`,
 					`…a secret mission…`,
 					`…to test a new space drive…`,
 				], () => setupScene('insideSoyuz'))

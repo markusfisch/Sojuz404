@@ -1,4 +1,4 @@
-# Sojuz 404
+# Soyuz 404
 
 <img src="svg/screenshot-400x250.jpg" alt="Screenshot"/>
 
