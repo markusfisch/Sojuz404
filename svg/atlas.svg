@@ -382,8 +382,8 @@
 <path d="M 314 -78 L 263 -78 L 263 -87 L 265 -87 L 265 -80 L 300 -80 L 300 -87 L 302 -87 L 302 -80 L 303 -80 L 303 -87 L 305 -87 L 305 -80 L 314 -80 Z" style="fill: #4F4F4F;"/>
 <path d="M 280 -59 C 280 -56 279 -55 279 -55 C 278 -55 278 -63 279 -63 C 279 -63 280 -62 280 -59 Z" style="fill: #323B2A;"/>
 <path d="M 254 -51 C 253 -46 262 -46 264 -43 C 266 -40 273 -43 279 -41" style="fill: none; stroke-linecap: round; stroke: #9F9F9F;"/>
-<polygon style="fill: #CBCCD0;" points="240 -65 240 -61 234 -61 234 -65" id="ConstructionFlap"/>
-<polygon style="fill: #D9D4D9;" points="303 -60 310 -60 310 -74 303 -74" id="GoToInfirmaryLeft"/>
+<polygon style="fill: #CBCCD0;" points="240 -65 240 -61 234 -61 234 -65" id="ConFlap"/>
+<polygon style="fill: #D9D4D9;" points="303 -60 310 -60 310 -74 303 -74" id="ToInfL"/>
 <g style="" transform="matrix(3.690097, 0, 0, 3.690097, 721.866272, -43.011864)"/>
 <polygon style="fill: #4F4F4F;" points="19 -69 19 -48 46 -49 45 -71" id=""/>
 <text style="fill: #727272; font-family: monospace; font-size: 2.5px; white-space: pre;" x="23" y="-152">x²+y²+z²-c²t²</text>
@@ -438,7 +438,7 @@
 <polygon style="fill: #C6C6C6;" points="72 -63 85 -63 87 -50 74 -50"/>
 <polygon style="fill: #3D3025;" points="74 -61 84 -61 85 -54 75 -54" id="Computer"/>
 <polygon style="fill: #D8D8D8;" points="39 -49 41 -49 41 -50 39 -50"/>
-<polygon style="fill: #2B221A;" points="8 -35 8 -79 11 -78 11 -37" id="GoToInfirmaryRight"/>
+<polygon style="fill: #2B221A;" points="8 -35 8 -79 11 -78 11 -37" id="ToInfR"/>
 <g transform="matrix(0.398488, 0, 0, 0.398488, 10.721924, -248.960022)" style="">
 <polygon style="fill: #C99E93;" points="-1 300 0 306 2 307 2 303 4 303 1 298"/>
 <polygon style="fill: #C99E93;" points="31 298 30 304 27 306 28 301 26 301 28 298"/>
@@ -493,10 +493,10 @@
 <line style="fill: none; stroke: #FF0900;" x1="151" y1="-70" x2="155" y2="-70"/>
 <polygon style="fill: #CBCCD0;" points="22 -248 22 -241 30 -241 30 -248" id="Flap"/>
 <polygon style="fill: #C1BCC1;" points="124 -39 118 -35 118 -78 123 -77"/>
-<polygon style="fill: #535153;" points="118 -37 121 -39 121 -77 118 -78" id="GoToConstruction"/>
+<polygon style="fill: #535153;" points="118 -37 121 -39 121 -77 118 -78" id="ToCon"/>
 <polygon style="fill: #AEA9AE;" points="124 -39 121 -39 121 -77 123 -77"/>
 <polygon style="fill: #C1BCC1;" points="197 -38 202 -34 203 -80 198 -78"/>
-<polygon style="fill: #535153;" points="199 -38 202 -36 203 -80 200 -78" id="GoToLibrary"/>
+<polygon style="fill: #535153;" points="199 -38 202 -36 203 -80 200 -78" id="ToLib"/>
 <polygon style="fill: #AEA9AE;" points="199 -38 197 -38 198 -78 200 -78"/>
 <rect width="100" height="100" style="fill: #E0E1E6;"/>
 <polygon style="fill: #9C9D9F;" points="21 38 11 20 89 20 79 38" id="ShutFlap"/>

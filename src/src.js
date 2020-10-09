@@ -185,11 +185,11 @@ const D = document,
 		opening: {
 			setup: function() {
 				setBackground('#111')
-				this.startX = centerX - 75
-				this.startY = centerY - 75
-				this.stopX = centerX - 25
-				this.stopY = centerY - 25
-				this.startTime = Date.now()
+				this.bx = centerX - 75
+				this.by = centerY - 75
+				this.ex = centerX - 25
+				this.ey = centerY - 25
+				this.st = Date.now()
 				this.duration = setTicker([
 					`You're a Pavel, commander of Soyuz 404…`,
 					`…a secret mission…`,
@@ -198,10 +198,10 @@ const D = document,
 				show(this, [objects.earth, objects.soyuz])
 			},
 			draw: function(now) {
-				const t = now - this.startTime,
+				const t = now - this.st,
 					d = this.duration,
-					x = lerpd(this.startX, this.stopX, t, d),
-					y = lerpd(this.startY, this.stopY, t, d)
+					x = lerpd(this.bx, this.ex, t, d),
+					y = lerpd(this.by, this.ey, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
 			},
@@ -257,14 +257,14 @@ const D = document,
 					() => setupScene('panel')
 				)
 				setHotspot(
-					hotspots.storage1,
+					hotspots.s1,
 					'Look into storage 1',
 					() => {
 						let message = `A couple of space suits. Might come in handy.`
 						if (state.nowhere) {
 							message = `There's nothing I can use right now.`
-							if (!state.storage1) {
-								state.storage1 = true
+							if (!state.s1) {
+								state.s1 = true
 								addToInventory('helmet')
 								message = `You've got a helmet!`
 							}
@@ -273,19 +273,19 @@ const D = document,
 					}
 				)
 				setHotspot(
-					hotspots.storage2,
+					hotspots.s2,
 					'Look into storage 2',
 					() => {
 						let message = `Food, adhesive tape and a towel. It's always good to have a towel.`
 						if (state.nowhere) {
 							message = `There's nothing I can use right now.`
-							if (!state.storage2) {
-								state.storage2 = 1
+							if (!state.s2) {
+								state.s2 = 1
 								addToInventory('tape')
 								addToInventory('food')
 								message = `You found a tape and food.`
-							} else if (state.storage2 == 1) {
-								state.storage2 = 2
+							} else if (state.s2 == 1) {
+								state.s2 = 2
 								addToInventory('pills')
 								message = `You find sleeping pills!`
 							}
@@ -424,7 +424,7 @@ const D = document,
 					])
 				)
 				setHotspot(
-					hotspots.goToInfirmaryRight,
+					hotspots.toInfRight,
 					'Go to infirmary',
 					() => setupScene('infirmary')
 				)
@@ -449,12 +449,12 @@ const D = document,
 					() => setDialog(convs.nurse.opening)
 				)
 				setHotspot(
-					hotspots.goToLibrary,
+					hotspots.toLib,
 					'Go to library',
 					() => setupScene('library')
 				)
 				setHotspot(
-					hotspots.goToConstruction,
+					hotspots.toCon,
 					'Go to construction',
 					() => setupScene('construction')
 				)
@@ -479,7 +479,7 @@ const D = document,
 					() => setDialog(convs.technician.opening)
 				)
 				setHotspot(
-					hotspots.constructionFlap,
+					hotspots.conFlap,
 					'Flap',
 					() => {
 						setTicker([state.knowFlap
@@ -489,7 +489,7 @@ const D = document,
 					}
 				)
 				setHotspot(
-					hotspots.goToInfirmaryLeft,
+					hotspots.toInfLeft,
 					'Go to infirmary',
 					() => setupScene('infirmary')
 				)
@@ -574,11 +574,11 @@ const D = document,
 		home: {
 			setup: function() {
 				setBackground('#111')
-				this.startX = centerX - 75
-				this.startY = centerY - 75
-				this.stopX = centerX - 25
-				this.stopY = centerY - 25
-				this.startTime = Date.now()
+				this.bx = centerX - 75
+				this.by = centerY - 75
+				this.ex = centerX - 25
+				this.ey = centerY - 25
+				this.st = Date.now()
 				this.duration = setTicker([
 					`${labels.yevgeni} We're home!`,
 					`${labels.you} Yes!`,
@@ -586,10 +586,10 @@ const D = document,
 				show(this, [objects.earth, objects.soyuz])
 			},
 			draw: function(now) {
-				const t = now - this.startTime,
+				const t = now - this.st,
 					d = this.duration,
-					x = lerpd(this.startX, this.stopX, t, d),
-					y = lerpd(this.startY, this.stopY, t, d)
+					x = lerpd(this.bx, this.ex, t, d),
+					y = lerpd(this.by, this.ey, t, d)
 				objects.soyuz.style.transform =
 					`translate(${x}px, ${y}px) rotateZ(45deg)`
 			},
@@ -962,7 +962,7 @@ W.onload = function() {
 		earth: D.getElementById('Earth'),
 		soyuz: D.getElementById('Soyuz'),
 		cosmonaut: D.getElementById('Cosmonaut'),
-		soyuzInside: D.getElementById('SoyuzInside'),
+		soyuzInside: D.getElementById('Inside'),
 		meFloating: D.getElementById('Me'),
 		yevgeniFloating: D.getElementById('Yevgeni'),
 		tape: D.getElementById('Tape'),
@@ -986,20 +986,20 @@ W.onload = function() {
 		hatch: D.getElementById('Hatch'),
 		radio: D.getElementById('Radio'),
 		controls: D.getElementById('Controls'),
-		storage1: D.getElementById('Storage1'),
-		storage2: D.getElementById('Storage2'),
-		stopLooking: D.getElementById('StopLooking'),
+		s1: D.getElementById('S1'),
+		s2: D.getElementById('S2'),
+		stopLooking: D.getElementById('Bck'),
 		plus: D.getElementById('Plus'),
 		minus: D.getElementById('Minus'),
 		value: D.getElementById('Value'),
 		start: D.getElementById('Start'),
 		reset: D.getElementById('Reset'),
-		goToInfirmaryLeft: D.getElementById('GoToInfirmaryLeft'),
-		goToInfirmaryRight: D.getElementById('GoToInfirmaryRight'),
-		goToConstruction: D.getElementById('GoToConstruction'),
-		goToLibrary: D.getElementById('GoToLibrary'),
+		toInfLeft: D.getElementById('ToInfL'),
+		toInfRight: D.getElementById('ToInfR'),
+		toCon: D.getElementById('ToCon'),
+		toLib: D.getElementById('ToLib'),
 		computer: D.getElementById('Computer'),
-		constructionFlap: D.getElementById('ConstructionFlap'),
+		conFlap: D.getElementById('ConFlap'),
 		shutFlap: D.getElementById('ShutFlap'),
 		o1: D.getElementById('O1'),
 		o2: D.getElementById('O2'),
