@@ -391,7 +391,7 @@ const D = document,
 					'Back',
 					() => setupScene('eva')
 				)
-				for (let i = 1; i < 9; ++i) {
+				for (let i = 1; i < 10; ++i) {
 					setHotspot(
 						hotspots[`o${i}`],
 						`Operation #${i}`,
@@ -401,6 +401,7 @@ const D = document,
 						}
 					)
 				}
+				setTicker([`${labels.you} Let's make that last + a -`])
 				show(this, [objects.service])
 			}
 		},
@@ -625,7 +626,7 @@ let rId,
 	useItemWith,
 	state = {
 		inventory: [],
-		operations: [2,0,2,0,2,0,2,2],
+		operations: [2,2,2,2,2,0,2,0,0],
 		scene: 'opening',
 	}
 
@@ -636,9 +637,9 @@ function updateOperations() {
 		'#0a8cc8',
 		'#d7c23a',
 	]
-	const key = [2,0,2,0,2,1,2,2]
+	const key = [2,2,2,2,2,0,2,0,1]
 	let correct = true
-	for (let i = 1; i < 9; ++i) {
+	for (let i = 1; i < 10; ++i) {
 		const j = i - 1,
 			value = state.operations[j] % 4
 		hotspots[`o${i}`].style = `fill: ${fills[value]}`
@@ -1008,6 +1009,7 @@ W.onload = function() {
 		o6: D.getElementById('O6'),
 		o7: D.getElementById('O7'),
 		o8: D.getElementById('O8'),
+		o9: D.getElementById('O9'),
 	}
 	info = D.getElementById('Info')
 	dialog = D.getElementById('Dialog')

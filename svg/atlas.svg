@@ -503,6 +503,16 @@
 <polygon style="fill: #CBCCD0;" points="21 38 21 80 79 80 79 38"/>
 <polygon style="fill: #BABBBE;" points="27 75 21 80 79 80 73 75"/>
 <polygon style="fill: #9C9D9F;" points="27 43 27 75 73 75 73 43"/>
+<line style="stroke: #000;" x1="56" y1="70" x2="56" y2="75"/>
+<rect x="32" y="48" width="4" height="5" style="fill: none; stroke: #000;"/>
+<rect x="40" y="48" width="4" height="5" style="fill: none; stroke: #000;"/>
+<rect x="48" y="48" width="4" height="5" style="fill: none; stroke: #000;"/>
+<rect x="56" y="48" width="4" height="5" style="fill: none; stroke: #000;"/>
+<rect x="64" y="48" width="4" height="5" style="fill: none; stroke: #000;"/>
+<polyline style="fill: none; stroke: #000;" points="36 53 36 59 44 59 44 53"/>
+<polyline style="fill: none; stroke: #000;" points="60 53 60 59 68 59 68 53"/>
+<polyline style="fill: none; stroke: #000;" points="40 59 40 64 52 64 52 53"/>
+<polyline style="fill: none; stroke: #000;" points="46 65 46 70 64 70 64 59"/>
 <polygon style="fill: #BABBBE;" points="21 38 27 43 73 43 79 38"/>
 <polygon style="fill: #E9EAED;" points="11 17 11 20 89 20 88 17"/>
 <rect x="25" y="36" width="6" height="3" style="fill: #6E6E6E;"/>
@@ -544,24 +554,7 @@
 <polygon style="fill: #D8A572;" points="316 393 309 381 322 387"/>
 <polygon style="fill: #656565;" points="316 393 363 440 371 434 322 387"/>
 <polygon style="fill: #656565;" points="313 388 309 381 316 384"/>
-<rect x="30" y="56" width="4" height="4" style="" id="O1"/>
-<rect x="35" y="56" width="4" height="4" style="" id="O2"/>
-<rect x="40" y="56" width="4" height="4" style="" id="O3"/>
-<rect x="45" y="56" width="4" height="4" style="" id="O4"/>
-<rect x="50" y="56" width="4" height="4" style="" id="O5"/>
-<rect x="55" y="56" width="4" height="4" style="" id="O6"/>
-<rect x="60" y="56" width="4" height="4" style="" id="O7"/>
-<rect x="65" y="56" width="4" height="4" style="" id="O8"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="33 60 33 62 36 62 36 60"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="38 56 38 54 41 54 41 56"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="43 60 43 62 46 62 46 60"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="48 56 48 54 51 54 51 56"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="53 60 53 62 56 62 56 60"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="58 56 58 54 61 54 61 56"/>
-<polyline style="fill: none; stroke: rgb(0, 0, 0);" points="63 60 63 62 66 62 66 60"/>
 <polyline style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="27 58"/>
-<line style="stroke: rgb(0, 0, 0);" x1="27" y1="58" x2="30" y2="58"/>
-<line style="stroke: rgb(0, 0, 0);" x1="69" y1="58" x2="73" y2="58"/>
 <rect x="338" y="-75" width="12" height="9" style="fill: rgb(185, 185, 185);"/>
 <rect x="339" y="-74" width="10" height="7" style="fill: rgb(61, 48, 37);"/>
 <text style="fill: rgb(255, 255, 255); font-family: monospace; font-size: 1px; white-space: pre; text-anchor: middle;" x="344" y="-72">x²+y²+z²+c²t²</text>
@@ -574,4 +567,23 @@
 <ellipse style="fill: #E1E1E1;" cx="9" cy="376" rx="21" ry="6"/>
 <path d="M 113 508 C 118 499 121 489 118 487 L 113 484 L 92 521 L 97 524 C 100 525 107 519 113 508 Z" style="fill: #D8D8D8;"/>
 <path d="M 92 521 C 95 522 102 516 108 505 C 113 495 116 486 113 484 C 110 483 103 489 97 499 C 91 510 89 519 92 521 Z" style="fill: #F6F6F6;"/>
+<rect x="30" y="46" width="4" height="4" style="" id=""/>
+<rect x="38" y="46" width="4" height="4" style="" id=""/>
+<rect x="46" y="46" width="4" height="4" style="" id=""/>
+<rect x="54" y="46" width="4" height="4" style="" id=""/>
+<rect x="62" y="46" width="4" height="4" style="" id=""/>
+<rect x="34" y="51" width="4" height="4" style="" id="O1"/>
+<rect x="42" y="51" width="4" height="4" style="" id="O2"/>
+<rect x="50" y="51" width="4" height="4" style="" id="O3"/>
+<rect x="58" y="51" width="4" height="4" style="" id="O4"/>
+<rect x="66" y="51" width="4" height="4" style="" id="O5"/>
+<rect x="38" y="57" width="4" height="4" style="" id="O6"/>
+<rect x="62" y="57" width="4" height="4" style="" id="O7"/>
+<rect x="44" y="62" width="4" height="4" style="" id="O8"/>
+<rect x="54" y="68" width="4" height="4" style="" id="O9"/>
+<text style="fill: #000; font-family: monospace; font-size: 3px; text-anchor: end; white-space: pre;" x="33" y="49">x</text>
+<text style="fill: #000; font-family: monospace; font-size: 3px; text-anchor: end; white-space: pre;" x="41" y="49">y</text>
+<text style="fill: #000; font-family: monospace; font-size: 3px; text-anchor: end; white-space: pre;" x="49" y="49">z</text>
+<text style="fill: #000; font-family: monospace; font-size: 3px; text-anchor: end; white-space: pre;" x="57" y="49">c</text>
+<text style="fill: #000; font-family: monospace; font-size: 3px; text-anchor: end; white-space: pre;" x="65" y="49">t</text>
 </svg>
