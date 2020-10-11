@@ -632,10 +632,10 @@ let rId,
 
 function updateOperations() {
 	const fills = [
-		'#76cf59',
-		'#c13549',
-		'#0a8cc8',
-		'#d7c23a',
+		'#00a270',
+		'#e55500',
+		'#0073b7',
+		'#f1e500',
 	]
 	const key = [2,2,2,2,2,0,2,0,1]
 	let correct = true
